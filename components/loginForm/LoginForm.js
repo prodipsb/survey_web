@@ -1,0 +1,125 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from "react";
+import { AiOutlineUser, AiFillUnlock, AiFillAndroid } from "react-icons/ai";
+import { Fade } from "react-reveal";
+import Image from "next/image";
+import logo from "../../assets/logo.png";
+import { useDispatch } from "react-redux";
+import { userLogin } from "../../redux/features/login/loginSlice";
+import { useLoginUserMutation } from "../../redux/features/login/loginApi";
+import { useRouter } from "next/router";
+import toast from "react-hot-toast";
+
+const LoginForm = ({ setForgotPassword }) => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const [signinData, setSigninData] = useState({
+    email: "",
+    password: "",
+    login_mode: "web login",
+  });
+  const [loginUser, { data }] = useLoginUserMutation();
+
+  const handleChange = (e) => {
+    const newData = { ...signinData };
+    newData[e.target.name] = e.target.value;
+    setSigninData(newData);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    loginUser(signinData);
+  };
+
+  useEffect(() => {
+    if (data?.token_type) {
+      dispatch(userLogin(data));
+      router.push("/");
+    } else {
+      toast.error("Credential missmatch...");
+    }
+  }, [data]);
+
+  return (
+    <div>
+      <Fade top>
+        <Image
+          className="w-[200px] h-[50px] mx-auto"
+          src={logo}
+          alt=""
+          priority
+        />
+      </Fade>
+      <Fade bottom>
+        <div className="mt-5 flex justify-center items-center">
+          <div>
+            <h2 className="text-center font-bold text-white text-[15px] mb-5">
+              SURVEY APPLICATION WEB PORTAL
+            </h2>
+            <div className="h-[430px] lg:h-[410px] md:h-[450px] 2xl:h-[500px] w-[95%] mx-auto md:w-[450px] lg:w-[395px] 2xl:w-[500px] md:[420px] bg-white rounded-tl-[20%] rounded-br-[20%]">
+              <form
+                onSubmit={handleSubmit}
+                className="flex flex-col items-center w-[80%] mx-auto"
+              >
+                <div className="relative w-full mt-[15%] 2xl:mt-[15%] md:mt-[15%] lg:mt-7">
+                  <input
+                    type="text"
+                    name="email"
+                    required
+                    onChange={handleChange}
+                    className="bg-[#31a2b6] w-full p-2 rounded-[25px] outline-none placeholder:text-white caret-white text-white pl-9"
+                    placeholder="Email / Employee ID"
+                  />
+                  <AiOutlineUser
+                    size={20}
+                    className="absolute top-2.5 left-2.5 text-white"
+                  />
+                </div>
+                <div className="relative w-full mt-5">
+                  <input
+                    type="password"
+                    name="password"
+                    required
+                    onChange={handleChange}
+                    className="bg-[#31a2b6] w-full p-2 rounded-[25px] outline-none placeholder:text-white caret-white text-white pl-9"
+                    placeholder="password"
+                  />
+                  <AiFillUnlock
+                    size={20}
+                    className="absolute top-2.5 left-2.5 text-white"
+                  />
+                </div>
+                <p
+                  className="flex justify-end w-[100%] mr-7 mt-4 text-[15px] text-[#31a2b6] font-thin cursor-pointer"
+                  onClick={() => setForgotPassword(true)}
+                >
+                  Forget Password ?
+                </p>
+                <button
+                  type="submit"
+                  className="bg-[#2dbdb6] pt-[2%] pb-[2%] w-[32%] rounded-[25px] mt-5 text-white hover:drop-shadow-lg"
+                >
+                  LOGIN
+                </button>
+              </form>
+              <p className="text-[13px] text-[#2dbdb6] font-thin ml-[10%] mt-5">
+                * For any assistance please contact with admin.
+              </p>
+              <hr className="w-[80%] mx-auto bg-blue-500 mt-5" />
+              <p className="text-[#2dbdb6] text-[13px] text-center mt-5">
+                Download Our Apps
+              </p>
+              <div className="flex justify-center w-[80%] mx-auto pt-5">
+                <button className="w-[45%] border-[#2dbdb6] border-[1px] pt-1 pb-1 text-[#2dbdb6] flex justify-center items-center rounded-md font-thin hover:bg-[#2dbdb6] hover:text-white">
+                  <AiFillAndroid /> <span className="ml-2">ANDROID</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Fade>
+    </div>
+  );
+};
+
+export default LoginForm;
