@@ -1,7 +1,8 @@
 import React from "react";
+import AuthCheck from "../../../components/authCheck/AuthCheck";
 
 const GeneralSetting = () => {
-    <div></div>
+  return <div>gg</div>;
 };
 
-export default GeneralSetting;
+export default AuthCheck(GeneralSetting);

@@ -1,7 +1,10 @@
+import AuthCheck from "../components/authCheck/AuthCheck";
 import MainDashboard from "../components/dashboard/Main";
 
 const Home = () => {
-  return <MainDashboard />;
+  return (
+      <MainDashboard />
+  );
 };
 
-export default Home;
+export default AuthCheck(Home);

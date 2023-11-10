@@ -1,18 +1,19 @@
 import "../styles/globals.css";
 import { Toaster } from "react-hot-toast";
-import { Provider, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 import store, { persistor } from "../redux/store";
 import { PersistGate } from "redux-persist/lib/integration/react";
-import Sidebar from "../components/sidebar/Main";
 import { useRouter } from "next/router";
+import Sidebar from "../components/sidebar/Main";
 
-export default function App({ Component, pageProps }) {
+const App = ({ Component, pageProps }) => {
   const { pathname } = useRouter();
+  const withoutLayout = ["/login", "/_error"];
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Toaster position="top-center" />
-        {pathname.includes("login") ? (
+        {withoutLayout.includes(pathname) ? (
           <Component {...pageProps} />
         ) : (
           <Sidebar>
@@ -22,4 +23,6 @@ export default function App({ Component, pageProps }) {
       </PersistGate>
     </Provider>
   );
-}
+};
+
+export default App;

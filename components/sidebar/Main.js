@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import background from "../../assets/sidebar-bg.jpg";
 
-function Main({ children }) {
+const Main = ({ children }) => {
   const [mobileView, setMobileView] = useState(false);
   const [largeView, setLargeView] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
@@ -84,6 +84,6 @@ function Main({ children }) {
       </div>
     </div>
   );
-}
+};
 
 export default Main;

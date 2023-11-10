@@ -1,9 +1,8 @@
 import React from "react";
+import AuthCheck from "../../../components/authCheck/AuthCheck";
 
 const index = () => {
-  return (
-    <div></div>
-  );
+  return <div>nn</div>;
 };
 
-export default index;
+export default AuthCheck(index);
