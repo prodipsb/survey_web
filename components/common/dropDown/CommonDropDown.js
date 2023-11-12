@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Image from "next/image";
 import React from "react";
 import { useEffect } from "react";
@@ -78,7 +79,7 @@ const CommonDropDown = ({
         onClick={() => setShowOption(!showOption)}
         className={`${
           showOption && "border-blue-300"
-        } flex justify-between items-center bg-gray-50 border border-gray-300 outline-none focus:border-blue-300 text-gray-900 rounded-lg p-2.5`}
+        } flex justify-between items-center bg-white border border-gray-300 outline-none focus:border-blue-300 text-gray-900 rounded-lg p-2.5`}
       >
         {selectedOption || primaryText !== defaultCreateText ? (
           <div className="w-full flex items-center justify-between mr-3">
@@ -106,7 +107,7 @@ const CommonDropDown = ({
             onFocus={() => {
               document.getElementById(`${name}`).blur();
             }}
-            className={`outline-none bg-gray-50 w-full cursor-pointer ${
+            className={`outline-none bg-white w-full cursor-pointer ${
               defaultOptionValue && "placeholder:text-black"
             }`}
           />

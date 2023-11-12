@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { AiFillDelete, AiFillEye } from "react-icons/ai";
 import { FaUserSecret } from "react-icons/fa";
@@ -14,8 +15,6 @@ const CustomTable = ({
   deleteData,
   assignRole,
 }) => {
-  const image =
-    "https://cdn.pixabay.com/photo/2012/04/13/21/07/user-33638__340.png";
   return (
     <div className="mt-5 block overflow-auto">
       <table className="table-auto w-full text-left text-[13px] overflow-x-auto">
@@ -46,16 +45,14 @@ const CustomTable = ({
                 >
                   {header?.key === "name" ? (
                     <div className="relative">
-                      <img
-                        className="rounded-[50%] h-[40px] w-[40px] absolute top-[-10px]"
-                        src={
-                          tableData?.employee?.avatar
-                            ? `${process.env.NEXT_PUBLIC_IMAGE}${tableData?.employee?.avatar}`
-                            : image
-                        }
-                        alt=""
-                      />
-                      <p className="ml-[55px]">{tableData?.employee?.name}</p>
+                      {tableData?.avatar && (
+                        <img
+                          className="rounded-[50%] h-[40px] w-[40px] absolute top-[-10px]"
+                          src={`${process.env.NEXT_PUBLIC_IMAGE}${tableData?.avatar}`}
+                          alt=""
+                        />
+                      )}
+                      <p className="ml-[55px]">{tableData?.name}</p>
                     </div>
                   ) : (
                     <>{tableData[header?.key]}</>

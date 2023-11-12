@@ -7,11 +7,11 @@ export const api = createApi({
     prepareHeaders: (headers, { getState }) => {
       const token = getState().loginInfo?.access_token;
       if (token) {
-        headers.set("authorization", `${token}`);
+        headers.set("authorization", `Bearer ${token}`);
       }
       return headers;
     },
   }),
-  tagTypes: [],
+  tagTypes: ['role'],
   endpoints: () => ({}),
 });
