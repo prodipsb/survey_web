@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import jwt from "jsonwebtoken";
 import { userLogin } from "../../redux/features/login/loginSlice";
 
 const AuthCheck = (WrappedComponent) => {
@@ -12,9 +12,7 @@ const AuthCheck = (WrappedComponent) => {
     const token = useSelector((state) => state?.loginInfo?.access_token);
 
     useEffect(() => {
-      try {
-        jwt.verify(token, "secret");
-      } catch (error) {
+      if (!token) {
         router.push(
           {
             pathname: "/login",
