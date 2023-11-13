@@ -8,14 +8,36 @@ const userApi = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["user"],
+    }),
+    getSingleUser: builder.query({
+      query: (id) => ({
+        url: `/user/${id}`,
+        method: "GET",
+      }),
+      invalidatesTags: ["user"],
     }),
     getUser: builder.query({
       query: (id) => ({
-        url: `/users?page=${id}`,
+        url: `/users?page=${id.page}&&search=${id.search}`,
         method: "GET",
       }),
+      providesTags: ["user"],
+    }),
+    deleteUser: builder.mutation({
+      query: (data) => ({
+        url: "/user-delete",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["user"],
     }),
   }),
 });
 
-export const { useCreateUserMutation, useGetUserQuery } = userApi;
+export const {
+  useCreateUserMutation,
+  useGetSingleUserQuery,
+  useGetUserQuery,
+  useDeleteUserMutation,
+} = userApi;

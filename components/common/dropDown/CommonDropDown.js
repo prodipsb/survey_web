@@ -33,6 +33,7 @@ const CommonDropDown = ({
       setPrimaryText(findText);
     } else {
       setPrimaryText(defaultCreateText);
+      setSelectedOption("");
     }
   }, [defaultOptionValue, optionData]);
 
@@ -73,6 +74,7 @@ const CommonDropDown = ({
       setShowOption(false);
     }
   };
+
   return (
     <div className="w-full text-sm relative" ref={outsideClick}>
       <div
