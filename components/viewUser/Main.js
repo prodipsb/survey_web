@@ -102,7 +102,7 @@ const ViewUser = ({ userView, setUserView }) => {
               onClick={() => setUserView(null)}
               className="bg-white border-blue-500 border px-8 py-2 rounded-md text-black hover:bg-blue-500 hover:text-white"
             >
-              Cancel
+              Back
             </button>
           </div>
         </div>
