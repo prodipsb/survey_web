@@ -34,7 +34,7 @@ const CustomTable = ({
           {data?.map((tableData, index) => (
             <tr
               key={index}
-              className={`hover:bg-[#F7F8FA] ${
+              className={`hover:bg-[#aeb4c0] ${
                 index % 2 === 0 ? "bg-[#F7F8FA]" : ""
               }`}
             >

@@ -98,7 +98,7 @@ const UserList = () => {
           />
           <div className="flex lg:justify-between md:justify-between lg:flex-row md:flex-row flex-col items-center gap-y-5 mt-5 pb-5">
             <Pagination
-              count={data?.data?.total}
+              count={data?.meta?.last_page}
               page={page}
               shape={"rounded"}
               onChange={handleChange}
