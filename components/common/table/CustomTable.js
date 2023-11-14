@@ -55,7 +55,13 @@ const CustomTable = ({
                       <p className="ml-[55px]">{tableData?.name}</p>
                     </div>
                   ) : (
-                    <>{tableData[header?.key]}</>
+                    <>
+                      {tableData[header?.nested]
+                        ? tableData[header?.key] &&
+                          tableData[header?.key][header?.nested] &&
+                          tableData[header?.key][header?.nested]
+                        : tableData[header?.key]}
+                    </>
                   )}
                   {header?.key === "action" && (
                     <div className="flex items-center gap-3">

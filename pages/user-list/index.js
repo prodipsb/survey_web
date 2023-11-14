@@ -84,9 +84,9 @@ const UserList = () => {
               { key: "country", label: "Country" },
               { key: "status", label: "Status" },
               { key: "date_of_joining", label: "Date of Joining" },
-              { key: "role_id", label: "Role" },
-              { key: "supervisor_id", label: "Supervisor" },
-              { key: "reporting_role_id", label: "Reporting To" },
+              { key: "role", label: "Role", nested: "name" },
+              { key: "supervisor", label: "Supervisor", nested: "name" },
+              { key: "report_to", label: "Reporting To", nested: "name" },
               { key: "user_type", label: "User Type" },
               { key: "action", label: "Action" },
             ]}

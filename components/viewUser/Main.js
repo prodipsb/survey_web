@@ -16,7 +16,7 @@ const ViewUser = ({ userView, setUserView }) => {
           {userView?.name}
         </p>
         <div className="mb-5">
-          <div className="md:flex lg:flex gap-10 text-center">
+          <div className="md:flex lg:flex gap-10">
             <div className="mb-5 w-full">
               <p className="mb-2 text-[#646C9A]">
                 <span className="font-bold text-[14px]">User Email: </span>
@@ -36,7 +36,7 @@ const ViewUser = ({ userView, setUserView }) => {
               </p>
             </div>
           </div>
-          <div className="md:flex lg:flex gap-10 text-center">
+          <div className="md:flex lg:flex gap-10">
             <div className="mb-5 w-full">
               <p className="mb-2 text-[#646C9A]">
                 <span className="font-bold text-[14px]">Role: </span>
@@ -46,17 +46,17 @@ const ViewUser = ({ userView, setUserView }) => {
             <div className="mb-5 w-full">
               <p className="mb-2 text-[#646C9A]">
                 <span className="font-bold text-[14px]">Supervisor: </span>
-                {userView?.supervisor_id}
+                {userView?.supervisor?.name}
               </p>
             </div>
             <div className="mb-5 w-full">
               <p className="mb-2 text-[#646C9A]">
                 <span className="font-bold text-[14px]">Reporting to: </span>
-                {userView?.reporting_role_id}
+                {userView?.reporting_to?.name}
               </p>
             </div>
           </div>
-          <div className="md:flex lg:flex gap-10 text-center">
+          <div className="md:flex lg:flex gap-10">
             <div className="mb-5 w-full">
               <p className="mb-2 text-[#646C9A]">
                 <span className="font-bold text-[14px]">City: </span>
@@ -76,7 +76,7 @@ const ViewUser = ({ userView, setUserView }) => {
               </p>
             </div>
           </div>
-          <div className="md:flex lg:flex gap-10 text-center">
+          <div className="md:flex lg:flex gap-10">
             <div className="mb-5 w-full">
               <p className="mb-2 text-[#646C9A]">
                 <span className="font-bold text-[14px]">Status: </span>
