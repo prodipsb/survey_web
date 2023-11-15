@@ -19,7 +19,7 @@ const userApi = api.injectEndpoints({
     }),
     getUser: builder.query({
       query: (id) => ({
-        url: `/users?page=${id.page}&&search=${id.search}`,
+        url: `/users?page=${id?.page}&&search=${id?.search?.search}&&start_date=${id?.search?.start_date}&&end_date=${id?.search?.end_date}`,
         method: "GET",
       }),
       providesTags: ["user"],
