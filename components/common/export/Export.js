@@ -98,7 +98,7 @@ const Export = ({ setSearch, expUrl }) => {
             type="text"
             name="search"
             onChange={handleChange}
-            placeholder="Accept name, email, user type"
+            placeholder="Search..."
             className="px-5 py-2 rounded-md placeholder:text-[12px] placeholder:text-black outline-none w-full md:w-auto lg:w-auto"
           />
         </div>

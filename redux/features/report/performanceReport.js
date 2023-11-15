@@ -1,10 +1,10 @@
 import { api } from "../../api/apiSlice";
 
-const activityReportApi = api.injectEndpoints({
+const performanceReportApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    masterReport: builder.query({
+    performanceReport: builder.query({
       query: (id) => ({
-        url: `/master-report?page=${id?.page}${
+        url: `/performance-report?page=${id?.page}${
           id?.search?.search && "&&search=" + id?.search?.search
         }${
           id?.search?.start_date &&
@@ -19,4 +19,4 @@ const activityReportApi = api.injectEndpoints({
   }),
 });
 
-export const { useMasterReportQuery } = activityReportApi;
+export const { usePerformanceReportQuery } = performanceReportApi;

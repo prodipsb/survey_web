@@ -43,16 +43,20 @@ const CustomTable = ({
                   className="border whitespace-nowrap p-3 h-[55px]"
                   key={index}
                 >
-                  {header?.key === "name" ? (
+                  {header?.nested?.name ? (
                     <div className="relative">
-                      {tableData?.avatar && (
+                      {tableData[header?.nested?.avatar] && (
                         <img
                           className="rounded-[50%] h-[40px] w-[40px] absolute top-[-10px]"
-                          src={`${process.env.NEXT_PUBLIC_IMAGE}${tableData?.avatar}`}
+                          src={`${process.env.NEXT_PUBLIC_IMAGE}${
+                            tableData[header?.nested?.avatar]
+                          }`}
                           alt=""
                         />
                       )}
-                      <p className="ml-[55px]">{tableData?.name}</p>
+                      <p className="ml-[55px]">
+                        {tableData[header?.nested?.name]}
+                      </p>
                     </div>
                   ) : (
                     <>

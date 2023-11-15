@@ -61,7 +61,13 @@ const UserList = () => {
           <Export setSearch={setSearch} expUrl="/users" />
           <CustomTable
             headers={[
-              { key: "name", label: "Name" },
+              {
+                label: "Name",
+                nested: {
+                  name: "name",
+                  avatar: "avatar",
+                },
+              },
               { key: "gender", label: "Gender" },
               { key: "phone", label: "Mobile" },
               { key: "email", label: "Email" },
