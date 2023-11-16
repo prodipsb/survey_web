@@ -74,12 +74,12 @@ const GeneralSetting = () => {
     <div>
     <div className="mt-5 w-[90%] mx-auto text-[13px] border-b-blue-300 pb-5">
       <p className="font-bold text-[#646C9A] text-center text-[24px] mt-5 mb-5">
-        General Setting
+        Push Notification
       </p>
       <form className="mb-5" onSubmit={handleSubmit} ref={formRef}>
         <div className="gap-10">
           <div className="mb-5 w-full">
-            <p className="mb-2 text-[#646C9A]">Website Title*</p>
+            <p className="mb-2 text-[#646C9A]">Secret ID*</p>
             <input
               className={inputStyle}
               type="text"
@@ -91,7 +91,7 @@ const GeneralSetting = () => {
             />
           </div>
           <div className="mb-5 w-full">
-            <p className="mb-2 text-[#646C9A]">Address</p>
+            <p className="mb-2 text-[#646C9A]">FCM</p>
             <input
               className={inputStyle}
               type="text"
@@ -108,7 +108,7 @@ const GeneralSetting = () => {
           </div>
 
           <div className="w-full mb-5">
-            <p className="mb-2 text-[#646C9A]">About</p>
+            <p className="mb-2 text-[#646C9A]">Message</p>
             <textarea
               className={inputStyle}
               type="text"
@@ -119,48 +119,6 @@ const GeneralSetting = () => {
               onChange={handleInputChange}
             />
           </div>
-
-          <div className="mb-5 w-full">
-            <p className="mb-2 text-[#646C9A]"> Logo</p>
-            <input
-              className="relative bg-white m-0 block w-full min-w-0 flex-auto rounded-md border border-solid border-gray-300 bg-clip-padding py-2 px-3 text-base font-normal text-[#AFABC3] transition duration-300 ease-in-out file:-mx-3 file:-my-2 file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-2 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-primary focus:border-blue-300"
-              type="file"
-              name="logo"
-              onChange={handleInputChange}
-            />
-          </div>
-
-
-          {/* {formData?.logo && (
-             <Image
-              src={`${process.env.NEXT_PUBLIC_IMAGE}${formData?.logo}`}
-              alt="logo"
-              quality={100}
-              width={200}
-              height={200}
-            />
-          )} */}
-
-          <div className="mb-5 w-full">
-            <p className="mb-2 text-[#646C9A]"> Favicon</p>
-            <input
-              className="relative bg-white m-0 block w-full min-w-0 flex-auto rounded-md border border-solid border-gray-300 bg-clip-padding py-2 px-3 text-base font-normal text-[#AFABC3] transition duration-300 ease-in-out file:-mx-3 file:-my-2 file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-2 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-primary focus:border-blue-300"
-              type="file"
-              name="favicon"
-              onChange={handleInputChange}
-            />
-          </div>
-
-          {/* {formData?.favicon && (
-             <Image
-              src={`${process.env.NEXT_PUBLIC_IMAGE}${formData?.favicon}`}
-              alt="favicon"
-              quality={100}
-              width={32}
-              height={32}
-            />
-          )} */}
-
         
         </div>
       
