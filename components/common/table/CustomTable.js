@@ -17,7 +17,7 @@ const CustomTable = ({
 }) => {
   return (
     <div className="mt-5 block overflow-auto">
-      <table className="table-auto w-full text-left text-[13px] overflow-x-auto">
+      <table className="table-auto w-full text-left text-[14px] overflow-x-auto">
         <thead>
           <tr>
             {headers?.map((header, index) => (

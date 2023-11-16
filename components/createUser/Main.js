@@ -25,7 +25,7 @@ const Main = () => {
 
   const formRef = useRef();
 
-  const { data } = useGetRoleQuery();
+  const { data } = useGetRoleQuery({pagination:0});
   const [createUser, { isLoading, isError, isSuccess, error }] =
     useCreateUserMutation();
 
