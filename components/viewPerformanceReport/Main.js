@@ -5,7 +5,7 @@ import user from "../../assets/user.png";
 const ViewPerformanceReport = ({ viewData, setViewData }) => {
   return (
     <div>
-      <div className="mt-5 w-[90%] mx-auto text-[13px] border-b-blue-300 pb-5">
+      <div className="mt-5 w-[90%] mx-auto text-[16px] border-b-blue-300 pb-5">
         <Image
           src={
             viewData?.surveySubmittedUserAvatar
@@ -108,7 +108,9 @@ const ViewPerformanceReport = ({ viewData, setViewData }) => {
             {viewData?.user?.last_login}
           </p>
           <p className="mb-3 text-[#646C9A]">
-            <span className="font-bold text-[14px]">Last Logout: </span>
+            <span className="font-bold text-[14px]">
+              Last Logout:{" "}
+            </span>
             {viewData?.user?.last_logout}
           </p>
         </div>

@@ -1,12 +1,17 @@
 import Image from "next/image";
 import React from "react";
+import user from "../../assets/user.png";
 
 const ViewUser = ({ userView, setUserView }) => {
   return (
     <div>
-      <div className="mt-5 w-[90%] mx-auto text-[13px] border-b-blue-300 pb-5">
+      <div className="mt-5 w-[90%] mx-auto text-[16px] border-b-blue-300 pb-5">
         <Image
-          src={`${process.env.NEXT_PUBLIC_IMAGE + userView?.avatar}`}
+          src={
+            userView?.avatar
+              ? `${process.env.NEXT_PUBLIC_IMAGE + userView?.avatar}`
+              : user
+          }
           alt=""
           height={150}
           width={150}
