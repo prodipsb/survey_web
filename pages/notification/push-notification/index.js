@@ -4,6 +4,8 @@ import { useGetGeneralSettingQuery } from "../../../redux/features/generalSettin
 import { useCreateGeneralSettingMutation } from "../../../redux/features/generalSetting/generalSettingApi";
 import toast from "react-hot-toast";
 import AuthCheck from "../../../components/authCheck/AuthCheck";
+ import {app, messaging} from "../../../utils/config/firebase";
+// import { Messaging } from "firebase/messaging";
 
 const GeneralSetting = () => {
 
@@ -69,6 +71,89 @@ const GeneralSetting = () => {
       toast.error("Something went wrong..." + isError);
     }
   }, [isSuccess, isError]);
+
+
+
+  useEffect(() => {
+    console.log('fcm on')
+    getFCMToken();
+  }, []);
+
+
+  const askForPermission = async () => {
+    try {
+      const messaging = firebase.messaging();
+      await messaging.requestPermission();
+      console.log('Notification permission granted');
+    } catch (error) {
+      console.error('Unable to get permission to notify.', error);
+    }
+  };
+
+
+  // const getFCMToken = async () => {
+  //   console.log('fcm in')
+  //   try {
+  //     // const messaging = firebase.messaging();
+  //     const token = await messaging.getToken();
+  //     console.log('FCM Token:', token);
+  //     return token;
+  //   } catch (error) {
+  //     console.error('Error getting FCM token.', error);
+  //   }
+  // };
+
+  const getFCMToken = async () => {
+    try {
+      const token = await messaging.getToken();
+      console.log('FCM Token:', token);
+      return token;
+    } catch (error) {
+      console.error('Error getting FCM token.', error);
+    }
+  };
+
+  // getFCMToken();
+
+
+
+//   const functions = require('firebase-functions');
+// const admin = require('firebase-admin');
+// admin.initializeApp();
+
+// exports.sendNotification = functions.https.onCall(async (data, context) => {
+//   const { token, title, body } = data;
+
+//   await admin.messaging().sendToDevice(token, {
+//     notification: {
+//       title,
+//       body,
+//     },
+//   });
+
+//   return { success: true };
+// });
+
+
+
+const sendPushNotification = async (token, title, body) => {
+  const sendNotification = firebase.functions().httpsCallable('sendNotification');
+  try {
+    await sendNotification({ token, title, body });
+    console.log('Push notification sent successfully');
+  } catch (error) {
+    console.error('Error sending push notification', error);
+  }
+};
+
+
+
+
+
+
+
+
+
 
   return (
     <div>

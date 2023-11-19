@@ -7,7 +7,7 @@ module.exports = nextConfig;
 
 module.exports = {
   images: {
-    domains: ["c109-103-197-204-100.ngrok-free.app"],
+    domains: ["http://4.193.55.34:8000"],
   },
   eslint: {
     ignoreDuringBuilds: true,
