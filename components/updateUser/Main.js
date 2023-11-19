@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import Image from "next/image";
 
 const UpdateUser = ({ userEdit, setUserEdit }) => {
-  const { data } = useGetRoleQuery();
+  const { data } = useGetRoleQuery({pagination:0});
   const [createUser, { isLoading, isError, isSuccess, error }] =
     useCreateUserMutation();
 

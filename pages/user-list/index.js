@@ -58,10 +58,16 @@ const UserList = () => {
           <h1 className="font-bold text-[#646C9A] text-center text-[24px] mt-5 mb-5">
             User List
           </h1>
-          <Export setSearch={setSearch} />
+          <Export setSearch={setSearch} expUrl="/users" />
           <CustomTable
             headers={[
-              { key: "name", label: "Name" },
+              {
+                label: "Name",
+                nested: {
+                  name: "name",
+                  avatar: "avatar",
+                },
+              },
               { key: "gender", label: "Gender" },
               { key: "phone", label: "Mobile" },
               { key: "email", label: "Email" },
