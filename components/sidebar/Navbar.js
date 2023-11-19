@@ -6,9 +6,12 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import logo from "../../assets/logo-2.png";
 import UserAction from "./UserAction";
 import Notification from "./Notification";
+import { useGetlogoQuery } from "../../redux/features/generalSetting/generalSettingApi";
 
 const Navbar = ({ mobileView, setMobileView, largeView, setLargeView }) => {
   const [handleUserAction, setHandleUserAction] = useState(false);
+
+  const {data} = useGetlogoQuery()
 
   return (
     <div
@@ -16,10 +19,11 @@ const Navbar = ({ mobileView, setMobileView, largeView, setLargeView }) => {
     >
       <div className="flex items-center">
         <Image
-          src={logo}
+          src={  data?.data ? process.env.NEXT_PUBLIC_IMAGE + data?.data : logo}
           className={`${largeView ? "hidden" : "px-3"} duration-300`}
-          alt=""
+          alt="logo"
           width="160"
+          height={100}
           priority
         />
         <div className="ml-5 flex text-blue-500 cursor-pointer hover:text-blue-900">

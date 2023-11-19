@@ -20,7 +20,7 @@ export const adminNav = [
     id: 2,
     single: false,
     icon: <FiUsers size={18} />,
-    name: "user-setting",
+    name: "User Setting",
     navData: [
       {
         id: 1,
@@ -68,18 +68,19 @@ export const adminNav = [
     navData: [
       {
         id: 1,
+        name: "Survey Report",
+        icon: <TbActivity size={18} />,
+        single: true,
+        href: "/activity-report",
+      },
+      {
+        id: 2,
         name: "Performance Report",
         icon: <FcSalesPerformance size={18} />,
         single: true,
         href: "/performance-report",
       },
-      {
-        id: 2,
-        name: "Activity Report",
-        icon: <TbActivity size={18} />,
-        single: true,
-        href: "/activity-report",
-      },
+     
     ],
   },
   {
@@ -90,17 +91,33 @@ export const adminNav = [
     navData: [
       {
         id: 1,
-        name: "General Setting",
+        name: "General Settings",
         icon: <RiSettings5Line size={18} />,
         single: true,
         href: "/setting/general-setting",
+      }
+      
+    ],
+  },
+  {
+    id: 6,
+    single: false,
+    icon: <RiNotification2Fill size={18} />,
+    name: "Notification",
+    navData: [
+      {
+        id: 1,
+        name: "Survey Notifications",
+        icon: <RiSettings5Line size={18} />,
+        single: true,
+        href: "/notification/survey-notification",
       },
       {
         id: 2,
-        name: "Notification Setting",
+        name: "Push Notification",
         icon: <RiNotification2Fill size={18} />,
         single: true,
-        href: "/setting/notification-setting",
+        href: "/notification/push-notification",
       },
     ],
   },

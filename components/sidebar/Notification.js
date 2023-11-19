@@ -2,13 +2,26 @@ import { Badge } from "@mui/material";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
-import { AiOutlineQuestionCircle } from "react-icons/ai";
+import { BiBellPlus } from "react-icons/bi";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { TbBellRinging } from "react-icons/tb";
 import background from "../../assets/user_bg.jpg";
+import { useGetNotificationQuery, useGetSingleNotificationMutation } from "../../redux/features/notification/notificationApi";
+import moment from "moment";
 
 const Notification = () => {
-  const [notification, setNotification] = useState(false);
+
+
+  const [getSingleNotification] = useGetSingleNotificationMutation()
+
+  const { data } = useGetNotificationQuery({}, {
+    pollingInterval: 120000,
+    refetchOnMountOrArgChange: true,
+    skip: false,
+  });
+
+
+  const [showNotification, setShowNotification] = useState(false);
   const outsideClick = useRef(null);
 
   useEffect(() => {
@@ -17,21 +30,31 @@ const Notification = () => {
 
   const handleOutsideClick = (e) => {
     if (!outsideClick?.current?.contains(e.target)) {
-      setNotification(false);
+      setShowNotification(false);
     }
   };
 
+
+  const notificationDetails = async (notification) => {
+    getSingleNotification({ id: notification.id })
+
+  }
+
+
   return (
     <div className="relative" ref={outsideClick}>
+
       <div
         className="cursor-pointer flex items-center gap-3 px-3 py-1.5 hover:bg-slate-50"
-        onClick={() => setNotification(!notification)}
+        onClick={() => setShowNotification(!showNotification)}
       >
-        <Badge badgeContent={5} color="error" max={99}>
+        <Badge badgeContent={data?.data?.length ?? 0} color="error" max={99}>
           <TbBellRinging size={25} color="action" />
         </Badge>{" "}
       </div>
-      {notification && (
+
+
+      {showNotification && (
         <div
           className={`animate-fade-in-down w-[320px] top-[51px] h-auto lg:right-[-50px] md:right-[-30px] right-[-50px] drop-shadow-lg bg-white rounded-md absolute`}
         >
@@ -46,7 +69,7 @@ const Notification = () => {
             </div>
             <div className="flex gap-2">
               <p className="text-[15px] font-bold text-white">Notifications</p>
-              <p className="text-white bg-[#0ABB87] px-3 py-0.5 rounded">0</p>
+              <p className="text-white bg-[#0ABB87] px-3 py-0.5 rounded">{data?.data?.length ?? 0}</p>
             </div>
           </div>
           <div className="w-[90%] mx-auto flex justify-between mt-2 mb-3">
@@ -57,58 +80,31 @@ const Notification = () => {
               Delete All
             </p>
           </div>
-          <div className="flex items-center text-[13px] justify-between border-b-[1px] px-5 py-3 hover:bg-[#f7f8fa]">
-            <div className="flex items-center gap-3">
-              <AiOutlineQuestionCircle className="text-[#A7ABC3]" size={25} />
-              <div>
-                <p className="text-[rgba(0,0,0,0.5)] font-bold">
-                  Request for Document
-                </p>
-                <p className="text-[#A7ABC3]">2 years ago</p>
-              </div>
-            </div>
-            <MdKeyboardArrowRight className="text-[#A7ABC3]" size={20} />
-          </div>
-          <div className="flex items-center text-[13px] justify-between border-b-[1px] px-5 py-3 hover:bg-[#f7f8fa]">
-            <div className="flex items-center gap-3">
-              <AiOutlineQuestionCircle className="text-[#A7ABC3]" size={25} />
-              <div>
-                <p className="text-[rgba(0,0,0,0.5)] font-bold">
-                  Request for Document
-                </p>
-                <p className="text-[#A7ABC3]">2 years ago</p>
-              </div>
-            </div>
-            <MdKeyboardArrowRight className="text-[#A7ABC3]" size={20} />
-          </div>
-          <div className="mb-5">
-            <div className="flex items-center text-[13px] justify-between border-b-[1px] px-5 py-3 hover:bg-[#f7f8fa]">
+
+
+
+          {data?.data?.map((notification, index) => (
+            <div key={index} className="flex items-center text-[13px] justify-between border-b-[1px] px-5 py-3 hover:bg-[#f7f8fa] cursor-pointer"
+              onClick={() => notificationDetails(notification)}>
               <div className="flex items-center gap-3">
-                <AiOutlineQuestionCircle className="text-[#A7ABC3]" size={25} />
+                <BiBellPlus className="text-[#A7ABC3]" size={25} />
                 <div>
                   <p className="text-[rgba(0,0,0,0.5)] font-bold">
-                    Request for Document
+                    {notification.data.message}
                   </p>
-                  <p className="text-[#A7ABC3]">2 years ago</p>
+                  <p className="text-[#A7ABC3]">{moment(notification.created_at).fromNow()}</p>
                 </div>
               </div>
               <MdKeyboardArrowRight className="text-[#A7ABC3]" size={20} />
             </div>
-            <div className="flex items-center text-[13px] justify-between border-b-[1px] px-5 py-3 hover:bg-[#f7f8fa]">
-              <div className="flex items-center gap-3">
-                <AiOutlineQuestionCircle className="text-[#A7ABC3]" size={25} />
-                <div>
-                  <p className="text-[rgba(0,0,0,0.5)] font-bold">
-                    Request for Document
-                  </p>
-                  <p className="text-[#A7ABC3]">2 years ago</p>
-                </div>
-              </div>
-              <MdKeyboardArrowRight className="text-[#A7ABC3]" size={20} />
-            </div>
-          </div>
+          ))}
+
+
         </div>
       )}
+
+
+
     </div>
   );
 };
