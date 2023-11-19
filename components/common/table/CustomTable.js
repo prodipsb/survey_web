@@ -17,7 +17,7 @@ const CustomTable = ({
 }) => {
   return (
     <div className="mt-5 block overflow-auto">
-      <table className="table-auto w-full text-left text-[13px] overflow-x-auto">
+      <table className="table-auto w-full text-left text-[14px] overflow-x-auto">
         <thead>
           <tr>
             {headers?.map((header, index) => (
@@ -34,7 +34,7 @@ const CustomTable = ({
           {data?.map((tableData, index) => (
             <tr
               key={index}
-              className={`hover:bg-[#F7F8FA] ${
+              className={`hover:bg-[#aeb4c0] ${
                 index % 2 === 0 ? "bg-[#F7F8FA]" : ""
               }`}
             >
@@ -43,16 +43,20 @@ const CustomTable = ({
                   className="border whitespace-nowrap p-3 h-[55px]"
                   key={index}
                 >
-                  {header?.key === "name" ? (
+                  {header?.nested?.name ? (
                     <div className="relative">
-                      {tableData?.avatar && (
+                      {tableData[header?.nested?.avatar] && (
                         <img
                           className="rounded-[50%] h-[40px] w-[40px] absolute top-[-10px]"
-                          src={`${process.env.NEXT_PUBLIC_IMAGE}${tableData?.avatar}`}
+                          src={`${process.env.NEXT_PUBLIC_IMAGE}${
+                            tableData[header?.nested?.avatar]
+                          }`}
                           alt=""
                         />
                       )}
-                      <p className="ml-[55px]">{tableData?.name}</p>
+                      <p className="ml-[55px]">
+                        {tableData[header?.nested?.name]}
+                      </p>
                     </div>
                   ) : (
                     <>

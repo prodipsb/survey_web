@@ -30,7 +30,7 @@ const Main = ({ children }) => {
               ? "lg:w-[21%] 2xl:w-[14%] md:w-[35%] w-[60%]"
               : isHovering
               ? "lg:w-[21%] 2xl:w-[14%] md:w-[35%] w-[60%]"
-              : "w-[6%] 2xl:w-[4%]"
+              : "w-[6%] 2xl:w-[4%] lg:w-auto"
           }h-screen lg:top-[64px] ${
             mobileView
               ? "block top-0 duration-300"

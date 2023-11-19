@@ -19,7 +19,22 @@ const userApi = api.injectEndpoints({
     }),
     getUser: builder.query({
       query: (id) => ({
-        url: `/users?page=${id.page}&&search=${id.search}`,
+        url: `/users?page=${id?.page}${
+          id?.search?.search && "&search=" + id?.search?.search
+        }${
+          id?.search?.start_date &&
+          "&start_date=" +
+            id?.search?.start_date +
+            "&end_date=" +
+            id?.search?.end_date
+        }`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
+    getAllUser: builder.query({
+      query: (id) => ({
+        url: `/all-users`,
         method: "GET",
       }),
       providesTags: ["user"],
@@ -40,4 +55,5 @@ export const {
   useGetSingleUserQuery,
   useGetUserQuery,
   useDeleteUserMutation,
+  useGetAllUserQuery,
 } = userApi;
