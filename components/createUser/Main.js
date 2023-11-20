@@ -82,7 +82,7 @@ const Main = () => {
   return (
     <div>
       <div className="mt-5 w-[90%] mx-auto text-[13px] border-b-blue-300 pb-5">
-        <p className="font-bold text-[#646C9A] text-center text-[24px] mt-5 mb-5">
+        <p className="font-bold text-[#646C9A] text-[24px] mt-5 mb-5">
           User Creation
         </p>
         <form className="mb-5" onSubmit={handleSubmit} ref={formRef}>
@@ -110,7 +110,7 @@ const Main = () => {
               />
               {error && (
                 <p className="text-red-500 mt-1">
-                  {error?.data?.message?.email[0]}
+                  {error?.data?.message?.email?.[0]}
                 </p>
               )}
             </div>
@@ -174,7 +174,7 @@ const Main = () => {
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">Select Supervisor*</p>
               <CommonDropDown
-                optionData={data?.data}
+                optionData={data?.data?.data}
                 defaultOptionValue={formData?.supervisor_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select supervisor"
@@ -186,7 +186,7 @@ const Main = () => {
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">Reporting To*</p>
               <CommonDropDown
-                optionData={data?.data}
+                optionData={data?.data?.data}
                 defaultOptionValue={formData?.reporting_role_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select reporting person"

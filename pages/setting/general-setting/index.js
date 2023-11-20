@@ -73,7 +73,7 @@ const GeneralSetting = () => {
   return (
     <div>
     <div className="mt-5 w-[90%] mx-auto text-[13px] border-b-blue-300 pb-5">
-      <p className="font-bold text-[#646C9A] text-center text-[24px] mt-5 mb-5">
+      <p className="font-bold text-[#646C9A] text-[24px] mt-5 mb-5">
         General Setting
       </p>
       <form className="mb-5" onSubmit={handleSubmit} ref={formRef}>

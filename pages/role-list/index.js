@@ -25,7 +25,7 @@ const RoleList = () => {
   return (
     <div>
       <div className="w-[95%] mx-auto">
-        <h1 className="font-bold text-[#646C9A] text-center text-[24px] mt-5 mb-5">
+        <h1 className="font-bold text-[#646C9A] text-[24px] mt-5 mb-5">
           Role List
         </h1>
         <div className="flex justify-between">
@@ -47,7 +47,7 @@ const RoleList = () => {
             onClick={() => setShowPopup(true)}
             className="py-2 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
           >
-            + Create new Role
+            + Create new
           </button>
         </div>
         <RoleManage values={data?.data?.data} />

@@ -20,7 +20,7 @@ export const adminNav = [
     id: 2,
     single: false,
     icon: <FiUsers size={18} />,
-    name: "User Setting",
+    name: "Users",
     navData: [
       {
         id: 1,
