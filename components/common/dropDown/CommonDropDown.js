@@ -17,7 +17,7 @@ const CommonDropDown = ({
   defaultCreateText,
   required,
 }) => {
-  const [mainData, setMainData] = useState();
+  const [mainData, setMainData] = useState([]);
   const [showOption, setShowOption] = useState(false);
   const [searchInput, setsearchInput] = useState();
   const [selectedOption, setSelectedOption] = useState();

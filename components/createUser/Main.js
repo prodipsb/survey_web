@@ -26,6 +26,7 @@ const Main = () => {
   const formRef = useRef();
 
   const { data } = useGetRoleQuery({pagination:0});
+  // console.log('user role', data)
   const [createUser, { isLoading, isError, isSuccess, error }] =
     useCreateUserMutation();
 
@@ -159,7 +160,7 @@ const Main = () => {
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">Select Role*</p>
               <CommonDropDown
-                optionData={data?.data}
+                optionData={data?.data?.data}
                 defaultOptionValue={formData?.role_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select a Role"
