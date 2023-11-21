@@ -3,6 +3,7 @@ import CommonDropDown from "../common/dropDown/CommonDropDown";
 import { useGetRoleQuery } from "../../redux/features/role/roleApi";
 import { useCreateUserMutation } from "../../redux/features/user/userApi";
 import toast from "react-hot-toast";
+import { IoIosEyeOff, IoMdEye } from "react-icons/io";
 
 const Main = () => {
   const [formData, setFormData] = useState({
@@ -23,10 +24,12 @@ const Main = () => {
     status: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const formRef = useRef();
 
-  const { data } = useGetRoleQuery({pagination:0});
-  // console.log('user role', data)
+  const { data } = useGetRoleQuery({ pagination: 0 });
+
   const [createUser, { isLoading, isError, isSuccess, error }] =
     useCreateUserMutation();
 
@@ -82,7 +85,7 @@ const Main = () => {
   return (
     <div>
       <div className="mt-5 w-[90%] mx-auto text-[13px] border-b-blue-300 pb-5">
-        <p className="font-bold text-[#646C9A] text-[24px] mt-5 mb-5">
+        <p className="font-bold text-[#646C9A] text-[24px] text-center mt-5 mb-5">
           User Creation
         </p>
         <form className="mb-5" onSubmit={handleSubmit} ref={formRef}>
@@ -110,23 +113,38 @@ const Main = () => {
               />
               {error && (
                 <p className="text-red-500 mt-1">
-                  {error?.data?.message?.email?.[0]}
+                  {error?.data?.message?.email?.[0] &&
+                    error?.data?.message?.email?.[0]}
                 </p>
               )}
             </div>
-            <div className="mb-5 w-full">
+            <div className="mb-5 w-full relative">
               <p className="mb-2 text-[#646C9A]">User Password*</p>
               <input
                 className={inputStyle}
-                type="text"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 required
                 placeholder="User password"
                 onChange={handleInputChange}
               />
+              {showPassword ? (
+                <IoIosEyeOff
+                  size={20}
+                  className="absolute right-3 top-10"
+                  onClick={() => setShowPassword(false)}
+                />
+              ) : (
+                <IoMdEye
+                  size={20}
+                  className="absolute right-3 top-10"
+                  onClick={() => setShowPassword(true)}
+                />
+              )}
               {error && (
                 <p className="text-red-500 mt-1">
-                  {error?.data?.message?.password[0]}
+                  {error?.data?.message?.password[0] &&
+                    error?.data?.message?.password[0]}
                 </p>
               )}
             </div>
@@ -172,31 +190,31 @@ const Main = () => {
           </div>
           <div className="md:flex lg:flex gap-10">
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Select Supervisor*</p>
+              <p className="mb-2 text-[#646C9A]">Select Supervisor</p>
               <CommonDropDown
                 optionData={data?.data?.data}
                 defaultOptionValue={formData?.supervisor_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select supervisor"
                 setFormData={setFormData}
-                required={true}
+                required={false}
                 name="supervisor_id"
               />
             </div>
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Reporting To*</p>
+              <p className="mb-2 text-[#646C9A]">Reporting To</p>
               <CommonDropDown
                 optionData={data?.data?.data}
                 defaultOptionValue={formData?.reporting_role_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select reporting person"
                 setFormData={setFormData}
-                required={true}
+                required={false}
                 name="reporting_role_id"
               />
             </div>
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">User City Name*</p>
+              <p className="mb-2 text-[#646C9A]">User City*</p>
               <input
                 className={inputStyle}
                 type="text"
@@ -209,7 +227,7 @@ const Main = () => {
           </div>
           <div className="md:flex lg:flex gap-10">
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">User Division Name*</p>
+              <p className="mb-2 text-[#646C9A]">User Division*</p>
               <input
                 className={inputStyle}
                 type="text"
@@ -268,7 +286,7 @@ const Main = () => {
               />
             </div>
             <div className="mb-5 w-full">
-              <p className="mb-2 text-[#646C9A]">User Image*</p>
+              <p className="mb-2 text-[#646C9A]">User Image</p>
               <input
                 className="relative bg-white m-0 block w-full min-w-0 flex-auto rounded-md border border-solid border-gray-300 bg-clip-padding py-2 px-3 text-base font-normal text-[#AFABC3] transition duration-300 ease-in-out file:-mx-3 file:-my-2 file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-2 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-primary focus:border-blue-300"
                 type="file"

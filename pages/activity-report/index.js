@@ -32,7 +32,7 @@ const ActivityReport = () => {
         <ViewActivityReport viewData={viewData} setViewData={setViewData} />
       ) : (
         <div className="w-[95%] mx-auto">
-          <h1 className="font-bold text-[#646C9A] text-[24px] mt-5 mb-5">
+          <h1 className="font-bold text-[#646C9A] text-[24px] text-center mt-5 mb-5">
             Survey Report
           </h1>
           <Export setSearch={setSearch} expUrl="/master-report" />

@@ -101,7 +101,7 @@ const SetPermission = ({ permissionData, setPermisionData }) => {
                 />
               </svg>
             )}
-            {isLoading ? "Loading" : "Set Role"}
+            {isLoading ? "Loading" : "Set Permission"}
           </button>
         </form>
       </div>

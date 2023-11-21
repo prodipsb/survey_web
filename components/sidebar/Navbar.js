@@ -11,7 +11,7 @@ import { useGetlogoQuery } from "../../redux/features/generalSetting/generalSett
 const Navbar = ({ mobileView, setMobileView, largeView, setLargeView }) => {
   const [handleUserAction, setHandleUserAction] = useState(false);
 
-  const {data} = useGetlogoQuery()
+  const { data } = useGetlogoQuery();
 
   return (
     <div
@@ -19,7 +19,7 @@ const Navbar = ({ mobileView, setMobileView, largeView, setLargeView }) => {
     >
       <div className="flex items-center">
         <Image
-          src={  data?.data ? process.env.NEXT_PUBLIC_IMAGE + data?.data : logo}
+          src={data?.data ? process.env.NEXT_PUBLIC_IMAGE + data?.data : logo}
           className={`${largeView ? "hidden" : "px-3"} duration-300`}
           alt="logo"
           width="160"

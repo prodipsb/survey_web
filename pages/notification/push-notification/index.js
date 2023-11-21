@@ -6,39 +6,29 @@ import toast from "react-hot-toast";
 import AuthCheck from "../../../components/authCheck/AuthCheck";
 
 const GeneralSetting = () => {
-
   const [formData, setFormData] = useState({
     website_title: "",
     address: "",
     about: "",
     logo: "",
-    favicon: null
+    favicon: null,
   });
 
   const formRef = useRef();
 
-
-  const {data} = useGetGeneralSettingQuery();
-  console.log('general setting', data)
-  
+  const { data } = useGetGeneralSettingQuery();
 
   const [createGeneralSetting, { isLoading, isError, isSuccess, error }] =
-  useCreateGeneralSettingMutation();
+    useCreateGeneralSettingMutation();
 
   const inputStyle =
     "border border-[#e2e5ec] outline-none focus:border-blue-300 placeholder:text-[#AFABC3] text-sm text-black rounded-md w-full p-2.5 bg-white";
 
-
-
-    useEffect(() => {
-      setFormData(data?.data)
-    
-     
-    }, [data])
-    
-
-
-
+  useEffect(() => {
+    if (data) {
+      setFormData(data?.data);
+    }
+  }, [data]);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -71,8 +61,7 @@ const GeneralSetting = () => {
   }, [isSuccess, isError]);
 
   return (
-    <div>
-    <div className="mt-5 w-[90%] mx-auto text-[13px] border-b-blue-300 pb-5">
+    <div className="mt-5 w-[90%] lg:w-[40%] md:w-[60%] mx-auto text-[13px] border-b-blue-300 pb-5">
       <p className="font-bold text-[#646C9A] text-center text-[24px] mt-5 mb-5">
         Push Notification
       </p>
@@ -85,7 +74,7 @@ const GeneralSetting = () => {
               type="text"
               name="website_title"
               required
-              value={formData?.website_title}
+              // value={formData?.website_title}
               placeholder="Example: website"
               onChange={handleInputChange}
             />
@@ -96,7 +85,7 @@ const GeneralSetting = () => {
               className={inputStyle}
               type="text"
               name="address"
-              value={formData?.address}
+              // value={formData?.address}
               placeholder="Example: address"
               onChange={handleInputChange}
             />
@@ -106,7 +95,6 @@ const GeneralSetting = () => {
               </p>
             )}
           </div>
-
           <div className="w-full mb-5">
             <p className="mb-2 text-[#646C9A]">Message</p>
             <textarea
@@ -114,15 +102,12 @@ const GeneralSetting = () => {
               type="text"
               rows={3}
               name="about"
-              value={formData?.about}
+              // value={formData?.about}
               placeholder="Example: user information"
               onChange={handleInputChange}
             />
           </div>
-        
         </div>
-      
-      
         <div className="flex justify-center mt-5">
           <button
             disabled={isLoading}
@@ -134,7 +119,6 @@ const GeneralSetting = () => {
         </div>
       </form>
     </div>
-  </div>
   );
 };
 

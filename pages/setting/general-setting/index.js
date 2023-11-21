@@ -6,39 +6,29 @@ import toast from "react-hot-toast";
 import AuthCheck from "../../../components/authCheck/AuthCheck";
 
 const GeneralSetting = () => {
-
   const [formData, setFormData] = useState({
     website_title: "",
     address: "",
     about: "",
     logo: "",
-    favicon: null
+    favicon: null,
   });
 
   const formRef = useRef();
 
-
-  const {data} = useGetGeneralSettingQuery();
-  console.log('general setting', data)
-  
+  const { data } = useGetGeneralSettingQuery();
 
   const [createGeneralSetting, { isLoading, isError, isSuccess, error }] =
-  useCreateGeneralSettingMutation();
+    useCreateGeneralSettingMutation();
 
   const inputStyle =
     "border border-[#e2e5ec] outline-none focus:border-blue-300 placeholder:text-[#AFABC3] text-sm text-black rounded-md w-full p-2.5 bg-white";
 
-
-
-    useEffect(() => {
-      setFormData(data?.data)
-    
-     
-    }, [data])
-    
-
-
-
+  useEffect(() => {
+    if (data) {
+      setFormData(data?.data);
+    }
+  }, [data]);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -71,9 +61,8 @@ const GeneralSetting = () => {
   }, [isSuccess, isError]);
 
   return (
-    <div>
-    <div className="mt-5 w-[90%] mx-auto text-[13px] border-b-blue-300 pb-5">
-      <p className="font-bold text-[#646C9A] text-[24px] mt-5 mb-5">
+    <div className="mt-5 lg:w-[40%] w-[90%] md:w-[60%] mx-auto text-[13px] border-b-blue-300 pb-5">
+      <p className="font-bold text-[#646C9A] text-[24px] text-center mt-5 mb-5">
         General Setting
       </p>
       <form className="mb-5" onSubmit={handleSubmit} ref={formRef}>
@@ -106,7 +95,6 @@ const GeneralSetting = () => {
               </p>
             )}
           </div>
-
           <div className="w-full mb-5">
             <p className="mb-2 text-[#646C9A]">About</p>
             <textarea
@@ -119,7 +107,6 @@ const GeneralSetting = () => {
               onChange={handleInputChange}
             />
           </div>
-
           <div className="mb-5 w-full">
             <p className="mb-2 text-[#646C9A]"> Logo</p>
             <input
@@ -129,18 +116,6 @@ const GeneralSetting = () => {
               onChange={handleInputChange}
             />
           </div>
-
-
-          {/* {formData?.logo && (
-             <Image
-              src={`${process.env.NEXT_PUBLIC_IMAGE}${formData?.logo}`}
-              alt="logo"
-              quality={100}
-              width={200}
-              height={200}
-            />
-          )} */}
-
           <div className="mb-5 w-full">
             <p className="mb-2 text-[#646C9A]"> Favicon</p>
             <input
@@ -150,21 +125,7 @@ const GeneralSetting = () => {
               onChange={handleInputChange}
             />
           </div>
-
-          {/* {formData?.favicon && (
-             <Image
-              src={`${process.env.NEXT_PUBLIC_IMAGE}${formData?.favicon}`}
-              alt="favicon"
-              quality={100}
-              width={32}
-              height={32}
-            />
-          )} */}
-
-        
         </div>
-      
-      
         <div className="flex justify-center mt-5">
           <button
             disabled={isLoading}
@@ -176,7 +137,6 @@ const GeneralSetting = () => {
         </div>
       </form>
     </div>
-  </div>
   );
 };
 

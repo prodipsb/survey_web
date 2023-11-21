@@ -29,8 +29,8 @@ const CommonDropDown = ({
     if (defaultOptionValue) {
       const findText = optionData?.find(
         (data) => data?.id === defaultOptionValue
-      )[defaultOptionLabel];
-      setPrimaryText(findText);
+      );
+      setPrimaryText(findText?.name);
     } else {
       setPrimaryText(defaultCreateText);
       setSelectedOption("");
