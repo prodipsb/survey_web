@@ -1,22 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
-import CommonDropDown from "../common/dropDown/CommonDropDown";
-import { useGetRoleQuery } from "../../redux/features/role/roleApi";
+import React, { useEffect } from "react";
 import { useCreateUserMutation } from "../../redux/features/user/userApi";
 import toast from "react-hot-toast";
 import Image from "next/image";
 
-const UpdateUser = ({ userEdit, setUserEdit }) => {
-  const { data } = useGetRoleQuery({ pagination: 0 });
-  const [createUser, { isLoading, isError, isSuccess, error }] =
-    useCreateUserMutation();
+const UserProfileEdit = ({ update, setUpdate }) => {
+  const [createUser, { isLoading, isSuccess, error }] = useCreateUserMutation();
 
   const inputStyle =
     "border border-[#e2e5ec] outline-none focus:border-blue-300 placeholder:text-[#AFABC3] text-sm text-black rounded-md w-full p-2.5 bg-white";
 
   const handleInputChange = (e) => {
-    setUserEdit({
-      ...userEdit,
+    setUpdate({
+      ...update,
       [e.target.name]:
         e.target.type === "file" ? e.target.files[0] : e.target.value,
     });
@@ -25,33 +21,35 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formdata = new FormData();
-    Object.keys(userEdit).forEach((key) => {
-      const value = userEdit[key];
-      formdata.append(key, value);
+    Object.keys(update).forEach((key) => {
+      if (key !== "role") {
+        const value = update[key];
+        formdata.append(key, value);
+      }
     });
     createUser(formdata);
   };
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Data successfully updated!");
-      setUserEdit(null);
+      toast.success("Profile successfully updated!");
+      setUpdate(null);
     }
 
-    if (isError) {
-      toast.error("Something went wrong...");
+    if (error) {
+      toast.error(error?.data?.message);
     }
-  }, [isSuccess, isError]);
+  }, [isSuccess, error]);
 
   return (
     <div>
       <div className="mt-5 w-[90%] mx-auto text-[13px] border-b-blue-300 pb-5">
-        {userEdit?.avatar && (
+        {update?.avatar && (
           <Image
             src={
-              typeof userEdit?.avatar === "string"
-                ? `${process.env.NEXT_PUBLIC_IMAGE + userEdit?.avatar}`
-                : URL.createObjectURL(userEdit?.avatar)
+              typeof update?.avatar === "string"
+                ? `${process.env.NEXT_PUBLIC_IMAGE + update?.avatar}`
+                : URL.createObjectURL(update?.avatar)
             }
             alt=""
             height={150}
@@ -60,7 +58,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
           />
         )}
         <p className="font-bold text-[#646C9A] text-center text-[24px] mt-5 mb-5">
-          User Update
+          Profile Update
         </p>
         <form className="mb-5" onSubmit={handleSubmit}>
           <div className="md:flex lg:flex gap-10">
@@ -70,7 +68,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
                 className={inputStyle}
                 type="text"
                 name="name"
-                value={userEdit?.name}
+                value={update?.name}
                 required
                 placeholder="Example: John Doe"
                 onChange={handleInputChange}
@@ -83,7 +81,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
                 type="email"
                 name="email"
                 readOnly
-                value={userEdit?.email}
+                value={update?.email}
                 required
                 placeholder="Example: user@gmail.com"
                 onChange={handleInputChange}
@@ -95,7 +93,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
                 className={inputStyle}
                 type="text"
                 name="phone"
-                value={userEdit?.phone}
+                value={update?.phone}
                 required
                 placeholder="Example: 01XXXXXXXXX"
                 onChange={handleInputChange}
@@ -107,7 +105,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
               <p className="mb-2 text-[#646C9A]">Gender*</p>
               <select
                 className={inputStyle}
-                value={userEdit?.gender}
+                value={update?.gender}
                 required
                 name="gender"
                 onChange={handleInputChange}
@@ -119,50 +117,12 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
               </select>
             </div>
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Select Role*</p>
-              <CommonDropDown
-                optionData={data?.data?.data}
-                defaultOptionValue={userEdit?.role_id}
-                defaultOptionLabel="name"
-                defaultCreateText="Select a Role"
-                setUserEdit={setUserEdit}
-                required={true}
-                name="role_id"
-              />
-            </div>
-            <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Select Supervisor</p>
-              <CommonDropDown
-                optionData={data?.data?.data}
-                defaultOptionValue={userEdit?.supervisor_id}
-                defaultOptionLabel="name"
-                defaultCreateText="Select supervisor"
-                setUserEdit={setUserEdit}
-                required={true}
-                name="supervisor_id"
-              />
-            </div>
-          </div>
-          <div className="md:flex lg:flex gap-10">
-            <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Reporting To</p>
-              <CommonDropDown
-                optionData={data?.data?.data}
-                defaultOptionValue={userEdit?.reporting_role_id}
-                defaultOptionLabel="name"
-                defaultCreateText="Select reporting person"
-                setUserEdit={setUserEdit}
-                required={true}
-                name="reporting_role_id"
-              />
-            </div>
-            <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">User City*</p>
               <input
                 className={inputStyle}
                 type="text"
                 name="city"
-                value={userEdit?.city}
+                value={update?.city}
                 required
                 placeholder="Example: Dhaka"
                 onChange={handleInputChange}
@@ -174,7 +134,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
                 className={inputStyle}
                 type="text"
                 name="division"
-                value={userEdit?.division}
+                value={update?.division}
                 required
                 placeholder="Example: Dhaka"
                 onChange={handleInputChange}
@@ -188,25 +148,11 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
                 className={inputStyle}
                 type="text"
                 name="location"
-                value={userEdit?.location}
+                value={update?.location}
                 required
                 placeholder="Example: Dhaka"
                 onChange={handleInputChange}
               />
-            </div>
-            <div className="mb-5 w-full">
-              <p className="mb-2 text-[#646C9A]">User Status*</p>
-              <select
-                className={inputStyle}
-                required
-                name="status"
-                value={userEdit?.status}
-                onChange={handleInputChange}
-              >
-                <option value="">Select status</option>
-                <option value="male">Active</option>
-                <option value="female">Inactive</option>
-              </select>
             </div>
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">User Bio*</p>
@@ -214,23 +160,10 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
                 className={inputStyle}
                 type="text"
                 rows={1}
-                value={userEdit?.bio}
+                value={update?.bio}
                 name="bio"
                 required
                 placeholder="Example: user information"
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-          <div className="md:flex lg:flex gap-10">
-            <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Join Date*</p>
-              <input
-                className={inputStyle}
-                type="date"
-                name="date_of_joining"
-                value={userEdit?.date_of_joining}
-                required
                 onChange={handleInputChange}
               />
             </div>
@@ -243,13 +176,12 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
                 onChange={handleInputChange}
               />
             </div>
-            <div className="mb-5 w-full"></div>
           </div>
           <div className="flex justify-center gap-3 mt-5">
             <button
               disabled={isLoading}
               type="buton"
-              onClick={() => setUserEdit(null)}
+              onClick={() => setUpdate(null)}
               className="bg-white border-blue-500 border px-8 py-2 rounded-md text-black hover:bg-blue-500 hover:text-white"
             >
               Cancel
@@ -259,7 +191,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
               type="submit"
               className="bg-white border-blue-500 border px-8 py-2 rounded-md text-black hover:bg-blue-500 hover:text-white"
             >
-              {isLoading ? "Loading..." : "Submit"}
+              {isLoading ? "Loading..." : "Update"}
             </button>
           </div>
         </form>
@@ -267,4 +199,5 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
     </div>
   );
 };
-export default UpdateUser;
+
+export default UserProfileEdit;

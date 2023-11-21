@@ -7,7 +7,7 @@ module.exports = nextConfig;
 
 module.exports = {
   images: {
-    domains: ["4.193.55.34:8000"],
+    domains: ["4.193.55.34"],
   },
   eslint: {
     ignoreDuringBuilds: true,

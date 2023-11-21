@@ -18,7 +18,7 @@ const LoginForm = ({ setForgotPassword }) => {
     password: "",
     login_mode: "web login",
   });
-  const [loginUser, { data }] = useLoginUserMutation();
+  const [loginUser, { data, error }] = useLoginUserMutation();
 
   const handleChange = (e) => {
     const newData = { ...signinData };
@@ -39,7 +39,10 @@ const LoginForm = ({ setForgotPassword }) => {
     if (data?.email || data?.password) {
       toast.error("Credential missmatch...");
     }
-  }, [data]);
+    if (error) {
+      toast.error(error?.data?.message);
+    }
+  }, [data, error]);
 
   return (
     <div>

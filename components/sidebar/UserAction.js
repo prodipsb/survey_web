@@ -1,11 +1,20 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import background from "../../assets/user_bg.jpg";
 import Image from "next/image";
+import { useLogoutUserMutation } from "../../redux/features/login/loginApi";
+import { useDispatch } from "react-redux";
+import { userLogout } from "../../redux/features/login/loginSlice";
+import { useUserProfileQuery } from "../../redux/features/user/userApi";
+import Link from "next/link";
 
 const UserAction = () => {
   const [showUserAction, setShowUserAction] = useState(false);
   const outsideClick = useRef(null);
+  const [logoutUser, { data }] = useLogoutUserMutation();
+  const { data: userData } = useUserProfileQuery();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     document.addEventListener("click", handleOutsideClick, true);
@@ -17,6 +26,16 @@ const UserAction = () => {
     }
   };
 
+  const handleLogout = () => {
+    logoutUser();
+  };
+
+  useEffect(() => {
+    if (data) {
+      dispatch(userLogout());
+    }
+  }, [data]);
+
   return (
     <div className="relative" ref={outsideClick}>
       <div
@@ -24,9 +43,20 @@ const UserAction = () => {
         onClick={() => setShowUserAction(!showUserAction)}
       >
         <p className="text-[13px] hidden lg:block">
-          Hi, <span className="ml-2">Admin</span>
+          Hi, <span className="ml-2">{userData?.data?.name}</span>
         </p>
-        <FaUserCircle size={30} />
+        {userData ? (
+          <Image
+            src={process.env.NEXT_PUBLIC_IMAGE + userData?.data?.avatar}
+            alt=""
+            width={32}
+            height={32}
+            priority
+            className="rounded-full"
+          />
+        ) : (
+          <FaUserCircle size={30} />
+        )}
       </div>
       {showUserAction && (
         <div
@@ -41,10 +71,27 @@ const UserAction = () => {
                 quality={100}
               />
             </div>
-            <div className="w-[90%] mx-auto flex items-center gap-3 h-full">
-              <FaUserCircle size={35} />
-              <p className="text-[15px] font-bold text-white">Admin</p>
-            </div>
+            <Link
+              href={"/profile"}
+              onClick={() => setShowUserAction(false)}
+              className="w-[90%] mx-auto flex items-center gap-3 h-full"
+            >
+              {userData ? (
+                <Image
+                  src={process.env.NEXT_PUBLIC_IMAGE + userData?.data?.avatar}
+                  alt=""
+                  width={80}
+                  height={80}
+                  priority
+                  className="rounded-full"
+                />
+              ) : (
+                <FaUserCircle size={30} />
+              )}
+              <p className="text-[15px] font-bold text-white">
+                {userData?.data?.name}
+              </p>
+            </Link>
           </div>
           <div className="border-b-[1px]">
             <div className="w-[90%] mx-auto">
@@ -53,7 +100,10 @@ const UserAction = () => {
               </p>
             </div>
           </div>
-          <button className="mx-[5%] my-6 text-[12px] bg-[rgba(45,189,182,0.1)] text-[#2DBDB6] font-bold px-4 py-2 rounded-sm hover:bg-[#2dbdb6] hover:text-white">
+          <button
+            onClick={handleLogout}
+            className="mx-[5%] my-6 text-[12px] bg-[rgba(45,189,182,0.1)] text-[#2DBDB6] font-bold px-4 py-2 rounded-sm hover:bg-[#2dbdb6] hover:text-white"
+          >
             Logout
           </button>
         </div>

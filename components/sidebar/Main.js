@@ -42,6 +42,7 @@ const Main = ({ children }) => {
               src={background}
               alt="background"
               className="h-screen w-screen"
+              priority
               quality={100}
             />
           </div>

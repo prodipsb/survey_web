@@ -4,13 +4,16 @@ import CustomTable from "../../../components/common/table/CustomTable";
 import { Pagination } from "@mui/material";
 import Swal from "sweetalert2";
 
-import { useDeleteNotificationMutation, useGetAllNotificationQuery } from "../../../redux/features/notification/notificationApi";
+import {
+  useDeleteNotificationMutation,
+  useGetAllNotificationQuery,
+} from "../../../redux/features/notification/notificationApi";
 import ViewNotification from "../../../components/viewNotification/Main";
 
 const UserList = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
-  const {data} = useGetAllNotificationQuery({ page: page, search: search })
+  const { data } = useGetAllNotificationQuery({ page: page, search: search });
   const [viewUserNotification, setViewUserNotification] = useState(null);
   const [deleteNotification] = useDeleteNotificationMutation();
 
@@ -20,7 +23,7 @@ const UserList = () => {
     if (name === "view") {
       setViewUserNotification(data);
     }
-   
+
     if (name === "delete") {
       Swal.fire({
         title: "Are you sure?",
@@ -45,10 +48,13 @@ const UserList = () => {
   return (
     <>
       {viewUserNotification ? (
-        <ViewNotification viewUserNotification={viewUserNotification} setViewUserNotification={setViewUserNotification}/>
+        <ViewNotification
+          viewUserNotification={viewUserNotification}
+          setViewUserNotification={setViewUserNotification}
+        />
       ) : (
         <div className="w-[95%] mx-auto">
-          <h1 className="font-bold text-[#646C9A] text-[24px] mt-5 mb-5">
+          <h1 className="font-bold text-[#646C9A] text-[24px] text-center mt-5 mb-5">
             Notification List
           </h1>
           <div className="flex gap-3">
@@ -72,7 +78,7 @@ const UserList = () => {
               { key: "message", label: "Message" },
               { key: "read", label: "Read" },
               { key: "read_at", label: "Read At" },
-           
+
               { key: "action", label: "Action" },
             ]}
             data={data?.data}
