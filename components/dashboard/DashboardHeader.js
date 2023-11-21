@@ -3,7 +3,8 @@ import HeaderCard from "./HeaderCard";
 import Image from "next/image";
 import background from "../../assets/sidebar.jpg";
 
-function DashboardHeader() {
+function DashboardHeader({userStats}) {
+
   const preview = [
     { name: "Activity Officer", count: 1216 },
     { name: "Supervisor", count: 24 },
@@ -20,7 +21,7 @@ function DashboardHeader() {
           quality={100}
         />
       </div>
-      <HeaderCard preview={preview} />
+      <HeaderCard preview={userStats} />
     </div>
   );
 }

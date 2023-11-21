@@ -7,7 +7,7 @@ function Main() {
   const { data } = useGetdashboardQuery();
   return (
     <div>
-      <DashboardHeader />
+      <DashboardHeader userStats={data?.data?.userStats}/>
       <div className="lg:w-[95%] 2xl:w-[90%] mx-auto md:w-[90%] mt-10 flex md:flex-col lg:flex-row flex-col gap-10">
         <div className="w-[100%]">
           <DashboardBody

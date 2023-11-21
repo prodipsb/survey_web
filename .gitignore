@@ -19,6 +19,10 @@
 .DS_Store
 *.pem
 
+.env.local
+
+next.config.js
+
 # debug
 npm-debug.log*
 yarn-debug.log*
