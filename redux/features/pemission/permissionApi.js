@@ -42,6 +42,14 @@ const permissionApi = api.injectEndpoints({
       }),
       invalidatesTags: ["permission"],
     }),
+    removeUserPermission: builder.mutation({
+      query: (data) => ({
+        url: `role/remove-permissions`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["permission"],
+    }),
   }),
 });
 
@@ -51,4 +59,5 @@ export const {
   useDeletePermissionMutation,
   usePermissionByRoleQuery,
   useSetUserPermissionMutation,
+  useRemoveUserPermissionMutation,
 } = permissionApi;

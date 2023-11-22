@@ -21,14 +21,14 @@ const RoleList = () => {
   const handleChange = (event, value) => {
     setPage(value);
   };
-  console.log(data?.data);
+
   return (
     <div>
       <div className="w-[95%] mx-auto">
         <h1 className="font-bold text-[#646C9A] text-[24px] text-center mt-5 mb-5">
           Role List
         </h1>
-        <div className="flex justify-between">
+        <div className="flex justify-between flex-wrap gap-y-2">
           <div className="flex gap-3">
             <input
               type="text"
@@ -52,7 +52,7 @@ const RoleList = () => {
             </button>
           )}
         </div>
-        <RoleManage values={data?.data?.data?.data} />
+        <RoleManage values={data?.data} />
         <div className="flex lg:justify-between md:justify-between lg:flex-row md:flex-row flex-col items-center gap-y-5 mt-5 pb-5">
           <Pagination
             count={data?.data?.data?.last_page}

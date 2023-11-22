@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import {
   usePermissionByRoleQuery,
-  useSetUserPermissionMutation,
+  useRemoveUserPermissionMutation,
 } from "../../redux/features/pemission/permissionApi";
 
 const RemovePermission = ({
@@ -13,9 +13,8 @@ const RemovePermission = ({
 }) => {
   const [permission, setPermission] = useState([]);
   const { data } = usePermissionByRoleQuery(removePermissionData?.id);
-
-  const [setUserPermission, { isLoading, isSuccess }] =
-    useSetUserPermissionMutation();
+  const [removeUserPermission, { isLoading, isSuccess }] =
+    useRemoveUserPermissionMutation();
 
   const outsideClick = useRef();
 
@@ -47,10 +46,18 @@ const RemovePermission = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const permission_Id = permission.map((item) => item.id);
-    setUserPermission({
+    const allpermission = Object?.entries(data?.data).map(([id, name]) => ({
+      id: parseInt(id),
+      name,
+    }));
+
+    const removePermission = allpermission
+      .filter((itemA) => !permission.some((itemB) => itemA.id === itemB.id))
+      .map((missingItem) => missingItem.id);
+
+    removeUserPermission({
       role_id: removePermissionData?.id,
-      permissions: permission_Id,
+      permissions: removePermission,
     });
   };
 
@@ -67,15 +74,18 @@ const RemovePermission = ({
           className="flex flex-col items-center h-full mt-10"
         >
           <p className="text-[#646C9A] text-[18px] mt-5">
-            Permission for: {removePermissionData?.name}
+            Permission Remove for: {removePermissionData?.name}
           </p>
           <div className="w-full p-3">
             <p className="text-[16px] mb-2 ml-1">Select permission</p>
             <Multiselect
-              options={data && Object?.entries(data?.data).map(([id, name]) => ({
-                id: parseInt(id),
-                name,
-              }))}
+              options={
+                data &&
+                Object?.entries(data?.data).map(([id, name]) => ({
+                  id: parseInt(id),
+                  name,
+                }))
+              }
               selectedValues={permission}
               onSelect={setPermission}
               onRemove={setPermission}
