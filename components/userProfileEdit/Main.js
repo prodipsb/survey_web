@@ -22,10 +22,8 @@ const UserProfileEdit = ({ update, setUpdate }) => {
     e.preventDefault();
     const formdata = new FormData();
     Object.keys(update).forEach((key) => {
-      if (key !== "role") {
-        const value = update[key];
-        formdata.append(key, value);
-      }
+      const value = update[key];
+      formdata.append(key, value);
     });
     createUser(formdata);
   };
@@ -155,20 +153,19 @@ const UserProfileEdit = ({ update, setUpdate }) => {
               />
             </div>
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">User Bio*</p>
+              <p className="mb-2 text-[#646C9A]">User Bio</p>
               <textarea
                 className={inputStyle}
                 type="text"
                 rows={1}
                 value={update?.bio}
                 name="bio"
-                required
                 placeholder="Example: user information"
                 onChange={handleInputChange}
               />
             </div>
             <div className="mb-5 w-full">
-              <p className="mb-2 text-[#646C9A]">User Image*</p>
+              <p className="mb-2 text-[#646C9A]">User Image</p>
               <input
                 className="relative bg-white m-0 block w-full min-w-0 flex-auto rounded-md border border-solid border-gray-300 bg-clip-padding py-2 px-3 text-base font-normal text-[#AFABC3] transition duration-300 ease-in-out file:-mx-3 file:-my-2 file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-2 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-primary focus:border-blue-300"
                 type="file"

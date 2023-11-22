@@ -79,13 +79,13 @@ const PermissionList = () => {
             { key: "name", label: "Permission Name" },
             { key: "action", label: "Action" },
           ]}
-          data={data?.data?.data}
+          data={data?.data?.data?.data}
           deleteData={true}
           click={handleClick}
         />
         <div className="flex lg:justify-between md:justify-between lg:flex-row md:flex-row flex-col items-center gap-y-5 mt-5 pb-5">
           <Pagination
-            count={data?.data?.last_page}
+            count={data?.data?.data?.last_page}
             page={page}
             shape={"rounded"}
             onChange={handleChange}

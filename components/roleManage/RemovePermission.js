@@ -3,29 +3,31 @@ import Multiselect from "multiselect-react-dropdown";
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import {
-  useGetPermissionQuery,
   usePermissionByRoleQuery,
   useSetUserPermissionMutation,
 } from "../../redux/features/pemission/permissionApi";
 
-const SetPermission = ({ permissionData, setPermissionData }) => {
+const RemovePermission = ({
+  removePermissionData,
+  setRemovePermissionData,
+}) => {
   const [permission, setPermission] = useState([]);
-  const { data } = useGetPermissionQuery({ pagination: 0 });
-  const { data: rolePermissionData } = usePermissionByRoleQuery(
-    permissionData?.id
-  );
+  const { data } = usePermissionByRoleQuery(removePermissionData?.id);
+
   const [setUserPermission, { isLoading, isSuccess }] =
     useSetUserPermissionMutation();
+
   const outsideClick = useRef();
 
   useEffect(() => {
-    if (rolePermissionData) {
-      const dataArray = Object?.entries(rolePermissionData?.data).map(
-        ([id, name]) => ({ id: parseInt(id), name })
-      );
+    if (data) {
+      const dataArray = Object?.entries(data?.data).map(([id, name]) => ({
+        id: parseInt(id),
+        name,
+      }));
       setPermission(dataArray);
     }
-  }, [rolePermissionData]);
+  }, [data]);
 
   useEffect(() => {
     document.addEventListener("click", handleOutsideClick, true);
@@ -33,13 +35,13 @@ const SetPermission = ({ permissionData, setPermissionData }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      setPermissionData(null);
+      setRemovePermissionData(null);
     }
   }, [isSuccess]);
 
   const handleOutsideClick = (e) => {
     if (outsideClick?.current && !outsideClick?.current?.contains(e.target)) {
-      setPermissionData(null);
+      setRemovePermissionData(null);
     }
   };
 
@@ -47,7 +49,7 @@ const SetPermission = ({ permissionData, setPermissionData }) => {
     e.preventDefault();
     const permission_Id = permission.map((item) => item.id);
     setUserPermission({
-      role_id: permissionData?.id,
+      role_id: removePermissionData?.id,
       permissions: permission_Id,
     });
   };
@@ -57,7 +59,7 @@ const SetPermission = ({ permissionData, setPermissionData }) => {
       <div className="h-[500px] w-[90%] md:w-[50%] lg:w-[30%] drop-shadow-lg bg-white rounded-md fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
         <AiOutlineCloseCircle
           className="absolute top-[-10px] right-[-10px] bg-white rounded-[50%] cursor-pointer"
-          onClick={() => setPermissionData(null)}
+          onClick={() => setRemovePermissionData(null)}
           size={30}
         />
         <form
@@ -65,18 +67,20 @@ const SetPermission = ({ permissionData, setPermissionData }) => {
           className="flex flex-col items-center h-full mt-10"
         >
           <p className="text-[#646C9A] text-[18px] mt-5">
-            Permission for: {permissionData?.name}
+            Permission for: {removePermissionData?.name}
           </p>
           <div className="w-full p-3">
             <p className="text-[16px] mb-2 ml-1">Select permission</p>
             <Multiselect
-              options={data?.data?.data}
+              options={data && Object?.entries(data?.data).map(([id, name]) => ({
+                id: parseInt(id),
+                name,
+              }))}
               selectedValues={permission}
               onSelect={setPermission}
               onRemove={setPermission}
               displayValue="name"
               showCheckbox={true}
-              disablePreSelectedValues={true}
             />
           </div>
 
@@ -102,7 +106,7 @@ const SetPermission = ({ permissionData, setPermissionData }) => {
                 />
               </svg>
             )}
-            {isLoading ? "Loading" : "Set Permission"}
+            {isLoading ? "Loading" : "Remove Permission"}
           </button>
         </form>
       </div>
@@ -110,4 +114,4 @@ const SetPermission = ({ permissionData, setPermissionData }) => {
   );
 };
 
-export default SetPermission;
+export default RemovePermission;

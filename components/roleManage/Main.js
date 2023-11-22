@@ -4,11 +4,13 @@ import { useDeleteRoleMutation } from "../../redux/features/role/roleApi";
 import SetRole from "./SetRole";
 import { useRouter } from "next/router";
 import SetPermission from "./SetPermission";
+import RemovePermission from "./RemovePermission";
 
 const RoleManage = ({ values }) => {
   const router = useRouter();
   const [roleData, setRoleData] = useState(null);
-  const [permissionData, setPermisionData] = useState(null);
+  const [permissionData, setPermissionData] = useState(null);
+  const [removePermissionData, setRemovePermissionData] = useState(null);
   const [deleteRole] = useDeleteRoleMutation();
 
   const handleDelete = (id) => {
@@ -67,10 +69,16 @@ const RoleManage = ({ values }) => {
                       User List
                     </button>
                     <button
-                      onClick={() => setPermisionData(data)}
+                      onClick={() => setPermissionData(data)}
                       className="px-3 py-1 rounded-md bg-[#F0FFFF] shadow-md"
                     >
                       Permission Set
+                    </button>
+                    <button
+                      onClick={() => setRemovePermissionData(data)}
+                      className="px-3 py-1 rounded-md bg-[#F0FFFF] shadow-md"
+                    >
+                      Permission Remove
                     </button>
                     <button
                       onClick={() => handleDelete(data?.id)}
@@ -89,7 +97,13 @@ const RoleManage = ({ values }) => {
       {permissionData && (
         <SetPermission
           permissionData={permissionData}
-          setPermisionData={setPermisionData}
+          setPermissionData={setPermissionData}
+        />
+      )}
+      {removePermissionData && (
+        <RemovePermission
+          removePermissionData={removePermissionData}
+          setRemovePermissionData={setRemovePermissionData}
         />
       )}
     </div>

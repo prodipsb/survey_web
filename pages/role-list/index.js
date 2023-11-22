@@ -21,7 +21,7 @@ const RoleList = () => {
   const handleChange = (event, value) => {
     setPage(value);
   };
-
+  console.log(data?.data);
   return (
     <div>
       <div className="w-[95%] mx-auto">
@@ -43,17 +43,19 @@ const RoleList = () => {
               Search
             </button>
           </div>
-          <button
-            onClick={() => setShowPopup(true)}
-            className="py-2 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
-          >
-            + Create new
-          </button>
+          {data?.data?.permissions?.includes("create role") && (
+            <button
+              onClick={() => setShowPopup(true)}
+              className="py-2 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
+            >
+              + Create new
+            </button>
+          )}
         </div>
-        <RoleManage values={data?.data?.data} />
+        <RoleManage values={data?.data?.data?.data} />
         <div className="flex lg:justify-between md:justify-between lg:flex-row md:flex-row flex-col items-center gap-y-5 mt-5 pb-5">
           <Pagination
-            count={data?.data?.last_page}
+            count={data?.data?.data?.last_page}
             page={page}
             shape={"rounded"}
             onChange={handleChange}

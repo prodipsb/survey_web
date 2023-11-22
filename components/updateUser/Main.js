@@ -8,7 +8,7 @@ import Image from "next/image";
 
 const UpdateUser = ({ userEdit, setUserEdit }) => {
   const { data } = useGetRoleQuery({ pagination: 0 });
-  const [createUser, { isLoading, isError, isSuccess, error }] =
+  const [createUser, { isLoading, isError, isSuccess }] =
     useCreateUserMutation();
 
   const inputStyle =
@@ -121,11 +121,11 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">Select Role*</p>
               <CommonDropDown
-                optionData={data?.data?.data}
+                optionData={data?.data?.data?.data}
                 defaultOptionValue={userEdit?.role_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select a Role"
-                setUserEdit={setUserEdit}
+                setFormData={setUserEdit}
                 required={true}
                 name="role_id"
               />
@@ -133,11 +133,11 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">Select Supervisor</p>
               <CommonDropDown
-                optionData={data?.data?.data}
+                optionData={data?.data?.data?.data}
                 defaultOptionValue={userEdit?.supervisor_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select supervisor"
-                setUserEdit={setUserEdit}
+                setFormData={setUserEdit}
                 required={true}
                 name="supervisor_id"
               />
@@ -147,11 +147,11 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">Reporting To</p>
               <CommonDropDown
-                optionData={data?.data?.data}
+                optionData={data?.data?.data?.data}
                 defaultOptionValue={userEdit?.reporting_role_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select reporting person"
-                setUserEdit={setUserEdit}
+                setFormData={setUserEdit}
                 required={true}
                 name="reporting_role_id"
               />
@@ -209,14 +209,13 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
               </select>
             </div>
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">User Bio*</p>
+              <p className="mb-2 text-[#646C9A]">User Bio</p>
               <textarea
                 className={inputStyle}
                 type="text"
                 rows={1}
                 value={userEdit?.bio}
                 name="bio"
-                required
                 placeholder="Example: user information"
                 onChange={handleInputChange}
               />
@@ -235,7 +234,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
               />
             </div>
             <div className="mb-5 w-full">
-              <p className="mb-2 text-[#646C9A]">User Image*</p>
+              <p className="mb-2 text-[#646C9A]">User Image</p>
               <input
                 className="relative bg-white m-0 block w-full min-w-0 flex-auto rounded-md border border-solid border-gray-300 bg-clip-padding py-2 px-3 text-base font-normal text-[#AFABC3] transition duration-300 ease-in-out file:-mx-3 file:-my-2 file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-2 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-primary focus:border-blue-300"
                 type="file"
