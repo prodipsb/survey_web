@@ -8,7 +8,7 @@ import Image from "next/image";
 
 const UpdateUser = ({ userEdit, setUserEdit }) => {
   const { data } = useGetRoleQuery({ pagination: 0 });
-  const [createUser, { isLoading, isError, isSuccess, error }] =
+  const [createUser, { isLoading, isError, isSuccess }] =
     useCreateUserMutation();
 
   const inputStyle =
@@ -121,7 +121,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">Select Role*</p>
               <CommonDropDown
-                optionData={data?.data?.data}
+                optionData={data?.data?.data?.data}
                 defaultOptionValue={userEdit?.role_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select a Role"
@@ -133,7 +133,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">Select Supervisor</p>
               <CommonDropDown
-                optionData={data?.data?.data}
+                optionData={data?.data?.data?.data}
                 defaultOptionValue={userEdit?.supervisor_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select supervisor"
@@ -147,7 +147,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">Reporting To</p>
               <CommonDropDown
-                optionData={data?.data?.data}
+                optionData={data?.data?.data?.data}
                 defaultOptionValue={userEdit?.reporting_role_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select reporting person"
