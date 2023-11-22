@@ -70,7 +70,7 @@ const SetPermission = ({ permissionData, setPermisionData }) => {
           <div className="w-full p-3">
             <p className="text-[16px] mb-2 ml-1">Select permission</p>
             <Multiselect
-              options={data?.data}
+              options={data?.data?.data}
               selectedValues={permission}
               onSelect={setPermission}
               onRemove={setPermission}

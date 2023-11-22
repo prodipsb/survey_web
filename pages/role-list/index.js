@@ -50,10 +50,10 @@ const RoleList = () => {
             + Create new
           </button>
         </div>
-        <RoleManage values={data?.data?.data} />
+        <RoleManage values={data?.data?.data?.data} />
         <div className="flex lg:justify-between md:justify-between lg:flex-row md:flex-row flex-col items-center gap-y-5 mt-5 pb-5">
           <Pagination
-            count={data?.data?.last_page}
+            count={data?.data?.data?.last_page}
             page={page}
             shape={"rounded"}
             onChange={handleChange}

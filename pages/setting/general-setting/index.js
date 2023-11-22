@@ -74,7 +74,6 @@ const GeneralSetting = () => {
               type="text"
               name="website_title"
               required
-              value={formData?.website_title}
               placeholder="Example: website"
               onChange={handleInputChange}
             />
@@ -85,7 +84,6 @@ const GeneralSetting = () => {
               className={inputStyle}
               type="text"
               name="address"
-              value={formData?.address}
               placeholder="Example: address"
               onChange={handleInputChange}
             />
@@ -102,7 +100,6 @@ const GeneralSetting = () => {
               type="text"
               rows={3}
               name="about"
-              value={formData?.about}
               placeholder="Example: user information"
               onChange={handleInputChange}
             />

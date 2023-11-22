@@ -45,7 +45,7 @@ const UserAction = () => {
         <p className="text-[13px] hidden lg:block">
           Hi, <span className="ml-2">{userData?.data?.name}</span>
         </p>
-        {userData ? (
+        {userData?.data?.avatar ? (
           <Image
             src={process.env.NEXT_PUBLIC_IMAGE + userData?.data?.avatar}
             alt=""
@@ -76,7 +76,7 @@ const UserAction = () => {
               onClick={() => setShowUserAction(false)}
               className="w-[90%] mx-auto flex items-center gap-3 h-full"
             >
-              {userData ? (
+              {userData?.data?.avatar ? (
                 <Image
                   src={process.env.NEXT_PUBLIC_IMAGE + userData?.data?.avatar}
                   alt=""
