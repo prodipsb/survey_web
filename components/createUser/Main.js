@@ -178,7 +178,7 @@ const Main = () => {
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">Select Role*</p>
               <CommonDropDown
-                optionData={data?.data?.data}
+                optionData={data?.data?.data?.data}
                 defaultOptionValue={formData?.role_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select a Role"
@@ -192,7 +192,7 @@ const Main = () => {
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">Select Supervisor</p>
               <CommonDropDown
-                optionData={data?.data?.data}
+                optionData={data?.data?.data?.data}
                 defaultOptionValue={formData?.supervisor_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select supervisor"
@@ -204,7 +204,7 @@ const Main = () => {
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">Reporting To</p>
               <CommonDropDown
-                optionData={data?.data?.data}
+                optionData={data?.data?.data?.data}
                 defaultOptionValue={formData?.reporting_role_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select reporting person"
@@ -264,13 +264,12 @@ const Main = () => {
           </div>
           <div className="md:flex lg:flex gap-10">
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">User Bio*</p>
+              <p className="mb-2 text-[#646C9A]">User Bio</p>
               <textarea
                 className={inputStyle}
                 type="text"
                 rows={1}
                 name="bio"
-                required
                 placeholder="Example: user information"
                 onChange={handleInputChange}
               />
