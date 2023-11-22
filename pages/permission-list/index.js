@@ -52,7 +52,7 @@ const PermissionList = () => {
         <h1 className="font-bold text-[#646C9A] text-center text-[24px] mt-5 mb-5">
           Permission List
         </h1>
-        <div className="flex justify-between">
+        <div className="flex justify-between flex-wrap gap-y-2">
           <div className="flex gap-3">
             <input
               type="text"

@@ -44,7 +44,7 @@ const RoleManage = ({ values }) => {
             </tr>
           </thead>
           <tbody>
-            {values?.map((data, index) => (
+            {values?.data?.data?.map((data, index) => (
               <tr
                 key={index}
                 className={`hover:bg-[#aeb4c0] ${
@@ -56,36 +56,52 @@ const RoleManage = ({ values }) => {
                 </td>
                 <td className="border whitespace-nowrap p-3 h-[55px]">
                   <div className="flex justify-center gap-3">
-                    <button
+                    {/* <button
                       className="px-3 py-1 rounded-md bg-[#F5F5DC] shadow-md"
                       onClick={() => setRole(data)}
                     >
                       User Role Set
-                    </button>
-                    <button
-                      onClick={() => router.push(`/role-user-list/${data?.id}`)}
-                      className="px-3 py-1 rounded-md bg-[#E9967A] text-white shadow-md"
-                    >
-                      User List
-                    </button>
-                    <button
-                      onClick={() => setPermissionData(data)}
-                      className="px-3 py-1 rounded-md bg-[#F0FFFF] shadow-md"
-                    >
-                      Permission Set
-                    </button>
-                    <button
-                      onClick={() => setRemovePermissionData(data)}
-                      className="px-3 py-1 rounded-md bg-[#F0FFFF] shadow-md"
-                    >
-                      Permission Remove
-                    </button>
-                    <button
-                      onClick={() => handleDelete(data?.id)}
-                      className="border border-red-500 px-3 py-1 rounded-md bg-red-500 text-white"
-                    >
-                      Delete
-                    </button>
+                    </button> */}
+                    {values?.permissions?.includes(
+                      "view user-list by role"
+                    ) && (
+                      <button
+                        onClick={() =>
+                          router.push(`/role-user-list/${data?.id}`)
+                        }
+                        className="px-3 py-1 rounded-md bg-[#E9967A] text-white shadow-md"
+                      >
+                        User List
+                      </button>
+                    )}
+                    {values?.permissions?.includes(
+                      "permission set by role"
+                    ) && (
+                      <button
+                        onClick={() => setPermissionData(data)}
+                        className="px-3 py-1 rounded-md bg-[#F0FFFF] shadow-md"
+                      >
+                        Permission Set
+                      </button>
+                    )}
+                    {values?.permissions?.includes(
+                      "permission remove by role"
+                    ) && (
+                      <button
+                        onClick={() => setRemovePermissionData(data)}
+                        className="px-3 py-1 rounded-md bg-[#F0FFFF] shadow-md"
+                      >
+                        Permission Remove
+                      </button>
+                    )}
+                    {values?.permissions?.includes("delete role") && (
+                      <button
+                        onClick={() => handleDelete(data?.id)}
+                        className="border border-red-500 px-3 py-1 rounded-md bg-red-500 text-white"
+                      >
+                        Delete
+                      </button>
+                    )}
                   </div>
                 </td>
               </tr>

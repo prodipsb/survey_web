@@ -17,7 +17,7 @@ const roleApi = api.injectEndpoints({
         }${id?.search && "&search=" + id?.search}`,
         method: "GET",
       }),
-      providesTags: ["role"],
+      providesTags: ["role",'permission'],
     }),
     setUerRole: builder.mutation({
       query: (data) => ({
