@@ -6,7 +6,7 @@ import Export from "../../components/common/export/Export";
 import ViewActivityReport from "../../components/activityReport/ViewActivityReport";
 import { useMasterReportQuery } from "../../redux/features/report/activityReportApi";
 
-const ActivityReport = () => {
+const SurveyReport = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState({
     search: "",
@@ -73,6 +73,7 @@ const ActivityReport = () => {
             click={handleClick}
           />
           <div className="flex lg:justify-between md:justify-between lg:flex-row md:flex-row flex-col items-center gap-y-5 mt-5 pb-5">
+          <p className="text-[#646C9A]">Total survey: {data?.meta?.total}</p>
             <Pagination
               count={data?.meta?.last_page}
               page={page}
@@ -86,4 +87,4 @@ const ActivityReport = () => {
   );
 };
 
-export default AuthCheck(ActivityReport);
+export default AuthCheck(SurveyReport);

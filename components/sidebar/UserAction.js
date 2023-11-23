@@ -93,10 +93,14 @@ const UserAction = ({ userData }) => {
             </Link>
           </div>
           <div className="border-b-[1px]">
-            <div className="w-[90%] mx-auto">
-              <p className="text-[13px] cursor-pointer my-5 font-bold text-[#6c7293]">
+            <div className="w-[90%] mx-auto my-5">
+              <Link
+                className="text-[13px] cursor-pointer font-bold text-[#6c7293]"
+                href="/change-password"
+                onClick={() => setShowUserAction(false)}
+              >
                 Change Password
-              </p>
+              </Link>
             </div>
           </div>
           <button

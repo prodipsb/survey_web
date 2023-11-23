@@ -15,10 +15,18 @@ const loginApi = api.injectEndpoints({
         method: "POST",
       }),
     }),
+    changePassword: builder.mutation({
+      query: (data) => ({
+        url: "/password-update",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
 export const {
   useLoginUserMutation,
-  useLogoutUserMutation
+  useLogoutUserMutation,
+  useChangePasswordMutation,
 } = loginApi;

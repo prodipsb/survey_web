@@ -72,7 +72,7 @@ export const adminNav = [
         name: "Survey Report",
         icon: <TbActivity size={18} />,
         single: true,
-        href: "/activity-report",
+        href: "/survey-report",
       },
       {
         id: 2,

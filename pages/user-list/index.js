@@ -89,8 +89,9 @@ const UserList = () => {
             click={handleClick}
           />
           <div className="flex lg:justify-between md:justify-between lg:flex-row md:flex-row flex-col items-center gap-y-5 mt-5 pb-5">
+            <p className="text-[#646C9A]">Total user: {data?.data?.total}</p>
             <Pagination
-              count={data?.meta?.last_page}
+              count={data?.data?.last_page}
               page={page}
               shape={"rounded"}
               onChange={handleChange}
