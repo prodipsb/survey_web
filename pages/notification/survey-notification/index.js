@@ -10,7 +10,7 @@ import {
 } from "../../../redux/features/notification/notificationApi";
 import ViewNotification from "../../../components/viewNotification/Main";
 
-const UserList = () => {
+const SurveyNotification = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const { data } = useGetAllNotificationQuery({ page: page, search: search });
@@ -103,4 +103,4 @@ const UserList = () => {
   );
 };
 
-export default AuthCheck(UserList);
+export default AuthCheck(SurveyNotification);

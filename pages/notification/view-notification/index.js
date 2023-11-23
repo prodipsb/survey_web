@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-const ViewUser = ({ userView, setUserView }) => {
+const ViewNotification = ({ userView, setUserView }) => {
   return (
     <div>
       <div className="mt-5 w-[90%] mx-auto text-[13px] border-b-blue-300 pb-5">
@@ -111,4 +111,4 @@ const ViewUser = ({ userView, setUserView }) => {
   );
 };
 
-export default ViewUser;
+export default ViewNotification;

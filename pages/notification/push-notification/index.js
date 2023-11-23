@@ -5,7 +5,7 @@ import { useCreateGeneralSettingMutation } from "../../../redux/features/general
 import toast from "react-hot-toast";
 import AuthCheck from "../../../components/authCheck/AuthCheck";
 
-const GeneralSetting = () => {
+const PushNotification = () => {
   const [formData, setFormData] = useState({
     website_title: "",
     address: "",
@@ -122,4 +122,4 @@ const GeneralSetting = () => {
   );
 };
 
-export default AuthCheck(GeneralSetting);
+export default AuthCheck(PushNotification);
