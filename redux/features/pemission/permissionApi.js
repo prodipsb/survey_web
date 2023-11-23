@@ -40,7 +40,7 @@ const permissionApi = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["permission"],
+      invalidatesTags: ["permission", "user"],
     }),
     removeUserPermission: builder.mutation({
       query: (data) => ({
@@ -48,7 +48,7 @@ const permissionApi = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["permission"],
+      invalidatesTags: ["permission", "user"],
     }),
   }),
 });

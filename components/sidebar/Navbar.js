@@ -8,7 +8,13 @@ import UserAction from "./UserAction";
 import Notification from "./Notification";
 import { useGetlogoQuery } from "../../redux/features/generalSetting/generalSettingApi";
 
-const Navbar = ({ mobileView, setMobileView, largeView, setLargeView }) => {
+const Navbar = ({
+  mobileView,
+  setMobileView,
+  largeView,
+  setLargeView,
+  userData,
+}) => {
   const [handleUserAction, setHandleUserAction] = useState(false);
 
   const { data } = useGetlogoQuery();
@@ -55,7 +61,7 @@ const Navbar = ({ mobileView, setMobileView, largeView, setLargeView }) => {
         }`}
       >
         <Notification />
-        <UserAction />
+        <UserAction userData={userData} />
       </div>
     </div>
   );

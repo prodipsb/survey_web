@@ -9,11 +9,10 @@ import { userLogout } from "../../redux/features/login/loginSlice";
 import { useUserProfileQuery } from "../../redux/features/user/userApi";
 import Link from "next/link";
 
-const UserAction = () => {
+const UserAction = ({ userData }) => {
   const [showUserAction, setShowUserAction] = useState(false);
   const outsideClick = useRef(null);
   const [logoutUser, { data }] = useLogoutUserMutation();
-  const { data: userData } = useUserProfileQuery();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -43,11 +42,11 @@ const UserAction = () => {
         onClick={() => setShowUserAction(!showUserAction)}
       >
         <p className="text-[13px] hidden lg:block">
-          Hi, <span className="ml-2">{userData?.data?.name}</span>
+          Hi, <span className="ml-2">{userData?.name}</span>
         </p>
-        {userData?.data?.avatar ? (
+        {userData?.avatar ? (
           <Image
-            src={process.env.NEXT_PUBLIC_IMAGE + userData?.data?.avatar}
+            src={process.env.NEXT_PUBLIC_IMAGE + userData?.avatar}
             alt=""
             width={32}
             height={32}
@@ -76,9 +75,9 @@ const UserAction = () => {
               onClick={() => setShowUserAction(false)}
               className="w-[90%] mx-auto flex items-center gap-3 h-full"
             >
-              {userData?.data?.avatar ? (
+              {userData?.avatar ? (
                 <Image
-                  src={process.env.NEXT_PUBLIC_IMAGE + userData?.data?.avatar}
+                  src={process.env.NEXT_PUBLIC_IMAGE + userData?.avatar}
                   alt=""
                   width={80}
                   height={80}
@@ -89,7 +88,7 @@ const UserAction = () => {
                 <FaUserCircle size={30} />
               )}
               <p className="text-[15px] font-bold text-white">
-                {userData?.data?.name}
+                {userData?.name}
               </p>
             </Link>
           </div>

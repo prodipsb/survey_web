@@ -8,6 +8,7 @@ import { MdAdminPanelSettings, MdManageAccounts } from "react-icons/md";
 import { CgUserList } from "react-icons/cg";
 import { FcSalesPerformance } from "react-icons/fc";
 import { TbActivity } from "react-icons/tb";
+
 export const adminNav = [
   {
     id: 1,
@@ -80,7 +81,6 @@ export const adminNav = [
         single: true,
         href: "/performance-report",
       },
-     
     ],
   },
   {
@@ -95,8 +95,7 @@ export const adminNav = [
         icon: <RiSettings5Line size={18} />,
         single: true,
         href: "/setting/general-setting",
-      }
-      
+      },
     ],
   },
   {

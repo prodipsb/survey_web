@@ -7,11 +7,13 @@ import { adminNav } from "../../static-data/adminNavData";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import background from "../../assets/sidebar-bg.jpg";
+import { useUserProfileQuery } from "../../redux/features/user/userApi";
 
 const Main = ({ children }) => {
   const [mobileView, setMobileView] = useState(false);
   const [largeView, setLargeView] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
+  const { data } = useUserProfileQuery();
   const { pathname } = useRouter();
   return (
     <div>
@@ -20,6 +22,7 @@ const Main = ({ children }) => {
         setMobileView={setMobileView}
         largeView={largeView}
         setLargeView={setLargeView}
+        userData={data?.data}
       />
       <div className="flex relative">
         <div
@@ -55,6 +58,7 @@ const Main = ({ children }) => {
                   isHovering={isHovering}
                   nav={nav}
                   pathname={pathname}
+                  permission={data?.data?.permissions}
                 />
               ) : (
                 <NavDropdown
@@ -63,6 +67,7 @@ const Main = ({ children }) => {
                   isHovering={isHovering}
                   nav={nav}
                   pathname={pathname}
+                  permission={data?.data?.permissions}
                 />
               )
             )}
