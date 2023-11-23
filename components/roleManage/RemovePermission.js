@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Multiselect from "multiselect-react-dropdown";
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import {
@@ -19,16 +18,6 @@ const RemovePermission = ({
   const outsideClick = useRef();
 
   useEffect(() => {
-    if (data) {
-      const dataArray = Object?.entries(data?.data).map(([id, name]) => ({
-        id: parseInt(id),
-        name,
-      }));
-      setPermission(dataArray);
-    }
-  }, [data]);
-
-  useEffect(() => {
     document.addEventListener("click", handleOutsideClick, true);
   }, []);
 
@@ -44,26 +33,26 @@ const RemovePermission = ({
     }
   };
 
+  const handleClick = (id) => {
+    if (!permission.includes(id)) {
+      setPermission([...permission, id]);
+    } else {
+      const remove = permission.filter((perm) => perm !== id);
+      setPermission(remove);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const allpermission = Object?.entries(data?.data).map(([id, name]) => ({
-      id: parseInt(id),
-      name,
-    }));
-
-    const removePermission = allpermission
-      .filter((itemA) => !permission.some((itemB) => itemA.id === itemB.id))
-      .map((missingItem) => missingItem.id);
-
     removeUserPermission({
       role_id: removePermissionData?.id,
-      permissions: removePermission,
+      permissions: permission,
     });
   };
 
   return (
     <div ref={outsideClick}>
-      <div className="h-[500px] w-[90%] md:w-[50%] lg:w-[30%] drop-shadow-lg bg-white rounded-md fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+      <div className="h-auto w-[90%] md:w-[50%] lg:w-[30%] drop-shadow-lg bg-white rounded-md fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
         <AiOutlineCloseCircle
           className="absolute top-[-10px] right-[-10px] bg-white rounded-[50%] cursor-pointer"
           onClick={() => setRemovePermissionData(null)}
@@ -76,28 +65,28 @@ const RemovePermission = ({
           <p className="text-[#646C9A] text-[18px] mt-5">
             Permission Remove for: {removePermissionData?.name}
           </p>
-          <div className="w-full p-3">
-            <p className="text-[16px] mb-2 ml-1">Select permission</p>
-            <Multiselect
-              options={
-                data &&
-                Object?.entries(data?.data).map(([id, name]) => ({
-                  id: parseInt(id),
-                  name,
-                }))
-              }
-              selectedValues={permission}
-              onSelect={setPermission}
-              onRemove={setPermission}
-              displayValue="name"
-              showCheckbox={true}
-            />
+          <div className="w-full p-3 flex flex-wrap items-center justify-center gap-3">
+            {data &&
+              Object?.entries(data?.data)
+                ?.map(([id, name]) => ({ id: parseInt(id), name }))
+                ?.map((option) => (
+                  <div className="flex items-center" key={option?.id}>
+                    <input
+                      onChange={() => handleClick(option?.id)}
+                      type="checkbox"
+                      checked={permission?.includes(option?.id) ? false : true}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+                    />
+                    <label className="ms-2 text-sm font-medium text-gray-700">
+                      {option?.name}
+                    </label>
+                  </div>
+                ))}
           </div>
-
           <button
             type="submit"
             disabled={isLoading}
-            className="flex justify-center items-center border border-slate-400 text-[13px] text-gray-700 font-bold px-6 py-2 mt-5 rounded-md hover:bg-slate-400 hover:text-white drop-shadow-md"
+            className="mb-10 flex justify-center items-center border border-slate-400 text-[13px] text-gray-700 font-bold px-6 py-2 mt-5 rounded-md hover:bg-slate-400 hover:text-white drop-shadow-md"
           >
             {isLoading && (
               <svg

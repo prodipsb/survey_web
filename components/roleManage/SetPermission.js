@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Multiselect from "multiselect-react-dropdown";
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import {
@@ -19,15 +18,6 @@ const SetPermission = ({ permissionData, setPermissionData }) => {
   const outsideClick = useRef();
 
   useEffect(() => {
-    if (rolePermissionData) {
-      const dataArray = Object?.entries(rolePermissionData?.data).map(
-        ([id, name]) => ({ id: parseInt(id), name })
-      );
-      setPermission(dataArray);
-    }
-  }, [rolePermissionData]);
-
-  useEffect(() => {
     document.addEventListener("click", handleOutsideClick, true);
   }, []);
 
@@ -43,18 +33,26 @@ const SetPermission = ({ permissionData, setPermissionData }) => {
     }
   };
 
+  const handleClick = (id) => {
+    if (!permission.includes(id)) {
+      setPermission([...permission, id]);
+    } else {
+      const remove = permission.filter((perm) => perm !== id);
+      setPermission(remove);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const permission_Id = permission.map((item) => item.id);
     setUserPermission({
       role_id: permissionData?.id,
-      permissions: permission_Id,
+      permissions: permission,
     });
   };
 
   return (
     <div ref={outsideClick}>
-      <div className="h-[500px] w-[90%] md:w-[50%] lg:w-[30%] drop-shadow-lg bg-white rounded-md fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+      <div className="h-auto w-[90%] md:w-[50%] lg:w-[30%] drop-shadow-lg bg-white rounded-md fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
         <AiOutlineCloseCircle
           className="absolute top-[-10px] right-[-10px] bg-white rounded-[50%] cursor-pointer"
           onClick={() => setPermissionData(null)}
@@ -67,23 +65,33 @@ const SetPermission = ({ permissionData, setPermissionData }) => {
           <p className="text-[#646C9A] text-[18px] mt-5">
             Permission for: {permissionData?.name}
           </p>
-          <div className="w-full p-3">
-            <p className="text-[16px] mb-2 ml-1">Select permission</p>
-            <Multiselect
-              options={data?.data?.data}
-              selectedValues={permission}
-              onSelect={setPermission}
-              onRemove={setPermission}
-              displayValue="name"
-              showCheckbox={true}
-              disablePreSelectedValues={true}
-            />
+          <div className="w-full p-3 flex flex-wrap items-center justify-center gap-3">
+            {data?.data?.data?.map((option) => (
+              <div className="flex items-center" key={option?.id}>
+                {rolePermissionData?.data?.hasOwnProperty(option?.id) ? (
+                  <input
+                    type="checkbox"
+                    disabled={true}
+                    checked={true}
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+                  />
+                ) : (
+                  <input
+                    onChange={() => handleClick(option?.id)}
+                    type="checkbox"
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+                  />
+                )}
+                <label className="ms-2 text-sm font-medium text-gray-700">
+                  {option?.name}
+                </label>
+              </div>
+            ))}
           </div>
-
           <button
             type="submit"
             disabled={isLoading}
-            className="flex justify-center items-center border border-slate-400 text-[13px] text-gray-700 font-bold px-6 py-2 mt-5 rounded-md hover:bg-slate-400 hover:text-white drop-shadow-md"
+            className=" mb-10 flex justify-center items-center border border-slate-400 text-[13px] text-gray-700 font-bold px-6 py-2 mt-5 rounded-md hover:bg-slate-400 hover:text-white drop-shadow-md"
           >
             {isLoading && (
               <svg
