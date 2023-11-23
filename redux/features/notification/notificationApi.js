@@ -2,7 +2,6 @@ import { api } from "../../api/apiSlice";
 
 const notificationApi = api.injectEndpoints({
   endpoints: (builder) => ({
-
     getAllNotification: builder.query({
       query: (id) => ({
         url: `/notifications?page=${id.page}&&search=${id.search}`,
@@ -23,7 +22,7 @@ const notificationApi = api.injectEndpoints({
       query: (data) => ({
         url: `/notification-read`,
         method: "POST",
-        body: data
+        body: data,
       }),
       invalidatesTags: ["notification"],
     }),
@@ -35,7 +34,20 @@ const notificationApi = api.injectEndpoints({
       }),
       invalidatesTags: ["notification"],
     }),
-
+    deleteAllNotification: builder.mutation({
+      query: () => ({
+        url: "/notifications-delete",
+        method: "POST",
+      }),
+      invalidatesTags: ["notification"],
+    }),
+    readAllNotification: builder.mutation({
+      query: () => ({
+        url: "/notifications-as-read",
+        method: "POST",
+      }),
+      invalidatesTags: ["notification"],
+    }),
   }),
 });
 
@@ -43,5 +55,7 @@ export const {
   useGetAllNotificationQuery,
   useGetNotificationQuery,
   useGetSingleNotificationMutation,
-  useDeleteNotificationMutation
+  useDeleteNotificationMutation,
+  useDeleteAllNotificationMutation,
+  useReadAllNotificationMutation,
 } = notificationApi;
