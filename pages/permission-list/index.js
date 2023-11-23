@@ -67,12 +67,14 @@ const PermissionList = () => {
               Search
             </button>
           </div>
-          <button
-            onClick={() => setShowPopup(true)}
-            className="py-2 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
-          >
-            + Create new
-          </button>
+          {data?.data?.permissions?.includes("delete permission") && (
+            <button
+              onClick={() => setShowPopup(true)}
+              className="py-2 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
+            >
+              + Create new
+            </button>
+          )}
         </div>
         <CustomTable
           headers={[
@@ -80,7 +82,11 @@ const PermissionList = () => {
             { key: "action", label: "Action" },
           ]}
           data={data?.data?.data?.data}
-          deleteData={true}
+          deleteData={
+            data?.data?.permissions?.includes("delete permission")
+              ? true
+              : false
+          }
           click={handleClick}
         />
         <div className="flex lg:justify-between md:justify-between lg:flex-row md:flex-row flex-col items-center gap-y-5 mt-5 pb-5">
