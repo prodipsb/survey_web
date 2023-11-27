@@ -12,6 +12,13 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ["user", "role", "permission", "notification", "setting"],
+  tagTypes: [
+    "user",
+    "role",
+    "permission",
+    "notification",
+    "setting",
+    "pushNotification",
+  ],
   endpoints: () => ({}),
 });

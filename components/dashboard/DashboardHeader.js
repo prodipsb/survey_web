@@ -4,13 +4,6 @@ import Image from "next/image";
 import background from "../../assets/sidebar.jpg";
 
 function DashboardHeader({userStats}) {
-
-  const preview = [
-    { name: "Activity Officer", count: 1216 },
-    { name: "Supervisor", count: 24 },
-    { name: "Teritory Manager", count: 50 },
-    { name: "Regional Manager", count: 10 },
-  ];
   return (
     <div>
       <div className="absolute -z-100">

@@ -18,7 +18,6 @@ const UserList = () => {
   const [userEdit, setUserEdit] = useState(null);
   const [userView, setUserView] = useState(null);
   const [deleteUser] = useDeleteUserMutation();
-
   const handleClick = (name, data) => {
     if (name === "view") {
       setUserView(data);
