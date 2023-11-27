@@ -1,4 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { userLogout } from "../features/login/loginSlice";
+import store from "../store";
 
 export const api = createApi({
   reducerPath: "api",
@@ -10,6 +12,13 @@ export const api = createApi({
         headers.set("authorization", `Bearer ${token}`);
       }
       return headers;
+    },
+    validateStatus: (response) => {
+      if (response.status === 401) {
+        store.dispatch(userLogout());
+      } else {
+        return response;
+      }
     },
   }),
   tagTypes: [
