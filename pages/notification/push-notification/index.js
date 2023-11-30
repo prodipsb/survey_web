@@ -11,8 +11,9 @@ const PushNotification = () => {
   const [isLoading, setIsloading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
-    subtitle: "",
     body: "",
+    image: "http://4.193.55.34:8000/assets/notification-bell.png",
+    content_available: true,
   });
 
   const formRef = useRef();
@@ -37,9 +38,15 @@ const PushNotification = () => {
       try {
         const response = await fetch("https://fcm.googleapis.com/fcm/send", {
           method: "POST",
-          body: JSON.stringify({ to: messageToken, notification: formData }),
+          body: JSON.stringify({
+            registration_ids: messageToken,
+            notification: formData,
+            priority: "high",
+          }),
           headers: {
-            "Content-type": "application/json",
+            "Content-Type": "application/json; charset=UTF-8",
+            Authorization:
+              "key=AAAAsRTlG0s:APA91bGi2Ez89m460zFWYUg02Y7cXgsFqvluQIqPkRnRdfj2Z6_Qz-Ex9JtYZoxVsfia-zcHCWwe6ObOVfEKjrA_1Udg9s6_2FUQF-iWhXgedTKDn8HNO3G_6pr9GGRb2-aa9KjZRkbF",
           },
         });
         const responseData = await response.json();
@@ -48,9 +55,11 @@ const PushNotification = () => {
         } else {
           toast.success("Notification send successfully!");
           formRef.current.reset();
+          setMessageTo(null);
         }
         setIsloading(false);
       } catch (error) {
+        console.log(error);
         toast.error(error.message);
         setIsloading(false);
       }
@@ -91,16 +100,6 @@ const PushNotification = () => {
               name="title"
               required
               placeholder="Example: message title"
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="mb-5 w-full">
-            <p className="mb-2 text-[#646C9A]">Sub Title*</p>
-            <input
-              className={inputStyle}
-              type="text"
-              name="subtitle"
-              placeholder="Example: message subtitle"
               onChange={handleInputChange}
             />
           </div>
