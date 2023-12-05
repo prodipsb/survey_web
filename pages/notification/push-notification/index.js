@@ -11,8 +11,9 @@ const PushNotification = () => {
   const [isLoading, setIsloading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
-    subtitle: "",
     body: "",
+    image:`${process.env.NEXT_PUBLIC_IMAGE}/assets/notification-bell.png`,
+    content_available: true
   });
 
   const formRef = useRef();
@@ -34,12 +35,16 @@ const PushNotification = () => {
     } else {
       setIsloading(true);
       const messageToken = messageTo?.map((item) => item?.device_token);
+      // console.log('messageToken formData', formData)
+      // return true;
       try {
+
         const response = await fetch("https://fcm.googleapis.com/fcm/send", {
           method: "POST",
-          body: JSON.stringify({ to: messageToken, notification: formData }),
+          body: JSON.stringify({ registration_ids: messageToken, notification: formData, priority: "high" }),
           headers: {
             "Content-type": "application/json",
+            "Authorization": `key=${process.env.NEXT_PUBLIC_PUSH_NOTIFICATION_SECRET_KEY}`
           },
         });
         const responseData = await response.json();
@@ -94,22 +99,12 @@ const PushNotification = () => {
               onChange={handleInputChange}
             />
           </div>
-          <div className="mb-5 w-full">
-            <p className="mb-2 text-[#646C9A]">Sub Title*</p>
-            <input
-              className={inputStyle}
-              type="text"
-              name="subtitle"
-              placeholder="Example: message subtitle"
-              onChange={handleInputChange}
-            />
-          </div>
           <div className="w-full mb-5">
             <p className="mb-2 text-[#646C9A]">Body*</p>
             <textarea
               className={inputStyle}
               type="text"
-              rows={3}
+              rows={5}
               name="body"
               placeholder="Example: message body"
               onChange={handleInputChange}
