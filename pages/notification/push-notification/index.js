@@ -53,9 +53,11 @@ const PushNotification = () => {
         } else {
           toast.success("Notification send successfully!");
           formRef.current.reset();
+          setMessageTo(null);
         }
         setIsloading(false);
       } catch (error) {
+        console.log(error);
         toast.error(error.message);
         setIsloading(false);
       }
