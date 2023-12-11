@@ -4,6 +4,8 @@ import { useGetRoleQuery } from "../../redux/features/role/roleApi";
 import { useCreateUserMutation } from "../../redux/features/user/userApi";
 import toast from "react-hot-toast";
 import { IoIosEyeOff, IoMdEye } from "react-icons/io";
+import cities from '../../utils/cities.json';
+import divisions from '../../utils/divisions.json';
 
 const Main = () => {
   const [formData, setFormData] = useState({
@@ -23,8 +25,12 @@ const Main = () => {
     location: "",
     status: "",
   });
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [isValid, setIsValid] = useState(true);
 
   const [showPassword, setShowPassword] = useState(false);
+  const [phoneValid, setPhoneValid] = useState(false);
+  const [selectedCity, setSelectedCity] = useState('');
 
   const formRef = useRef();
 
@@ -82,10 +88,42 @@ const Main = () => {
     }
   }, [isSuccess, isError]);
 
+
+  const handleMobileNumberChange = (e) => {
+
+    setPhoneValid(true);
+    const value = e.target.value;
+
+    // Allow only numeric input
+    const numericValue = value.replace(/\D/g, '');
+
+    // Restrict length to 11 digits
+    const truncatedValue = numericValue.slice(0, 11);
+
+    setMobileNumber(truncatedValue);
+
+    // Validate mobile number format
+    const isValidFormat = /^01\d{9}$/.test(truncatedValue);
+    setIsValid(isValidFormat);
+
+    setFormData({
+      ...formData,
+      [e.target.name]:
+        e.target.type === "file" ? e.target.files[0] : e.target.value,
+    });
+  };
+
+
+  const handleCityChange = (e) => {
+    setSelectedCity(e.target.value);
+  };
+
+  console.log('formData', formData)
+
   return (
     <div>
       <div className="mt-5 w-[90%] mx-auto text-[13px] border-b-blue-300 pb-5">
-        <p className="font-bold text-[#646C9A] text-[24px] text-center mt-5 mb-5">
+        <p className="font-bold text-[#646C9A] text-[24px] mt-5 mb-5">
           User Creation
         </p>
         <form className="mb-5" onSubmit={handleSubmit} ref={formRef}>
@@ -102,7 +140,7 @@ const Main = () => {
               />
             </div>
             <div className="mb-5 w-full">
-              <p className="mb-2 text-[#646C9A]">User Email*</p>
+              <p className="mb-2 text-[#646C9A]"> Email*</p>
               <input
                 className={inputStyle}
                 type="email"
@@ -119,14 +157,14 @@ const Main = () => {
               )}
             </div>
             <div className="mb-5 w-full relative">
-              <p className="mb-2 text-[#646C9A]">User Password*</p>
+              <p className="mb-2 text-[#646C9A]"> Password*</p>
               <input
                 className={inputStyle}
                 type={showPassword ? "text" : "password"}
                 name="password"
                 required
                 placeholder="User password"
-                onChange={handleInputChange}
+                onBlur={handleInputChange}
               />
               {showPassword ? (
                 <IoIosEyeOff
@@ -150,7 +188,30 @@ const Main = () => {
             </div>
           </div>
           <div className="md:flex lg:flex gap-10">
-            <div className="mb-5 w-full">
+          <div className="mb-5 w-full">
+          <p className="mb-2 text-[#646C9A]"> Mobile Number*</p>
+            <input
+              className={inputStyle}
+              type="text"
+              id="mobileNumber"
+              name="phone"
+              value={mobileNumber}
+              required
+              placeholder="Example: 01XXXXXXXXX"
+              onChange={handleMobileNumberChange}
+            />
+          
+
+            { phoneValid && isValid && (
+              <p style={{ color: 'green' }}>Valid mobile number format</p>
+            )}
+
+            {!isValid && (
+               <p style={{ color: 'red' }}>Invalid mobile number format</p>
+            )}
+          </div>
+
+            {/* <div className="mb-5 w-full">
               <p className="mb-2 text-[#646C9A]">User Mobile Number*</p>
               <input
                 className={inputStyle}
@@ -160,7 +221,7 @@ const Main = () => {
                 placeholder="Example: 01XXXXXXXXX"
                 onChange={handleInputChange}
               />
-            </div>
+            </div> */}
             <div className="mb-5 w-full">
               <p className="mb-2 text-[#646C9A]">Gender*</p>
               <select
@@ -169,7 +230,7 @@ const Main = () => {
                 name="gender"
                 onChange={handleInputChange}
               >
-                <option value="">Select gender</option>
+                <option value=""> Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
                 <option value="others">Others</option>
@@ -190,7 +251,7 @@ const Main = () => {
           </div>
           <div className="md:flex lg:flex gap-10">
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Select Supervisor</p>
+              <p className="mb-2 text-[#646C9A]"> Supervisor</p>
               <CommonDropDown
                 optionData={data?.data?.data?.data}
                 defaultOptionValue={formData?.supervisor_id}
@@ -203,6 +264,7 @@ const Main = () => {
             </div>
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">Reporting To</p>
+              {console.log('uuuu', data?.data?.data?.data)}
               <CommonDropDown
                 optionData={data?.data?.data?.data}
                 defaultOptionValue={formData?.reporting_role_id}
@@ -215,27 +277,56 @@ const Main = () => {
             </div>
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">User City*</p>
-              <input
+              {/* <select id="city" value={selectedCity} onChange={handleCityChange}> */}
+                {/* <option value="">Select a city</option>
+                {cities.map((city, index) => (
+                  <option key={index} value={city}>
+                    {city}
+                  </option>
+                ))}
+              </select> */}
+              
+
+              <CommonDropDown
+                optionData={cities}
+                defaultOptionValue={formData?.city}
+                defaultOptionLabel="name"
+                defaultCreateText="Select City"
+                setFormData={setFormData}
+                required={true}
+                name="city"
+              />
+              {selectedCity && <p style={{ color: 'green' }}>You selected: {selectedCity}</p>}
+              {/* <input
                 className={inputStyle}
                 type="text"
                 name="city"
                 required
                 placeholder="Example: Dhaka"
                 onChange={handleInputChange}
-              />
+              /> */}
             </div>
           </div>
           <div className="md:flex lg:flex gap-10">
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">User Division*</p>
-              <input
+              <CommonDropDown
+                optionData={divisions}
+                defaultOptionValue={formData?.division}
+                defaultOptionLabel="name"
+                defaultCreateText="Select Division"
+                setFormData={setFormData}
+                required={true}
+                name="division"
+              />
+              {/* <input
                 className={inputStyle}
                 type="text"
                 name="division"
                 required
                 placeholder="Example: Dhaka"
                 onChange={handleInputChange}
-              />
+              /> */}
             </div>
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">User Location*</p>

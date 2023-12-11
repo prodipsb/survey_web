@@ -5,22 +5,15 @@ import { useGetdashboardQuery } from "../../redux/features/dashboard/dashboardAp
 
 function Main() {
   const { data } = useGetdashboardQuery();
+
+  // console.log('stats', data)
   return (
     <div>
       <DashboardHeader userStats={data?.data?.userStats}/>
       <div className="lg:w-[95%] 2xl:w-[90%] mx-auto md:w-[90%] mt-10 flex md:flex-col lg:flex-row flex-col gap-10">
         <div className="w-[100%]">
           <DashboardBody
-            dashboardItems={[
-              {
-                name: "Total Form Submission",
-                count: data?.data?.totalMonthlySubmittedSurveyCount | 0,
-              },
-              {
-                name: "Today Form Submission",
-                count: data?.data?.totalTodaySubmittedSurveyCount | 0,
-              },
-            ]}
+            dashboardItems={data?.data?.stats}
           />
         </div>
       </div>

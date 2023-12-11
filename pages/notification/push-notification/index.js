@@ -35,8 +35,6 @@ const PushNotification = () => {
     } else {
       setIsloading(true);
       const messageToken = messageTo?.map((item) => item?.device_token);
-      // console.log('messageToken formData', formData)
-      // return true;
       try {
 
         const response = await fetch("https://fcm.googleapis.com/fcm/send", {

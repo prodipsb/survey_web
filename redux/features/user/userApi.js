@@ -18,20 +18,27 @@ const userApi = api.injectEndpoints({
       invalidatesTags: ["user"],
     }),
     getUser: builder.query({
-      query: (id) => ({
-        url: `/users?page=${id?.page}${
-          id?.search?.search && "&search=" + id?.search?.search
-        }${
-          id?.search?.start_date &&
-          "&start_date=" +
-            id?.search?.start_date +
-            "&end_date=" +
-            id?.search?.end_date
-        }`,
-        method: "GET",
-      }),
+      query: (data) => {
+        const searchParams = new URLSearchParams();
+        
+        if (data?.search?.search) {
+          searchParams.append("search", data.search.search);
+        }
+    
+        if (data?.search?.start_date && data?.search?.end_date) {
+          searchParams.append("start_date", data.search.start_date);
+          searchParams.append("end_date", data.search.end_date);
+        }
+    
+        const url = `/users?page=${data?.page}&${searchParams.toString()}`;
+    
+        return {
+          url,
+          method: "GET",
+        };
+      },
       providesTags: ["user"],
-    }),
+    }),    
     getAllUser: builder.query({
       query: (id) => ({
         url: `/all-users`,

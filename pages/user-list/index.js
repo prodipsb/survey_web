@@ -15,6 +15,7 @@ const UserList = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState(null);
   const { data } = useGetUserQuery({ page: page, search: search });
+  console.log('user data', data)
   const [userEdit, setUserEdit] = useState(null);
   const [userView, setUserView] = useState(null);
   const [deleteUser] = useDeleteUserMutation();
@@ -43,6 +44,7 @@ const UserList = () => {
   };
 
   const handleChange = (event, value) => {
+    console.log('page', page)
     setPage(value);
   };
 
@@ -54,7 +56,7 @@ const UserList = () => {
         <ViewUser userView={userView} setUserView={setUserView} />
       ) : (
         <div className="w-[95%] mx-auto">
-          <h1 className="font-bold text-[#646C9A] text-[24px] text-center mt-5 mb-5">
+          <h1 className="font-bold text-[#646C9A] text-[24px] mt-5 mb-5">
             User List
           </h1>
           <Export setSearch={setSearch} expUrl="/users" />
