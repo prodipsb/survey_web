@@ -109,6 +109,7 @@ const Main = () => {
     }
   }, [isSuccess, isError]);
 
+  
 
   useEffect(() => {
     // Additional logic with the fetched data
@@ -150,22 +151,6 @@ const Main = () => {
   };
 
 
-  const handleUserRole = (e) => {
-    const value = e.target.value;
-    console.log('all', value)
-
-    const { data } = useGetUpperRolesQuery(value);
-    console.log('all data', data)
-
-  }
-
-
-
-  console.log('=============formData=======================');
-  console.log(formData);
-  console.log('====================================');
-
-
   const handleCityChange = (e) => {
     setSelectedCity(e.target.value);
   };
@@ -175,8 +160,6 @@ const Main = () => {
 
   const updateState = async (id, name) => {
     try {
-      console.log('updateState  id', id);
-      console.log('updateState  name', name);
       if(name == 'role_id'){
         setSelectedRole(id);
         await refetchRoles(id);
@@ -199,21 +182,13 @@ const Main = () => {
         setSelectedSupervisorRole(payload);
         await refetchRoleUsers(id);
       }
-      
-      
-
-      // setFormData({
-      //   ...formData,
-      //   [name]: id,
-      // });
-      
 
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
-  // console.log('upperRoles', upperRoles)
+   console.log('formData', formData)
   // console.log('upperRoles11', data?.data?.data?.data)
 
   return (
