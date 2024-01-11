@@ -179,7 +179,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
                 defaultOptionLabel="name"
                 defaultCreateText="Select supervisor"
                 setFormData={setUserEdit}
-                required={true}
+                required={false}
                 name="supervisor_id"
               />
             </div>
@@ -193,7 +193,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
                 defaultOptionLabel="name"
                 defaultCreateText="Select reporting person"
                 setFormData={setUserEdit}
-                required={true}
+                required={false}
                 name="reporting_role_id"
               />
             </div>

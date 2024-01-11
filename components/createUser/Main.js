@@ -1,23 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
 import CommonDropDown from "../common/dropDown/CommonDropDown";
-import { useGetRoleQuery } from "../../redux/features/role/roleApi";
+import { useGetRoleQuery, useGetUpperRolesQuery, useGetUserWithRoleQuery } from "../../redux/features/role/roleApi";
 import { useCreateUserMutation } from "../../redux/features/user/userApi";
 import toast from "react-hot-toast";
 import { IoIosEyeOff, IoMdEye } from "react-icons/io";
 import cities from '../../utils/cities.json';
 import divisions from '../../utils/divisions.json';
+import useUpperRoles from "../../hooks/useUpperRoles";
+
 
 const Main = () => {
   const [formData, setFormData] = useState({
+    employee_id: "",
     name: "",
     email: "",
     password: "",
     phone: "",
     role_id: null,
     supervisor_id: null,
+    supervisor_user_id: null,
     avatar: null,
     gender: "",
     reporting_role_id: null,
+    reporting_user_id: null,
     bio: "",
     date_of_joining: "",
     city: "",
@@ -30,11 +35,25 @@ const Main = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [phoneValid, setPhoneValid] = useState(false);
+  const [supervisorUsers, setSupervisorUsers] = useState([]);
+  const [reportingUsers, setReportingUsers] = useState([]);
+  const [upperRoles, setUpperRoles] = useState([]);
   const [selectedCity, setSelectedCity] = useState('');
+  const [selectedRole, setSelectedRole] = useState(0);
+  const [selectedSupervisorRole, setSelectedSupervisorRole] = useState(0);
 
   const formRef = useRef();
 
   const { data } = useGetRoleQuery({ pagination: 0 });
+
+  const { data: roleData, error: roleError, isLoading: roleIsLoading, refetch: refetchRoles  } = useGetUpperRolesQuery(selectedRole);
+  // const { data: roleUsers, error: roleUsersError, isLoading: roleUsersIsLoading, refetch: roleUsersRefetch } = useLazyGetUserWithRoleQuery(selectedSupervisorRole)
+
+
+  const { data: roleUsers, error: roleUsersError, isLoading: roleUsersIsLoading, refetch: refetchRoleUsers  } = useGetUserWithRoleQuery(selectedSupervisorRole);
+
+
+
 
   const [createUser, { isLoading, isError, isSuccess, error }] =
     useCreateUserMutation();
@@ -65,15 +84,18 @@ const Main = () => {
       toast.success("Data successfully stored!");
       formRef.current.reset();
       setFormData({
+        employee_id: "",
         name: "",
         email: "",
         password: "",
         phone: "",
         role_id: null,
         supervisor_id: null,
+        supervisor_user_id: null,
         avatar: null,
         gender: "",
         reporting_role_id: null,
+        reporting_user_id: null,
         bio: "",
         date_of_joining: "",
         city: "",
@@ -87,6 +109,21 @@ const Main = () => {
       toast.error("Something went wrong...");
     }
   }, [isSuccess, isError]);
+
+
+  useEffect(() => {
+    // Additional logic with the fetched data
+    setUpperRoles(roleData?.data);
+    console.log('Fetched data:', roleData?.data);
+  }, [roleData]);
+
+  useEffect(() => {
+
+   
+    // Additional logic with the fetched data
+    console.log('Fetched roleUsers:', roleUsers);
+    setSupervisorUsers(roleUsers?.data);
+  }, [roleUsers]);
 
 
   const handleMobileNumberChange = (e) => {
@@ -114,11 +151,71 @@ const Main = () => {
   };
 
 
+  const handleUserRole = (e) => {
+    const value = e.target.value;
+    console.log('all', value)
+
+    const { data } = useGetUpperRolesQuery(value);
+    console.log('all data', data)
+
+  }
+
+
+
+  console.log('=============formData=======================');
+  console.log(formData);
+  console.log('====================================');
+
+
   const handleCityChange = (e) => {
     setSelectedCity(e.target.value);
   };
+  
+  // const { data } = useGetUpperRolesQuery(2);
+  //     console.log('hello test', data);
 
-  console.log('formData', formData)
+  const updateState = async (id, name) => {
+    try {
+      console.log('updateState  id', id);
+      console.log('updateState  name', name);
+      if(name == 'role_id'){
+        setSelectedRole(id);
+        await refetchRoles(id);
+      }
+
+      if(name == 'supervisor_id'){
+        const payload = {
+          id: id,
+          pagination: 0
+        }
+        setSelectedSupervisorRole(payload);
+        await refetchRoleUsers(id);
+      }
+
+      if(name == 'reporting_role_id'){
+        const payload = {
+          id: id,
+          pagination: 0
+        }
+        setSelectedSupervisorRole(payload);
+        await refetchRoleUsers(id);
+      }
+      
+      
+
+      // setFormData({
+      //   ...formData,
+      //   [name]: id,
+      // });
+      
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  // console.log('upperRoles', upperRoles)
+  // console.log('upperRoles11', data?.data?.data?.data)
 
   return (
     <div>
@@ -128,6 +225,19 @@ const Main = () => {
         </p>
         <form className="mb-5" onSubmit={handleSubmit} ref={formRef}>
           <div className="md:flex lg:flex gap-10">
+
+          <div className="mb-5 w-full">
+              <p className="mb-2 text-[#646C9A]">Employee ID*</p>
+              <input
+                className={inputStyle}
+                type="text"
+                name="employee_id"
+                required
+                placeholder="Example: 100001"
+                onChange={handleInputChange}
+              />
+            </div>
+
             <div className="mb-5 w-full">
               <p className="mb-2 text-[#646C9A]">User Name*</p>
               <input
@@ -156,6 +266,49 @@ const Main = () => {
                 </p>
               )}
             </div>
+
+
+          </div>
+          <div className="md:flex lg:flex gap-10">
+          <div className="mb-5 w-full">
+          <p className="mb-2 text-[#646C9A]"> Mobile Number*</p>
+            <input
+              className={inputStyle}
+              type="text"
+              id="mobileNumber"
+              name="phone"
+              value={mobileNumber}
+              required
+              placeholder="Example: 01XXXXXXXXX"
+              onChange={handleMobileNumberChange}
+            />
+          
+
+            { phoneValid && isValid && (
+              <p style={{ color: 'green' }}>Valid mobile number format</p>
+            )}
+
+            {!isValid && (
+               <p style={{ color: 'red' }}>Invalid mobile number format</p>
+            )}
+          </div>
+
+ 
+            <div className="mb-5 w-full">
+              <p className="mb-2 text-[#646C9A]">Gender*</p>
+              <select
+                className={inputStyle}
+                required
+                name="gender"
+                onChange={handleInputChange}
+              >
+                <option value=""> Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="others">Others</option>
+              </select>
+            </div>
+
             <div className="mb-5 w-full relative">
               <p className="mb-2 text-[#646C9A]"> Password*</p>
               <input
@@ -186,106 +339,90 @@ const Main = () => {
                 </p>
               )}
             </div>
+
           </div>
           <div className="md:flex lg:flex gap-10">
-          <div className="mb-5 w-full">
-          <p className="mb-2 text-[#646C9A]"> Mobile Number*</p>
-            <input
-              className={inputStyle}
-              type="text"
-              id="mobileNumber"
-              name="phone"
-              value={mobileNumber}
-              required
-              placeholder="Example: 01XXXXXXXXX"
-              onChange={handleMobileNumberChange}
-            />
-          
 
-            { phoneValid && isValid && (
-              <p style={{ color: 'green' }}>Valid mobile number format</p>
-            )}
+          <div className="w-full mb-5">
+              <p className="mb-2 text-[#646C9A]">User Role*</p>
 
-            {!isValid && (
-               <p style={{ color: 'red' }}>Invalid mobile number format</p>
-            )}
-          </div>
-
-            {/* <div className="mb-5 w-full">
-              <p className="mb-2 text-[#646C9A]">User Mobile Number*</p>
-              <input
-                className={inputStyle}
-                type="text"
-                name="phone"
-                required
-                placeholder="Example: 01XXXXXXXXX"
-                onChange={handleInputChange}
-              />
-            </div> */}
-            <div className="mb-5 w-full">
-              <p className="mb-2 text-[#646C9A]">Gender*</p>
-              <select
+              {/* <select
                 className={inputStyle}
                 required
-                name="gender"
+                name="role_id"
                 onChange={handleInputChange}
               >
-                <option value=""> Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="others">Others</option>
-              </select>
-            </div>
-            <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Select Role*</p>
+                <option value="">Select Role</option>
+                {data?.data?.data?.data.map((option, i) => (
+                  <option key={i} value={option.id}>
+                    {option.name}
+                  </option>
+                ))}
+              
+              </select> */}
+
+
               <CommonDropDown
                 optionData={data?.data?.data?.data}
                 defaultOptionValue={formData?.role_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select a Role"
                 setFormData={setFormData}
+               // onChange={handleUserRole}
+                updateState = {updateState}
                 required={true}
                 name="role_id"
               />
+
+
             </div>
-          </div>
-          <div className="md:flex lg:flex gap-10">
+
+          {/* <div className="w-full mb-5">
+              <p className="mb-2 text-[#646C9A]">User Role*</p>
+              <CommonDropDown
+                optionData={data?.data?.data?.data}
+                defaultOptionValue={formData?.role_id}
+                defaultOptionLabel="name"
+                defaultCreateText="Select a Role"
+                // setFormData={setFormData}
+                onChange={handleUserRole}
+                required={true}
+                name="role_id"
+              />
+            </div> */}
+            
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]"> Supervisor</p>
               <CommonDropDown
-                optionData={data?.data?.data?.data}
+                optionData={upperRoles}
                 defaultOptionValue={formData?.supervisor_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select supervisor"
+                updateState = {updateState}
                 setFormData={setFormData}
                 required={false}
                 name="supervisor_id"
               />
             </div>
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Reporting To</p>
-              {console.log('uuuu', data?.data?.data?.data)}
+              <p className="mb-2 text-[#646C9A]">Supervisor Users</p>
               <CommonDropDown
-                optionData={data?.data?.data?.data}
-                defaultOptionValue={formData?.reporting_role_id}
+                optionData={supervisorUsers}
+                defaultOptionValue={formData?.supervisor_user_id}
                 defaultOptionLabel="name"
-                defaultCreateText="Select reporting person"
+                defaultCreateText="Select supervisor person"
                 setFormData={setFormData}
                 required={false}
-                name="reporting_role_id"
+                name="supervisor_user_id"
               />
             </div>
-            <div className="w-full mb-5">
+
+          </div>
+
+
+          <div className="md:flex lg:flex gap-10">
+          <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">User City*</p>
-              {/* <select id="city" value={selectedCity} onChange={handleCityChange}> */}
-                {/* <option value="">Select a city</option>
-                {cities.map((city, index) => (
-                  <option key={index} value={city}>
-                    {city}
-                  </option>
-                ))}
-              </select> */}
-              
 
               <CommonDropDown
                 optionData={cities}
@@ -297,16 +434,36 @@ const Main = () => {
                 name="city"
               />
               {selectedCity && <p style={{ color: 'green' }}>You selected: {selectedCity}</p>}
-              {/* <input
-                className={inputStyle}
-                type="text"
-                name="city"
-                required
-                placeholder="Example: Dhaka"
-                onChange={handleInputChange}
-              /> */}
+
+            </div>
+            <div className="w-full mb-5">
+              <p className="mb-2 text-[#646C9A]">Reporting To</p>
+              <CommonDropDown
+                optionData={upperRoles}
+                defaultOptionValue={formData?.reporting_role_id}
+                defaultOptionLabel="name"
+                defaultCreateText="Select reporting person"
+                setFormData={setFormData}
+                updateState = {updateState}
+                required={false}
+                name="reporting_role_id"
+              />
+            </div>
+            <div className="mb-5 w-full">
+              <p className="mb-2 text-[#646C9A]">Reporting Users*</p>
+              <CommonDropDown
+                optionData={supervisorUsers}
+                defaultOptionValue={formData?.reporting_user_id}
+                defaultOptionLabel="name"
+                defaultCreateText="Select reporting person"
+                setFormData={setFormData}
+                required={false}
+                name="reporting_user_id"
+              />
             </div>
           </div>
+
+          
           <div className="md:flex lg:flex gap-10">
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">User Division*</p>
@@ -340,7 +497,7 @@ const Main = () => {
               />
             </div>
             <div className="mb-5 w-full">
-              <p className="mb-2 text-[#646C9A]">User Status*</p>
+              <p className="mb-2 text-[#646C9A]"> Status*</p>
               <select
                 className={inputStyle}
                 required

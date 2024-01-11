@@ -16,6 +16,7 @@ const CommonDropDown = ({
   name,
   defaultCreateText,
   required,
+  updateState
 }) => {
   const [mainData, setMainData] = useState([]);
   const [showOption, setShowOption] = useState(false);
@@ -54,7 +55,15 @@ const CommonDropDown = ({
     }
   }, [searchInput]);
 
-  const handleClick = (e) => {
+  
+
+  const handleClick = async(e) => {
+
+    if(name == 'role_id' || name == 'supervisor_id' || name == 'reporting_role_id'){
+
+      await updateState(e.id, name)
+
+    }
     setSelectedOption(e[defaultOptionLabel]);
     setFormData((prev) => {
       return {

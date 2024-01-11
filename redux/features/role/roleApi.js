@@ -13,7 +13,7 @@ const roleApi = api.injectEndpoints({
     getRole: builder.query({
       query: (id) => ({
         url: `/roles?pagination=${id?.pagination}${
-          id?.page && "&page=" + id?.page
+          id?.page && "&page=" + id?.page 
         }${id?.search && "&search=" + id?.search}`,
         method: "GET",
       }),
@@ -37,7 +37,7 @@ const roleApi = api.injectEndpoints({
     }),
     getUserWithRole: builder.query({
       query: (id) => ({
-        url: `/role/users?id=${id?.id}&pagination=1&page=${id?.page}${
+        url: `/role/users?id=${id?.id}&pagination=${id?.pagination}&page=${id?.page}${
           id?.search !== "" && `&search=${id?.search}`
         }`,
         method: "GET",
@@ -59,6 +59,13 @@ const roleApi = api.injectEndpoints({
       }),
       invalidatesTags: ["role"],
     }),
+    getUpperRoles: builder.query({
+      query: (id) => ({
+        url: `/roles/upper-roles?role_id=${id}`,
+        method: "GET",
+      }),
+      providesTags: ["role"],
+    }),
   }),
 });
 
@@ -70,4 +77,8 @@ export const {
   useLazyGetUserWithRoleQuery,
   useGetUserWithoutRoleQuery,
   useUserRoleRemoveMutation,
+  useGetUpperRolesQuery,
+  useGetUserWithRoleQuery
 } = roleApi;
+
+export default roleApi;

@@ -39,12 +39,15 @@ const SurveyReport = () => {
           <CustomTable
             headers={[
               { key: "date", label: "Date" },
-              { key: "surveySubmittedUserName", label: "Submitted By" },
+              { key: "surveySubmittedUserName", label: "Name" },
               {
                 key: "surveySubmittedUserPhone",
-                label: "Submitted User Mobile",
+                label: "Mobile Number",
               },
-              { key: "binHolderName", label: "BIN Holder Name" },
+              { key: "role", label: "Role" },
+              { key: "supervisor", label: "Supervisor" },
+              { key: "binNumber", label: "BIN Number" },
+              { key: "binHolderName", label: "BIN Holder" },
               { key: "binHolderMobile", label: "BIN Holder Mobile" },
               { key: "division", label: "Division" },
               { key: "subDivision", label: "Sub Division" },
@@ -57,15 +60,10 @@ const SurveyReport = () => {
               { key: "outletAddress", label: "Outlet Address" },
               { key: "category", label: "Category" },
               { key: "subCategory", label: "Sub Category" },
-              { key: "numberOfOutlet", label: "Number of Outlet" },
-              { key: "numberOfCounter", label: "Number of Counter" },
               { key: "transactionType", label: "Transaction Type" },
-              { key: "monthlyAverageSales", label: "Monthly Average Sales" },
-              {
-                key: "monthlyAverageCustomer",
-                label: "Monthly Average Customer",
-              },
+              
               { key: "onlineSaleAvailable", label: "Online Sale Available" },
+              { key: "weeklyHoliday", label: "Weekly Holiday" },
               { key: "action", label: "Action" },
             ]}
             data={data?.data}
