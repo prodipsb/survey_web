@@ -6,7 +6,6 @@ import toast from "react-hot-toast";
 import { IoIosEyeOff, IoMdEye } from "react-icons/io";
 import cities from '../../utils/cities.json';
 import divisions from '../../utils/divisions.json';
-import useUpperRoles from "../../hooks/useUpperRoles";
 
 
 const Main = () => {
