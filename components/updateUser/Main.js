@@ -7,6 +7,10 @@ import toast from "react-hot-toast";
 import Image from "next/image";
 import cities from '../../utils/cities.json';
 import divisions from '../../utils/divisions.json';
+import countries from '../../utils/countries.json';
+import zones from '../../utils/zones.json';
+import commissionerate from '../../utils/commissionerate.json';
+import {circleData, subdivision} from '../../utils/divisionCircle';
 import moment from "moment";
 
 
@@ -16,7 +20,6 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
     useCreateUserMutation();
 
 
-
     const [mobileNumber, setMobileNumber] = useState('');
     const [isValid, setIsValid] = useState(true);
     const [phoneValid, setPhoneValid] = useState(false);
@@ -24,6 +27,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
     const [upperRoles, setUpperRoles] = useState([]);
     const [selectedRole, setSelectedRole] = useState(0);
     const [selectedSupervisorRole, setSelectedSupervisorRole] = useState(0);
+    const [chnagePassword, setChangePassword] = useState(false);
 
 
     const { data: roleData, error: roleError, isLoading: roleIsLoading, refetch: refetchRoles  } = useGetUpperRolesQuery(selectedRole);
@@ -146,6 +150,13 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
   };
 
 
+  const handleChangePassword = (e) => {
+
+    e.target.value == "Yes" ? setChangePassword(true) : setChangePassword(false)
+
+  }
+
+
   return (
     <div>
       <div className="mt-5 w-[90%] mx-auto text-[13px] border-b-blue-300 pb-5">
@@ -180,7 +191,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
               />
             </div>
             <div className="mb-5 w-full">
-              <p className="mb-2 text-[#646C9A]">User Name*</p>
+              <p className="mb-2 text-[#646C9A]"> Name*</p>
               <input
                 className={inputStyle}
                 type="text"
@@ -192,7 +203,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
               />
             </div>
             <div className="mb-5 w-full">
-              <p className="mb-2 text-[#646C9A]">User Email*</p>
+              <p className="mb-2 text-[#646C9A]"> Email*</p>
               <input
                 className={inputStyle}
                 type="email"
@@ -208,7 +219,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
           </div>
           <div className="md:flex lg:flex gap-10">
           <div className="mb-5 w-full">
-          <p className="mb-2 text-[#646C9A]"> Mobile Number*</p>
+          <p className="mb-2 text-[#646C9A]"> Phone*</p>
             <input
               className={inputStyle}
               type="text"
@@ -260,7 +271,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
           <div className="md:flex lg:flex gap-10">
 
           <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Select Role*</p>
+              <p className="mb-2 text-[#646C9A]"> Role*</p>
               <CommonDropDown
                 optionData={data?.data?.data?.data}
                 defaultOptionValue={userEdit?.role_id}
@@ -276,7 +287,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">Supervisor</p>
               <CommonDropDown
-                optionData={upperRoles}
+                optionData={data?.data?.data?.data}
                 defaultOptionValue={userEdit?.supervisor_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select supervisor"
@@ -288,7 +299,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
             </div>
 
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Select Supervisor User</p>
+              <p className="mb-2 text-[#646C9A]"> Supervisor User</p>
               <CommonDropDown
                 optionData={supervisorUsers}
                 defaultOptionValue={userEdit?.supervisor_user_id}
@@ -304,7 +315,7 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
           </div>
           <div className="md:flex lg:flex gap-10">
 
-          <div className="w-full mb-5">
+          {/* <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">User Location*</p>
               <input
                 className={inputStyle}
@@ -315,32 +326,46 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
                 placeholder="Example: Dhaka"
                 onChange={handleInputChange}
               />
-            </div>
+            </div> */}
 
           <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Reporting To</p>
+              <p className="mb-2 text-[#646C9A]">Country</p>
               <CommonDropDown
-                optionData={upperRoles}
-                defaultOptionValue={userEdit?.reporting_role_id}
+                optionData={countries}
+                defaultOptionValue={userEdit?.country}
                 defaultOptionLabel="name"
-                defaultCreateText="Select reporting person"
+                defaultCreateText="Select country"
                 setFormData={setUserEdit}
                 updateState = {updateState}
                 required={false}
-                name="reporting_role_id"
+                name="country"
+              />
+            </div>
+
+          <div className="w-full mb-5">
+              <p className="mb-2 text-[#646C9A]">Zone</p>
+              <CommonDropDown
+                optionData={zones}
+                defaultOptionValue={userEdit?.zone}
+                defaultOptionLabel="name"
+                defaultCreateText="Select zone"
+                setFormData={setUserEdit}
+                updateState = {updateState}
+                required={false}
+                name="zone"
               />
             </div>
 
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Reporting Users</p>
+              <p className="mb-2 text-[#646C9A]">Commissionerate</p>
               <CommonDropDown
-                optionData={supervisorUsers}
-                defaultOptionValue={userEdit?.reporting_user_id}
+                optionData={commissionerate}
+                defaultOptionValue={userEdit?.commissionerate}
                 defaultOptionLabel="name"
-                defaultCreateText="Select reporting person"
+                defaultCreateText="Select Commissionerate"
                 setFormData={setUserEdit}
                 required={false}
-                name="reporting_user_id"
+                name="commissionerate"
               />
             </div>
 
@@ -350,31 +375,11 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
           <div className="md:flex lg:flex gap-10">
 
 
-          <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">User City*</p>
-              <CommonDropDown
-                optionData={cities}
-                defaultOptionValue={userEdit?.city}
-                defaultOptionLabel="name"
-                defaultCreateText="Select City"
-                setFormData={setUserEdit}
-                required={true}
-                name="city"
-              />
-              {/* <input
-                className={inputStyle}
-                type="text"
-                name="city"
-                value={userEdit?.city}
-                required
-                placeholder="Example: Dhaka"
-                onChange={handleInputChange}
-              /> */}
-            </div>
+          
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">User Division*</p>
+              <p className="mb-2 text-[#646C9A]"> Division*</p>
               <CommonDropDown
-                optionData={divisions}
+                optionData={subdivision[userEdit.commissionerate]}
                 defaultOptionValue={userEdit?.division}
                 defaultOptionLabel="name"
                 defaultCreateText="Select Division"
@@ -392,8 +397,40 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
                 onChange={handleInputChange}
               /> */}
             </div>
-            <div className="mb-5 w-full">
-              <p className="mb-2 text-[#646C9A]">User Status</p>
+
+            <div className="w-full mb-5">
+              <p className="mb-2 text-[#646C9A]">Circle*</p>
+              <CommonDropDown
+                optionData={circleData[userEdit?.division]}
+                defaultOptionValue={userEdit?.circle}
+                defaultOptionLabel="name"
+                defaultCreateText="Select Circle"
+                setFormData={setUserEdit}
+                required={true}
+                name="circle"
+              />
+            </div>
+
+            <div className="w-full mb-5">
+              <p className="mb-2 text-[#646C9A]">Address</p>
+              <textarea
+                className={inputStyle}
+                type="text"
+                rows={1}
+                value={userEdit?.address}
+                name="address"
+                placeholder="Example: user address"
+                onChange={handleInputChange}
+              />
+            </div>
+           
+          
+          </div>
+
+          <div className="md:flex lg:flex gap-10">
+
+          <div className="mb-5 w-full">
+              <p className="mb-2 text-[#646C9A]"> Status</p>
               <select
                 className={inputStyle}
                 name="status"
@@ -406,16 +443,8 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
               </select>
             </div>
 
-           
-           
-           
-          
-          </div>
-
-          <div className="md:flex lg:flex gap-10">
-
           <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">User Bio</p>
+              <p className="mb-2 text-[#646C9A]"> Bio</p>
               <textarea
                 className={inputStyle}
                 type="text"
@@ -440,9 +469,52 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
               />
             </div>
 
-            <div className="w-full mb-5"></div>
+            {/* <div className="w-full mb-5"></div> */}
 
           </div>
+
+          <div className="md:flex lg:flex gap-10">
+
+          <div className="mb-5 w-full">
+              <p className="mb-2 text-[#646C9A]"> Change Password</p>
+              <select
+                className={inputStyle}
+                value={userEdit?.gender}
+                name="change_password"
+                onChange={handleChangePassword}
+              >
+                <option value="">Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+          </div>
+
+            {chnagePassword ? (
+
+            <div className="mb-5 w-full">
+              <p className="mb-2 text-[#646C9A]"> Password</p>
+              <input
+                className={inputStyle}
+                type="password"
+                name="password"
+                value={userEdit?.password}
+                placeholder="password"
+                onChange={handleInputChange}
+              />
+            </div>
+
+            ) : (
+              <div className="mb-5 w-full"></div>
+            )}
+            
+          
+          
+
+            <div className="mb-5 w-full"></div>
+
+            </div>
+
+
           <div className="flex justify-center gap-3 mt-5">
             <button
               disabled={isLoading}

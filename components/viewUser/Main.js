@@ -13,7 +13,7 @@ const ViewUser = ({ userView, setUserView }) => {
               ? `${process.env.NEXT_PUBLIC_IMAGE + userView?.avatar}`
               : user
           }
-          alt=""
+          alt="user avatar"
           height={150}
           width={150}
           className="border rounded-full mx-auto shadow-md"
@@ -23,56 +23,74 @@ const ViewUser = ({ userView, setUserView }) => {
         </p>
         <div className="mb-5 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
           <p className="mb-2 text-[#646C9A]">
-            <span className="font-bold text-[14px]">User Email: </span>
+            <span className="font-bold text-[14px]">Employee ID : </span>
+            {userView?.employee_id}
+          </p>
+          <p className="mb-2 text-[#646C9A]">
+            <span className="font-bold text-[14px]"> Email : </span>
             {userView?.email}
           </p>
           <p className="mb-2 text-[#646C9A]">
-            <span className="font-bold text-[14px]">Mobile: </span>
+            <span className="font-bold text-[14px]">Phone : </span>
             {userView?.phone}
           </p>
+         
           <p className="mb-2 text-[#646C9A]">
-            <span className="font-bold text-[14px]">Gender: </span>
-            {userView?.gender}
-          </p>
-          <p className="mb-2 text-[#646C9A]">
-            <span className="font-bold text-[14px]">Role: </span>
+            <span className="font-bold text-[14px]">Role : </span>
             {userView?.role?.name}
           </p>
+          {userView?.supervisor?.role?.name && (
+            <p className="mb-2 text-[#646C9A]">
+              <span className="font-bold text-[14px]">Supervisor : </span>
+              {userView?.supervisor?.role?.name}
+            </p>
+          )}
           {userView?.supervisor?.name && (
             <p className="mb-2 text-[#646C9A]">
-              <span className="font-bold text-[14px]">Supervisor: </span>
+              <span className="font-bold text-[14px]">Supervisor Name : </span>
               {userView?.supervisor?.name}
             </p>
           )}
-          {userView?.reporting_to?.name && (
+       
+          <p className="mb-2 text-[#646C9A]">
+            <span className="font-bold text-[14px]">Country : </span>
+            {userView?.country}
+          </p>
+          {userView?.zone && (
             <p className="mb-2 text-[#646C9A]">
-              <span className="font-bold text-[14px]">Reporting to: </span>
-              {userView?.reporting_to?.name}
+              <span className="font-bold text-[14px]">Zone : </span>
+              {userView?.zone}
             </p>
           )}
-          <p className="mb-2 text-[#646C9A]">
-            <span className="font-bold text-[14px]">City: </span>
-            {userView?.city}
-          </p>
           <p className="mb-2 text-[#646C9A]">
             <span className="font-bold text-[14px]">Division: </span>
             {userView?.division}
           </p>
           <p className="mb-2 text-[#646C9A]">
-            <span className="font-bold text-[14px]">Location: </span>
-            {userView?.location}
+            <span className="font-bold text-[14px]">Circle: </span>
+            {userView?.circle}
+          </p>
+          {userView?.address && (
+          <p className="mb-2 text-[#646C9A]">
+            <span className="font-bold text-[14px]">Address: </span>
+            {userView?.address}
+          </p>
+          )}
+          <p className="mb-2 text-[#646C9A]">
+            <span className="font-bold text-[14px]">Gender: </span>
+            {userView?.gender}
           </p>
           <p className="mb-2 text-[#646C9A]">
             <span className="font-bold text-[14px]">Status: </span>
             {userView?.status}
           </p>
           <p className="mb-2 text-[#646C9A]">
-            <span className="font-bold text-[14px]">Bio: </span>
-            {userView?.bio}
-          </p>
-          <p className="mb-2 text-[#646C9A]">
             <span className="font-bold text-[14px]">Join date: </span>
             {moment(userView?.date_of_joining).format("DD-MM-YYYY")}
+          </p>
+          <p className="mb-2 text-[#646C9A]">
+            <span className="font-bold text-[14px]">Bio: </span>
+            {userView?.bio}
           </p>
         </div>
         <div className="flex justify-center mt-5">

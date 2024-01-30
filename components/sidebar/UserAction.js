@@ -87,13 +87,30 @@ const UserAction = ({ userData }) => {
               ) : (
                 <FaUserCircle size={30} />
               )}
-              <p className="text-[15px] font-bold text-white">
-                {userData?.name}
-              </p>
+
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <p className="text-[16px] font-bold text-white">
+                  {userData?.name}
+                </p>
+                <p className="text-[13px] font-bold text-white">
+                  {userData?.role?.name}
+                </p>
+              </div>
+
+              
             </Link>
           </div>
           <div className="border-b-[1px]">
-            <div className="w-[90%] mx-auto my-5">
+            <div className="w-[90%] mx-auto my-3">
+              <Link
+                className="text-[13px] cursor-pointer font-bold text-[#6c7293]"
+                href="/profile"
+                onClick={() => setShowUserAction(false)}
+              >
+                Edit Profile
+              </Link>
+            </div>
+            <div className="w-[90%] mx-auto my-2">
               <Link
                 className="text-[13px] cursor-pointer font-bold text-[#6c7293]"
                 href="/change-password"

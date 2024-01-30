@@ -3,6 +3,7 @@ import AuthCheck from "../../components/authCheck/AuthCheck";
 import {
   useDeleteUserMutation,
   useGetUserQuery,
+  useStatusUserMutation,
 } from "../../redux/features/user/userApi";
 import CustomTable from "../../components/common/table/CustomTable";
 import { Pagination } from "@mui/material";
@@ -10,15 +11,21 @@ import Swal from "sweetalert2";
 import UpdateUser from "../../components/updateUser/Main";
 import ViewUser from "../../components/viewUser/Main";
 import Export from "../../components/common/export/Export";
+import ImportUserModel from "../../components/ImportUserModal/Main";
 
 const UserList = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState(null);
   const { data } = useGetUserQuery({ page: page, search: search });
-  console.log('user data', data)
+  
   const [userEdit, setUserEdit] = useState(null);
   const [userView, setUserView] = useState(null);
-  const [deleteUser] = useDeleteUserMutation();
+  const [visible, setVisible] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  // const [showImport, setShowImport] = useState(false);
+  
+  const [userStatus] = useStatusUserMutation();
+
   const handleClick = (name, data) => {
     if (name === "view") {
       setUserView(data);
@@ -41,12 +48,19 @@ const UserList = () => {
         }
       });
     }
+    if (name === "status") {
+      console.log('sss', { id: data?.id })
+        userStatus({ id: data?.id });
+    }
   };
 
   const handleChange = (event, value) => {
     console.log('page', page)
     setPage(value);
   };
+
+
+  console.log('showPopup', showPopup);
 
   return (
     <>
@@ -59,9 +73,11 @@ const UserList = () => {
           <h1 className="font-bold text-[#646C9A] text-[24px] mt-5 mb-5">
             User List
           </h1>
-          <Export setSearch={setSearch} expUrl="/users" />
+          <Export setSearch={setSearch} expUrl="/users" setVisible={setVisible}/>
           <CustomTable
             headers={[
+              // { key: "id", label: "SI. No." },
+              { key: "employee_id", label: "Employee ID" },
               {
                 label: "Name",
                 nested: {
@@ -69,17 +85,21 @@ const UserList = () => {
                   avatar: "avatar",
                 },
               },
-              { key: "phone", label: "Mobile" },
               { key: "email", label: "Email" },
+              { key: "phone", label: "Phone" },
               { key: "role", label: "Role", nested: "name" },
-              { key: "supervisor", label: "Supervisor", nested: "name" },
-              { key: "report_to", label: "Reporting To", nested: "name" },
-              { key: "location", label: "Location" },
-              { key: "city", label: "City" },
-              { key: "division", label: "Division" },
-              { key: "last_login", label: "Last Login" },
-              { key: "last_logout", label: "Last Logout" },
+              { key: "supervisor_role", label: "Supervisor", nested: "name"},
+              { key: "supervisor", label: "Supervisor Name", nested: "name" },
+              { key: "gender", label: "Gender" },
               { key: "date_of_joining", label: "Date of Joining" },
+              { key: "country", label: "Country" },
+              { key: "zone", label: "Zone" },
+              { key: "commissionerate", label: "Commissionerate" },
+              { key: "division", label: "Division" },
+              { key: "circle", label: "Circle" },
+              { key: "address", label: "Address" },
+              // { key: "last_login", label: "Last Login" },
+              // { key: "last_logout", label: "Last Logout" },
               { key: "status", label: "Status" },
               
               { key: "action", label: "Action" },
@@ -87,7 +107,7 @@ const UserList = () => {
             data={data?.data?.data}
             viewData={true}
             editData={true}
-            deleteData={true}
+            statusData={true}
             click={handleClick}
           />
           <div className="flex lg:justify-between md:justify-between lg:flex-row md:flex-row flex-col items-center gap-y-5 mt-5 pb-5">
@@ -101,6 +121,7 @@ const UserList = () => {
           </div>
         </div>
       )}
+       {visible && <ImportUserModel setShowPopup={setShowPopup} />}
     </>
   );
 };

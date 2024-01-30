@@ -61,6 +61,22 @@ const userApi = api.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+    statusUser: builder.mutation({
+      query: (data) => ({
+        url: "/user-status",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["user"],
+    }),
+    importUser: builder.mutation({
+      query: (data) => ({
+        url: "/user-import",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
@@ -71,4 +87,6 @@ export const {
   useDeleteUserMutation,
   useGetAllUserQuery,
   useUserProfileQuery,
+  useStatusUserMutation,
+  useImportUserMutation
 } = userApi;

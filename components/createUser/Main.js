@@ -4,8 +4,11 @@ import { useGetRoleQuery, useGetUpperRolesQuery, useGetUserWithRoleQuery } from 
 import { useCreateUserMutation } from "../../redux/features/user/userApi";
 import toast from "react-hot-toast";
 import { IoIosEyeOff, IoMdEye } from "react-icons/io";
+import countries from '../../utils/countries.json';
+import commissionerate from '../../utils/commissionerate.json';
 import cities from '../../utils/cities.json';
-import divisions from '../../utils/divisions.json';
+import zones from '../../utils/zones.json';
+import {circleData, subdivision} from '../../utils/divisionCircle';
 
 
 const Main = () => {
@@ -20,13 +23,16 @@ const Main = () => {
     supervisor_user_id: null,
     avatar: null,
     gender: "",
-    reporting_role_id: null,
-    reporting_user_id: null,
     bio: "",
     date_of_joining: "",
-    city: "",
+    country: "",
+    zone: "",
+    commissionerate: "",
     division: "",
-    location: "",
+    circle: "",
+    address: "",
+    longitude:"",
+    latitude:"",
     status: "",
   });
   const [mobileNumber, setMobileNumber] = useState('');
@@ -93,13 +99,16 @@ const Main = () => {
         supervisor_user_id: null,
         avatar: null,
         gender: "",
-        reporting_role_id: null,
-        reporting_user_id: null,
         bio: "",
         date_of_joining: "",
-        city: "",
+        country: "",
+        zone: "",
+        commissionerate: '',
         division: "",
-        location: "",
+        circle: "",
+        address: "",
+        longitude:"",
+        latitude:"",
         status: "",
       });
     }
@@ -188,8 +197,9 @@ const Main = () => {
     }
   };
 
-   console.log('formData', formData)
-  // console.log('upperRoles11', data?.data?.data?.data)
+  //  console.log('formData', formData)
+  //  console.log('formData commissionerate', formData.commissionerate)
+//  console.log('subdivision', subdivision[formData.commissionerate])
 
   return (
     <div>
@@ -213,7 +223,7 @@ const Main = () => {
             </div>
 
             <div className="mb-5 w-full">
-              <p className="mb-2 text-[#646C9A]">User Name*</p>
+              <p className="mb-2 text-[#646C9A]"> Name*</p>
               <input
                 className={inputStyle}
                 type="text"
@@ -245,7 +255,7 @@ const Main = () => {
           </div>
           <div className="md:flex lg:flex gap-10">
           <div className="mb-5 w-full">
-          <p className="mb-2 text-[#646C9A]"> Mobile Number*</p>
+          <p className="mb-2 text-[#646C9A]"> Phone*</p>
             <input
               className={inputStyle}
               type="text"
@@ -318,7 +328,7 @@ const Main = () => {
           <div className="md:flex lg:flex gap-10">
 
           <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">User Role*</p>
+              <p className="mb-2 text-[#646C9A]"> Role*</p>
 
               {/* <select
                 className={inputStyle}
@@ -379,7 +389,7 @@ const Main = () => {
               />
             </div>
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Supervisor Users</p>
+              <p className="mb-2 text-[#646C9A]">Supervisor Name</p>
               <CommonDropDown
                 optionData={supervisorUsers}
                 defaultOptionValue={formData?.supervisor_user_id}
@@ -396,53 +406,62 @@ const Main = () => {
 
           <div className="md:flex lg:flex gap-10">
           <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">User City*</p>
+              <p className="mb-2 text-[#646C9A]"> Country*</p>
 
               <CommonDropDown
-                optionData={cities}
-                defaultOptionValue={formData?.city}
+                optionData={countries}
+                defaultOptionValue={formData?.country}
                 defaultOptionLabel="name"
-                defaultCreateText="Select City"
+                defaultCreateText="Select Country"
                 setFormData={setFormData}
                 required={true}
-                name="city"
+                name="country"
               />
               {selectedCity && <p style={{ color: 'green' }}>You selected: {selectedCity}</p>}
 
             </div>
+
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Reporting To</p>
+              <p className="mb-2 text-[#646C9A]"> Zone*</p>
+
               <CommonDropDown
-                optionData={upperRoles}
-                defaultOptionValue={formData?.reporting_role_id}
+                optionData={zones}
+                defaultOptionValue={formData?.zone}
                 defaultOptionLabel="name"
-                defaultCreateText="Select reporting person"
+                defaultCreateText="Select Zone"
                 setFormData={setFormData}
-                updateState = {updateState}
-                required={false}
-                name="reporting_role_id"
+                required={true}
+                name="zone"
               />
+              {selectedCity && <p style={{ color: 'green' }}>You selected: {selectedCity}</p>}
+
             </div>
-            <div className="mb-5 w-full">
-              <p className="mb-2 text-[#646C9A]">Reporting Users*</p>
+
+            <div className="w-full mb-5">
+              <p className="mb-2 text-[#646C9A]"> Commissionerate*</p>
+
               <CommonDropDown
-                optionData={supervisorUsers}
-                defaultOptionValue={formData?.reporting_user_id}
+                optionData={commissionerate}
+                defaultOptionValue={formData?.commissionerate}
                 defaultOptionLabel="name"
-                defaultCreateText="Select reporting person"
+                defaultCreateText="Select Commissionerate"
                 setFormData={setFormData}
-                required={false}
-                name="reporting_user_id"
+                required={true}
+                name="commissionerate"
               />
+              {selectedCity && <p style={{ color: 'green' }}>You selected: {selectedCity}</p>}
+
             </div>
+
+   
           </div>
 
           
           <div className="md:flex lg:flex gap-10">
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">User Division*</p>
+              <p className="mb-2 text-[#646C9A]"> Division*</p>
               <CommonDropDown
-                optionData={divisions}
+                optionData={subdivision[formData.commissionerate]}
                 defaultOptionValue={formData?.division}
                 defaultOptionLabel="name"
                 defaultCreateText="Select Division"
@@ -459,8 +478,30 @@ const Main = () => {
                 onChange={handleInputChange}
               /> */}
             </div>
+
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">User Location*</p>
+              <p className="mb-2 text-[#646C9A]"> Circle*</p>
+              <CommonDropDown
+                optionData={circleData[formData?.division]}
+                defaultOptionValue={formData?.circle}
+                defaultOptionLabel="name"
+                defaultCreateText="Select Circle"
+                setFormData={setFormData}
+                required={true}
+                name="circle"
+              />
+              {/* <input
+                className={inputStyle}
+                type="text"
+                name="division"
+                required
+                placeholder="Example: Dhaka"
+                onChange={handleInputChange}
+              /> */}
+            </div>
+
+            {/* <div className="w-full mb-5">
+              <p className="mb-2 text-[#646C9A]"> Circle*</p>
               <input
                 className={inputStyle}
                 type="text"
@@ -469,8 +510,22 @@ const Main = () => {
                 placeholder="Example: Dhaka"
                 onChange={handleInputChange}
               />
+            </div> */}
+            <div className="w-full mb-5">
+              <p className="mb-2 text-[#646C9A]"> Address</p>
+              <textarea
+                className={inputStyle}
+                type="text"
+                rows={1}
+                name="address"
+                placeholder="Example: user address"
+                onChange={handleInputChange}
+              />
             </div>
-            <div className="mb-5 w-full">
+            
+          </div>
+          <div className="md:flex lg:flex gap-10">
+          <div className="mb-5 w-full">
               <p className="mb-2 text-[#646C9A]"> Status*</p>
               <select
                 className={inputStyle}
@@ -483,21 +538,8 @@ const Main = () => {
                 <option value="Inactive">Inactive</option>
               </select>
             </div>
-          </div>
-          <div className="md:flex lg:flex gap-10">
             <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">User Bio</p>
-              <textarea
-                className={inputStyle}
-                type="text"
-                rows={1}
-                name="bio"
-                placeholder="Example: user information"
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Join Date*</p>
+              <p className="mb-2 text-[#646C9A]">Date of Joining*</p>
               <input
                 className={inputStyle}
                 type="date"
@@ -506,8 +548,23 @@ const Main = () => {
                 onChange={handleInputChange}
               />
             </div>
-            <div className="mb-5 w-full">
-              <p className="mb-2 text-[#646C9A]">User Image</p>
+
+            <div className="w-full mb-5">
+              <p className="mb-2 text-[#646C9A]"> Bio</p>
+              <textarea
+                className={inputStyle}
+                type="text"
+                rows={1}
+                name="bio"
+                placeholder="Example: user bio"
+                onChange={handleInputChange}
+              />
+            </div>
+
+          </div>
+          <div className="md:flex lg:flex gap-10">
+          <div className="mb-5 w-full">
+              <p className="mb-2 text-[#646C9A]">Avatar</p>
               <input
                 className="relative bg-white m-0 block w-full min-w-0 flex-auto rounded-md border border-solid border-gray-300 bg-clip-padding py-2 px-3 text-base font-normal text-[#AFABC3] transition duration-300 ease-in-out file:-mx-3 file:-my-2 file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-2 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-primary focus:border-blue-300"
                 type="file"
@@ -515,6 +572,8 @@ const Main = () => {
                 onChange={handleInputChange}
               />
             </div>
+            <div className="mb-5 w-full"></div>
+            <div className="mb-5 w-full"></div>
           </div>
           <div className="flex justify-center mt-5">
             <button

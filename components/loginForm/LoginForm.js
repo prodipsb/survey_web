@@ -36,13 +36,23 @@ const LoginForm = ({ setForgotPassword }) => {
       dispatch(userLogin(data));
       router.push(router?.query?.redirect ? router?.query?.redirect : "/");
     }
-    if (data?.email || data?.password) {
-      toast.error("Credential missmatch...");
+    if (data?.status == "error") {
+      toast.error(data?.message);
     }
+    // if (data?.email || data?.password) {
+    //   toast.error("Credential missmatch...");
+    // }
     if (error) {
       toast.error(error?.data?.message);
     }
   }, [data, error]);
+
+
+  const handleAppDownload = () => {
+    const url = 'https://play.google.com/store/apps/details?id=com.surveyMaster';
+    window.open(url, '_blank'); // Open the link in a new tab/window
+    // Alternatively, you can use history.push(url) if you're using React Router for navigation
+  };
 
   return (
     <div>
@@ -111,7 +121,7 @@ const LoginForm = ({ setForgotPassword }) => {
               Download Our Apps
             </p>
             <div className="flex justify-center w-[80%] mx-auto pt-5">
-              <button className="w-[45%] border-[#2dbdb6] border-[1px] pt-1 pb-1 text-[#2dbdb6] flex justify-center items-center rounded-md font-thin hover:bg-[#2dbdb6] hover:text-white">
+              <button onClick={handleAppDownload} className="w-[45%] border-[#2dbdb6] border-[1px] pt-1 pb-1 text-[#2dbdb6] flex justify-center items-center rounded-md font-thin hover:bg-[#2dbdb6] hover:text-white">
                 <AiFillAndroid /> <span className="ml-2">ANDROID</span>
               </button>
             </div>

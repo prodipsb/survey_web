@@ -10,7 +10,7 @@ function DashboardHeader({userStats}) {
         <Image
           src={background}
           alt="background"
-          className="w-screen lg:h-[128px] md:h-[235px] h-[350px]"
+          className="w-screen lg:h-[235px] md:h-[235px] h-[350px]"
           quality={100}
         />
       </div>

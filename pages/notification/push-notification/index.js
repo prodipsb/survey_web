@@ -1,128 +1,127 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useGetGeneralSettingQuery } from "../../../redux/features/generalSetting/generalSettingApi";
-import toast from "react-hot-toast";
+import React, { useRef, useState } from "react";
 import AuthCheck from "../../../components/authCheck/AuthCheck";
-import Multiselect from "multiselect-react-dropdown";
-import { useGetDevicetokenQuery } from "../../../redux/features/pushNotification/pushNotificationApi";
+import CustomTable from "../../../components/common/table/CustomTable";
+import { Pagination } from "@mui/material";
+import Swal from "sweetalert2";
+import { useRouter } from 'next/router';
+import { useDeletePushNotificationMutation, useGetAllPushNotificationQuery } from "../../../redux/features/pushNotification/pushNotificationApi";
+import ViewPushNotification from "../../../components/viewPushNotification/Main";
 
-const PushNotification = () => {
-  const { data, loading } = useGetDevicetokenQuery();
-  const [messageTo, setMessageTo] = useState(null);
-  const [isLoading, setIsloading] = useState(false);
-  const [formData, setFormData] = useState({
-    title: "",
-    body: "",
-    image:`${process.env.NEXT_PUBLIC_IMAGE}/assets/notification-bell.png`,
-    content_available: true
-  });
 
-  const formRef = useRef();
 
-  const inputStyle =
-    "border border-[#e2e5ec] outline-none focus:border-blue-300 placeholder:text-[#AFABC3] text-sm text-black rounded-md w-full p-2.5 bg-white";
+const SurveyNotification = () => {
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
+  // const { data } = useGetAllNotificationQuery({ page: page, search: search });
+  const { data } = useGetAllPushNotificationQuery({ page: page, search: search });
+  const [viewUserNotification, setViewUserNotification] = useState(null);
+  const [deletePushNotification] = useDeletePushNotificationMutation();
 
-  const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  // Get the router object
+  const router = useRouter();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!messageTo) {
-      toast.error("Please select whom you want to send...");
-    } else {
-      setIsloading(true);
-      const messageToken = messageTo?.map((item) => item?.device_token);
-      try {
+  const inputRef = useRef();
 
-        const response = await fetch("https://fcm.googleapis.com/fcm/send", {
-          method: "POST",
-          body: JSON.stringify({ registration_ids: messageToken, notification: formData, priority: "high" }),
-          headers: {
-            "Content-type": "application/json",
-            "Authorization": `key=${process.env.NEXT_PUBLIC_PUSH_NOTIFICATION_SECRET_KEY}`
-          },
-        });
-        const responseData = await response.json();
-        if (!response.ok) {
-          toast.error(responseData.message || "Something went wrong");
-        } else {
-          toast.success("Notification send successfully!");
-          formRef.current.reset();
-          setMessageTo(null);
+  const handleClick = (name, data) => {
+    if (name === "view") {
+      setViewUserNotification(data);
+    }
+
+    if (name === "delete") {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Data will be deleted",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#2dbdb6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          deletePushNotification({ id: data?.id });
         }
-        setIsloading(false);
-      } catch (error) {
-        console.log(error);
-        toast.error(error.message);
-        setIsloading(false);
-      }
+      });
     }
   };
 
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
+
+  const handleButtonClick = () => {
+    // Use the push method to navigate to a new page
+    router.push('/notification/send-push-notification');
+  };
+
+
   return (
-    <div className="mt-5 w-[90%] lg:w-[40%] md:w-[60%] mx-auto text-[13px] border-b-blue-300 pb-5">
-      <p className="font-bold text-[#646C9A] text-center text-[24px] mt-5 mb-5">
-        Push Notification
-      </p>
-      <form className="mb-5" onSubmit={handleSubmit} ref={formRef}>
-        <div className="gap-10">
-          <div className="mb-5 w-full">
-            <p className="mb-2 text-[#646C9A]">To*</p>
-            <Multiselect
-              options={data?.data}
-              selectedValues={messageTo}
-              onSelect={setMessageTo}
-              onRemove={setMessageTo}
-              displayValue="user"
-              showCheckbox={true}
-              style={{
-                searchBox: {
-                  backgroundColor: "white",
-                  padding: "10px",
-                  border: "1px solid #e2e5ec",
-                },
-              }}
-              loading={loading}
-            />
-          </div>
-          <div className="mb-5 w-full">
-            <p className="mb-2 text-[#646C9A]">Title*</p>
+    <>
+      {viewUserNotification ? (
+        <ViewPushNotification
+          viewUserNotification={viewUserNotification}
+          setViewUserNotification={setViewUserNotification}
+        />
+      ) : (
+        <div className="w-[95%] mx-auto">
+          <h1 className="font-bold text-[#646C9A] text-[24px] text-center mt-5 mb-5">
+            Push Notification
+          </h1>
+          <div className="flex justify-between flex-wrap gap-y-2">
+          <div className="flex gap-3">
             <input
-              className={inputStyle}
               type="text"
-              name="title"
-              required
-              placeholder="Example: message title"
-              onChange={handleInputChange}
+              placeholder="Accept name"
+              ref={inputRef}
+              className="px-5 py-2 rounded-md placeholder:text-[12px] outline-none w-[75%] md:w-auto lg:w-auto"
             />
+            <button
+              onClick={() => setSearch(inputRef.current.value)}
+              className="py-2 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
+            >
+              Search
+            </button>
           </div>
-          <div className="w-full mb-5">
-            <p className="mb-2 text-[#646C9A]">Body*</p>
-            <textarea
-              className={inputStyle}
-              type="text"
-              rows={5}
-              name="body"
-              placeholder="Example: message body"
-              onChange={handleInputChange}
+
+            <button
+              onClick={handleButtonClick}
+              className="py-2 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
+            >
+              Send Push Notification
+            </button>
+          </div>
+          
+          <CustomTable
+            headers={[
+              { key: "created_at", label: "Date" },
+              { key: "sender_name", label: "Sender"},
+              { key: "receiver_name", label: "Receiver"},
+              { key: "message_title", label: "Message Title"},
+              { key: "message", label: "Message" },
+              { key: "read", label: "Read" },
+              { key: "read_at", label: "Read At" },
+
+              { key: "action", label: "Action" },
+            ]}
+            data={data?.data}
+            viewData={true}
+            deleteData={true}
+            click={handleClick}
+          />
+          <div className="flex lg:justify-between md:justify-between lg:flex-row md:flex-row flex-col items-center gap-y-5 mt-5 pb-5">
+            <p className="text-[#646C9A]">
+              Total notification: {data?.meta?.total}
+            </p>
+            <Pagination
+              count={data?.meta?.last_page}
+              page={page}
+              shape={"rounded"}
+              onChange={handleChange}
             />
           </div>
         </div>
-        <div className="flex justify-center mt-5">
-          <button
-            disabled={isLoading}
-            type="submit"
-            className="bg-white border-blue-500 border px-8 py-2 rounded-md text-black hover:bg-blue-500 hover:text-white"
-          >
-            {isLoading ? "Loading..." : "Send"}
-          </button>
-        </div>
-      </form>
-    </div>
+      )}
+    </>
   );
 };
 
-export default AuthCheck(PushNotification);
+export default AuthCheck(SurveyNotification);

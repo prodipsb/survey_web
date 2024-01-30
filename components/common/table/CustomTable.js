@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { AiFillDelete, AiFillEye } from "react-icons/ai";
-import { FaUserSecret } from "react-icons/fa";
+import { FaUserSecret, FaEyeSlash } from "react-icons/fa";
 import { TbEdit } from "react-icons/tb";
 import { VscSettings } from "react-icons/vsc";
 
@@ -14,6 +14,7 @@ const CustomTable = ({
   editData,
   deleteData,
   assignRole,
+  statusData,
 }) => {
   return (
     <div className="mt-5 block overflow-auto">
@@ -106,6 +107,14 @@ const CustomTable = ({
                           <FaUserSecret
                             size={20}
                             onClick={() => click("role", tableData)}
+                          />
+                        </p>
+                      )}
+                      {statusData && (
+                        <p className="cursor-pointer">
+                          <FaEyeSlash 
+                            size={20}
+                            onClick={() => click("status", tableData)}
                           />
                         </p>
                       )}

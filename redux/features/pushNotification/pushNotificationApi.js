@@ -9,7 +9,35 @@ const pushNotificationApi = api.injectEndpoints({
       }),
       providesTags: ["pushNotification"],
     }),
+    getAllPushNotification: builder.query({
+      query: (data) => ({
+        url: `/push-notifications?page=${data.page}&&search=${data.search}`,
+        method: "GET",
+      }),
+      providesTags: ["pushNotification"],
+    }),
+    createPushNotification: builder.mutation({
+      query: (data) => ({
+        url: "/push-notification-create",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["pushNotification"],
+    }),
+    deletePushNotification: builder.mutation({
+      query: (data) => ({
+        url: "/push-notification-delete",
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["pushNotification"],
+    }),
   }),
 });
 
-export const { useGetDevicetokenQuery } = pushNotificationApi;
+export const { 
+  useGetDevicetokenQuery,
+  useCreatePushNotificationMutation,
+  useGetAllPushNotificationQuery,
+  useDeletePushNotificationMutation
+} = pushNotificationApi;

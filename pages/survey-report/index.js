@@ -16,6 +16,8 @@ const SurveyReport = () => {
   const [viewData, setViewData] = useState(null);
   const { data } = useMasterReportQuery({ page: page, search: search });
 
+  console.log('sss', data)
+
   const handleChange = (event, value) => {
     setPage(value);
   };

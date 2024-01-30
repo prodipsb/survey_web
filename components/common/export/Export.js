@@ -1,8 +1,13 @@
+import { Button, Modal } from "@mui/material";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { FaDownload } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import ImportUserModel from "../../ImportUserModal/Main";
+import Link from "next/link";
 
-const Export = ({ setSearch, expUrl }) => {
+
+const Export = ({ setSearch, expUrl, setVisible }) => {
   const [searchValue, setSearchvalue] = useState({
     search: "",
     start_date: "",
@@ -10,6 +15,8 @@ const Export = ({ setSearch, expUrl }) => {
   });
   const [isSearch, setIsSearch] = useState(false);
   const token = useSelector((state) => state?.loginInfo?.access_token);
+
+
   const handleChange = (e) => {
     setSearchvalue({
       ...searchValue,
@@ -86,7 +93,12 @@ const Export = ({ setSearch, expUrl }) => {
       });
   };
 
+  const showModal = () => {
+    setVisible(true);
+  };
+
   return (
+    <div>
     <form
       className="flex flex-wrap justify-between w-full"
       onSubmit={handleSubmit}
@@ -130,16 +142,22 @@ const Export = ({ setSearch, expUrl }) => {
           >
             Search
           </button>
-          <button
+          {/* <button
             type="submit"
             onClick={() => setIsSearch(false)}
             className="py-2.5 block lg:hidden md:hidden px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
           >
             Export
-          </button>
+          </button> */}
         </div>
       </div>
       <div className="items-end lg:flex md:flex hidden">
+        <Link
+          href="/importUser"
+          className="py-2.5  px-5 mx-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
+        >
+          Import
+        </Link>
         <button
           type="submit"
           onClick={() => setIsSearch(false)}
@@ -149,6 +167,12 @@ const Export = ({ setSearch, expUrl }) => {
         </button>
       </div>
     </form>
+
+
+   
+    
+
+    </div>
   );
 };
 

@@ -3,8 +3,10 @@ import AuthCheck from "../../components/authCheck/AuthCheck";
 import { useChangePasswordMutation } from "../../redux/features/login/loginApi";
 import { IoIosEyeOff, IoMdEye } from "react-icons/io";
 import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 const ChangePassword = () => {
+  const router = useRouter();
   const [updatePassword, setUpdatePassword] = useState({
     password: "",
     password_confirmation: "",
@@ -32,6 +34,8 @@ const ChangePassword = () => {
     } else {
       changePassword(updatePassword);
       formRef.current.reset();
+      toast.success("User Password Updated Successfully!")
+      router.push('/')
     }
   };
 
