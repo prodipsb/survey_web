@@ -152,12 +152,6 @@ const Export = ({ setSearch, expUrl, setVisible }) => {
         </div>
       </div>
       <div className="items-end lg:flex md:flex hidden">
-        <Link
-          href="/importUser"
-          className="py-2.5  px-5 mx-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
-        >
-          Import
-        </Link>
         <button
           type="submit"
           onClick={() => setIsSearch(false)}

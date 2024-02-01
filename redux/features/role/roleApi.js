@@ -37,7 +37,7 @@ const roleApi = api.injectEndpoints({
     }),
     getUserWithRole: builder.query({
       query: (id) => ({
-        url: `/role/users?id=${id?.id}&pagination=${id?.pagination}&page=${id?.page}${
+        url: `/role/users?id=${id.id}&pagination=${id?.pagination}&page=${id?.page}${
           id?.search !== "" && `&search=${id?.search}`
         }`,
         method: "GET",

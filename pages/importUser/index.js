@@ -113,7 +113,7 @@ const ImportUser = ({ setShowPopup, history }) => {
                 onChange={(info) => handleFileChange(info)}
               />
             </div>
-            <div className="mb-5 w-full"></div>
+            {/* <div className="mb-5 w-full"></div> */}
           </div>
           <Button
             type="submit"

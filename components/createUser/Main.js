@@ -9,9 +9,12 @@ import commissionerate from '../../utils/commissionerate.json';
 import cities from '../../utils/cities.json';
 import zones from '../../utils/zones.json';
 import {circleData, subdivision} from '../../utils/divisionCircle';
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 
 const Main = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     employee_id: "",
     name: "",
@@ -58,6 +61,7 @@ const Main = () => {
   const { data: roleUsers, error: roleUsersError, isLoading: roleUsersIsLoading, refetch: refetchRoleUsers  } = useGetUserWithRoleQuery(selectedSupervisorRole);
 
 
+  console.log('selectedSupervisorRole', selectedSupervisorRole)
 
 
   const [createUser, { isLoading, isError, isSuccess, error }] =
@@ -82,6 +86,7 @@ const Main = () => {
       convertedFormData.append(key, value);
     });
     createUser(convertedFormData);
+    router.push('user-list')
   };
 
   useEffect(() => {
@@ -127,8 +132,6 @@ const Main = () => {
   }, [roleData]);
 
   useEffect(() => {
-
-   
     // Additional logic with the fetched data
     console.log('Fetched roleUsers:', roleUsers);
     setSupervisorUsers(roleUsers?.data);
@@ -168,6 +171,7 @@ const Main = () => {
   //     console.log('hello test', data);
 
   const updateState = async (id, name) => {
+    // console.log('aaa' ,id)
     try {
       if(name == 'role_id'){
         setSelectedRole(id);
@@ -179,18 +183,19 @@ const Main = () => {
           id: id,
           pagination: 0
         }
+        console.log('setSelectedSupervisorRole', payload)
         setSelectedSupervisorRole(payload);
         await refetchRoleUsers(id);
       }
 
-      if(name == 'reporting_role_id'){
-        const payload = {
-          id: id,
-          pagination: 0
-        }
-        setSelectedSupervisorRole(payload);
-        await refetchRoleUsers(id);
-      }
+      // if(name == 'reporting_role_id'){
+      //   const payload = {
+      //     id: id,
+      //     pagination: 0
+      //   }
+      //   setSelectedSupervisorRole(payload);
+      //   await refetchRoleUsers(id);
+      // }
 
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -204,9 +209,34 @@ const Main = () => {
   return (
     <div>
       <div className="mt-5 w-[90%] mx-auto text-[13px] border-b-blue-300 pb-5">
+
+      <div className="flex justify-between items-center">
         <p className="font-bold text-[#646C9A] text-[24px] mt-5 mb-5">
           User Creation
         </p>
+        <div className="flex items-end">
+          <Link
+            href="/importUser"
+            className="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
+          >
+            Import 
+          </Link>
+        </div>
+      </div>
+
+
+        {/* <p className="font-bold text-[#646C9A] text-[24px] mt-5 mb-5">
+          User Creation
+        </p>
+        <div className="items-end lg:flex md:flex hidden">
+        <Link
+          href="/importUser"
+          className="py-2.5  px-5 mx-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
+        >
+          Import
+        </Link>
+        </div> */}
+
         <form className="mb-5" onSubmit={handleSubmit} ref={formRef}>
           <div className="md:flex lg:flex gap-10">
 
