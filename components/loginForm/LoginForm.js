@@ -8,6 +8,8 @@ import { userLogin } from "../../redux/features/login/loginSlice";
 import { useLoginUserMutation } from "../../redux/features/login/loginApi";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import store from "../../redux/store";
+import { clearCache } from "../../redux/api/cacheSlice";
 
 const LoginForm = ({ setForgotPassword }) => {
   const dispatch = useDispatch();
@@ -34,7 +36,14 @@ const LoginForm = ({ setForgotPassword }) => {
   useEffect(() => {
     if (data?.token_type) {
       dispatch(userLogin(data));
-      router.push(router?.query?.redirect ? router?.query?.redirect : "/");
+        // Dispatch an action to clear the cache upon successful login
+       // store.dispatch(clearCache());
+        dispatch(clearCache());
+        const nextPage = router.query.redirect || '/';
+        window.location.href = nextPage;
+
+        // router.push(router?.query?.redirect ? router?.query?.redirect : "/");
+      
     }
     if (data?.status == "error") {
       toast.error(data?.message);

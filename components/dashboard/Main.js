@@ -6,7 +6,7 @@ import { useGetdashboardQuery } from "../../redux/features/dashboard/dashboardAp
 function Main() {
   const { data } = useGetdashboardQuery();
 
-  //  console.log('stats', data)
+    console.log('stats', data)
   return (
     <div>
       {data?.data?.userStats?.length > 0 && (

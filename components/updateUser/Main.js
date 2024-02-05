@@ -208,7 +208,6 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
                 className={inputStyle}
                 type="email"
                 name="email"
-                readOnly
                 value={userEdit?.email}
                 required
                 placeholder="Example: user@gmail.com"
