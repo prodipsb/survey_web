@@ -4,6 +4,7 @@ import {
   useDeleteUserMutation,
   useGetUserQuery,
   useStatusUserMutation,
+  useUserProfileQuery,
 } from "../../redux/features/user/userApi";
 import CustomTable from "../../components/common/table/CustomTable";
 import { Pagination } from "@mui/material";
@@ -17,6 +18,7 @@ const UserList = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState(null);
   const { data } = useGetUserQuery({ page: page, search: search });
+  const { data:profileData } = useUserProfileQuery();
   
   const [userEdit, setUserEdit] = useState(null);
   const [userView, setUserView] = useState(null);
@@ -60,7 +62,7 @@ const UserList = () => {
   };
 
 
-  console.log('showPopup', showPopup);
+  // permission?.includes(nav?.name?.toLowerCase())
 
   return (
     <>
@@ -106,7 +108,7 @@ const UserList = () => {
             ]}
             data={data?.data?.data}
             viewData={true}
-            editData={true}
+            editData={profileData?.data?.permissions?.includes('edit user') ?  true : false}
             statusData={true}
             click={handleClick}
           />
