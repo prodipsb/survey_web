@@ -105,6 +105,7 @@ export const circleData = {
     {id: 'Rayerbazar', name: 'Rayerbazar'},
     {id: 'Kalabagan', name: 'Kalabagan'},
     {id: 'Nilkhet', name: 'Nilkhet'},
+    {id: 'Kathalbagan', name: 'Kathalbagan'},
   ],
   'Motijheel-0202': [
     {id: 'Motijheel', name: 'Motijheel'},
@@ -202,6 +203,7 @@ export const circleData = {
     {id: 'Kazipara', name: 'Kazipara'},
     {id: 'Kafrul', name: 'Kafrul'},
     {id: 'Kallyanpur', name: 'Kallyanpur'},
+    {id: 'Shahali', name: 'Shahali'},
   ],
   'Mohammadpur-0402': [
     {id: 'Mohammadpur', name: 'Mohammadpur'},
