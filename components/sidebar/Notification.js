@@ -90,6 +90,7 @@ const Notification = () => {
               Delete All
             </p>
           </div>
+          <div className="h-[300px] overflow-auto">
           {data?.data?.length ? (
             data?.data?.map((notification, index) => (
               <div
@@ -114,6 +115,7 @@ const Notification = () => {
           ) : (
             <p className="py-3 text-center mb-3 text-blue-400 text-[14px]">No have no notification</p>
           )}
+          </div>
         </div>
       )}
     </div>

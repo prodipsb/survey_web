@@ -7,7 +7,7 @@ module.exports = nextConfig;
 
 module.exports = {
   images: {
-    domains: ["4.193.55.34"],
+    domains: [process?.env?.NEXT_PUBLIC_BASE_URL],
   },
   eslint: {
     ignoreDuringBuilds: true,

@@ -24,6 +24,8 @@ const PushNotification = () => {
     content_available: true
   });
 
+  console.log('useGetDevicetokenQuery', data)
+
 
   const formRef = useRef();
   const router = useRouter();
@@ -45,48 +47,6 @@ const PushNotification = () => {
     });
   };
 
-
-
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-    
-  //   if (notificationType?.notificationType === "Individual" && !selectedDeviceUsers.length > 0) {
-  //     toast.error("Please select whom you want to send...");
-  //     return;
-  //   } 
-  
-  //   if (notificationType?.notificationType === "Role" && !roles.length > 0) {
-  //     toast.error("Please select which role you want to send...");
-  //     return;
-  //   }
-  
-  //   const deviceTokens = selectedDeviceUsers?.map((item) => item?.device_token);
-  
-  //   const storeData = {
-  //     notificationType: notificationType?.notificationType,
-  //     deviceTokens: selectedDeviceUsers,
-  //     roles: roles,
-  //     sender: {
-  //       id: profileData?.data?.id,
-  //       name: profileData?.data?.name,
-  //       role_id: profileData?.data?.role_id,
-  //       role: profileData?.data?.role?.name,
-  //     },
-  //     notification: formData
-  //   };
-
-
-  //   console.log('stored', storeData)
-
-  //   // Use the helper function to send push notification
-  //   sendPushNotification(deviceTokens, formData, router, storeData);
-  
-  // }
-
-  
-
-  console.log('roles', roles)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -111,13 +71,12 @@ const PushNotification = () => {
 
         const roleIds = roles?.map((role) => role?.id);
         const filteredUsers = data?.data?.filter(user => roleIds.includes(user.role_id));
-        deviceTokens = filteredUsers?.map(user => user.device_token);
+        deviceTokens = filteredUsers?.map(user => user?.device_token);
 
       }
 
-
-      //  console.log('deviceTokens', deviceTokens);
-      // return false;
+      if(selectedDeviceUsers){
+     
 
       const storeData = {
         notificationType: notificationType?.notificationType,
@@ -172,6 +131,10 @@ const PushNotification = () => {
         toast.error(error.message);
         setIsloading(false);
       }
+
+    }else{
+      toast.error('No Device Found!');
+    }
     
   };
 

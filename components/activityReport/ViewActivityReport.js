@@ -29,10 +29,6 @@ const ViewActivityReport = ({ viewData, setViewData }) => {
           {viewData?.supervisor}
         </p>
         <p className="mb-3 text-[#646C9A]">
-          <span className="font-bold text-[16px]">Reporting To: </span>
-          {viewData?.roportTo}
-        </p>
-        <p className="mb-3 text-[#646C9A]">
           <span className="font-bold text-[16px]">BIN Holder Name: </span>
           {viewData?.binHolderName}
         </p>
@@ -49,13 +45,14 @@ const ViewActivityReport = ({ viewData, setViewData }) => {
           {viewData?.binHolderMobile}
         </p>
         <p className="mb-3 text-[#646C9A]">
+          <span className="font-bold text-[16px]">CommissioneRate: </span>
+          {viewData?.commissioneRate}
+        </p>
+        <p className="mb-3 text-[#646C9A]">
           <span className="font-bold text-[16px]">Division: </span>
           {viewData?.division}
         </p>
-        <p className="mb-3 text-[#646C9A]">
-          <span className="font-bold text-[16px]">Sub Division: </span>
-          {viewData?.subDivision}
-        </p>
+        
         <p className="mb-3 text-[#646C9A]">
           <span className="font-bold text-[16px]">Circle: </span>
           {viewData?.circle}
@@ -79,7 +76,7 @@ const ViewActivityReport = ({ viewData, setViewData }) => {
           {viewData?.businessRegisteredAddress}
         </p>
         <p className="mb-3 text-[#646C9A]">
-          <span className="font-bold text-[16px]">Shop Name: </span>
+          <span className="font-bold text-[16px]">Outlet Address: </span>
           {viewData?.outletAddress}
         </p>
         <p className="mb-3 text-[#646C9A]">
@@ -95,7 +92,7 @@ const ViewActivityReport = ({ viewData, setViewData }) => {
           {viewData?.transactionType}
         </p>
         <p className="mb-3 text-[#646C9A]">
-          <span className="font-bold text-[16px]">Mushak 6.3: </span>
+          <span className="font-bold text-[16px]">Mushak: </span>
           {viewData?.transactionType}
         </p>
         <p className="mb-3 text-[#646C9A]">
