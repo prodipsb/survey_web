@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthCheck from "../../components/authCheck/AuthCheck";
 import {
   useDeleteUserMutation,
@@ -13,10 +13,11 @@ import UpdateUser from "../../components/updateUser/Main";
 import ViewUser from "../../components/viewUser/Main";
 import Export from "../../components/common/export/Export";
 import ImportUserModel from "../../components/ImportUserModal/Main";
+import { useRouter } from 'next/router';
 
 const UserList = () => {
   const [page, setPage] = useState(1);
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState();
   const { data } = useGetUserQuery({ page: page, search: search });
   const { data:profileData } = useUserProfileQuery();
   
@@ -75,7 +76,7 @@ const UserList = () => {
           <h1 className="font-bold text-[#646C9A] text-[24px] mt-5 mb-5">
             User List
           </h1>
-          <Export setSearch={setSearch} expUrl="/users" setVisible={setVisible}/>
+          <Export setSearch={setSearch} expUrl="/users" setVisible={setVisible} />
           <CustomTable
             headers={[
               // { key: "id", label: "SI. No." },
