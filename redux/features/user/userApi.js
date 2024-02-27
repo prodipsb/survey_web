@@ -20,6 +20,10 @@ const userApi = api.injectEndpoints({
     getUser: builder.query({
       query: (data) => {
         const searchParams = new URLSearchParams();
+
+        if (data?.search?.employee_id) {
+          searchParams.append("employee_id", data.search.employee_id);
+        }
         
         if (data?.search?.search) {
           searchParams.append("search", data.search.search);

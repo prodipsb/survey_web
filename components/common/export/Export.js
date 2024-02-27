@@ -9,6 +9,7 @@ import Link from "next/link";
 
 const Export = ({ setSearch, expUrl, setVisible }) => {
   const [searchValue, setSearchvalue] = useState({
+    employee_id: "",
     search: "",
     start_date: "",
     end_date: "",
@@ -97,6 +98,9 @@ const Export = ({ setSearch, expUrl, setVisible }) => {
     setVisible(true);
   };
 
+
+  console.log('searchValue', searchValue)
+
   return (
     <div>
     <form
@@ -104,13 +108,23 @@ const Export = ({ setSearch, expUrl, setVisible }) => {
       onSubmit={handleSubmit}
     >
       <div className="flex flex-wrap gap-3">
+      <div>
+          <p className="mb-2 text-[#646C9A]">Employee ID</p>
+          <input
+            type="text"
+            name="employee_id"
+            onChange={handleChange}
+            placeholder="Enter Employee ID"
+            className="px-5 py-2 rounded-md placeholder:text-[12px] placeholder:text-black outline-none w-full md:w-auto lg:w-auto"
+          />
+        </div>
         <div>
-          <p className="mb-2 text-[#646C9A]">Enter Search Value</p>
+          <p className="mb-2 text-[#646C9A]">Enter Search</p>
           <input
             type="text"
             name="search"
             onChange={handleChange}
-            placeholder="Search..."
+            placeholder="Enter Name, Phone, Email"
             className="px-5 py-2 rounded-md placeholder:text-[12px] placeholder:text-black outline-none w-full md:w-auto lg:w-auto"
           />
         </div>
