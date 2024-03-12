@@ -5,7 +5,6 @@ import { FaDownload } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import ImportUserModel from "../../ImportUserModal/Main";
 import Link from "next/link";
-import { Select, SelectItem } from "@nextui-org/react";
 import CommonDropDown from "../dropDown/CommonDropDown";
 import { useGetSuperviseUsersQuery } from "../../../redux/features/user/userApi";
 import { get } from "../../../utils/api/ApiCaller";
