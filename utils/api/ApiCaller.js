@@ -3,10 +3,11 @@ import { useSelector } from "react-redux";
 
 const appUrl = process.env.NEXT_PUBLIC_API;
 
-export const get = async (endpoint, params) => {
+export const get = async (endpoint, params, token) => {
   const url = `${appUrl}/${endpoint}`;
+  console.log('url', url)
 
-  const token = useSelector((state) => state?.loginInfo?.access_token);
+  // const token = useSelector((state) => state?.loginInfo?.access_token);
 
   const options = {
     method: 'GET',
@@ -17,6 +18,8 @@ export const get = async (endpoint, params) => {
     },
     params,
   };
+
+  console.log('option', options)
   return await axios(options)?.then(res => res?.data);
 };
 

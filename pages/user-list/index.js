@@ -52,7 +52,6 @@ const UserList = () => {
       });
     }
     if (name === "status") {
-      console.log('sss', { id: data?.id })
         userStatus({ id: data?.id });
     }
   };

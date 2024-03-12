@@ -16,8 +16,6 @@ const SurveyReport = () => {
   const [viewData, setViewData] = useState(null);
   const { data } = useMasterReportQuery({ page: page, search: search });
 
-  console.log('sss', data)
-
   const handleChange = (event, value) => {
     setPage(value);
   };
@@ -41,6 +39,7 @@ const SurveyReport = () => {
           <CustomTable
             headers={[
               { key: "date", label: "Date" },
+              { key: "employee_id", label: "Employee ID" },
               { key: "surveySubmittedUserName", label: "Name" },
               {
                 key: "surveySubmittedUserPhone",

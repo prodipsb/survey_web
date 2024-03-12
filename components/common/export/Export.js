@@ -1,10 +1,14 @@
 import { Button, Modal } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaDownload } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import ImportUserModel from "../../ImportUserModal/Main";
 import Link from "next/link";
+import { Select, SelectItem } from "@nextui-org/react";
+import CommonDropDown from "../dropDown/CommonDropDown";
+import { useGetSuperviseUsersQuery } from "../../../redux/features/user/userApi";
+import { get } from "../../../utils/api/ApiCaller";
 
 
 const Export = ({ setSearch, expUrl, setVisible }) => {
@@ -15,7 +19,38 @@ const Export = ({ setSearch, expUrl, setVisible }) => {
     end_date: "",
   });
   const [isSearch, setIsSearch] = useState(false);
+  const [supervisor2, setSupervisor2] = useState([]);
   const token = useSelector((state) => state?.loginInfo?.access_token);
+
+
+  const inputStyle =
+    "border border-[#e2e5ec] outline-none focus:border-blue-300 placeholder:text-[#AFABC3] text-sm text-black rounded-md w-full p-2.5 bg-white min-w-[252px]";
+
+    const { data } = useGetSuperviseUsersQuery();
+
+
+    useEffect(() => {
+      const fetchData = async () => {
+        const payload = {
+          'supervisor_user_id': searchValue?.supervise_user_id
+        };
+    
+        if(searchValue?.supervise_user_id){
+
+          try {
+            const superviseUsers = await get('get-supervise-users/list', payload, token);
+            setSupervisor2(superviseUsers);
+          } catch (error) {
+            console.error('Error fetching supervise users:', error);
+          }
+
+        }
+
+      };
+    
+      fetchData(); // Call the async function inside useEffect
+    
+    }, [searchValue?.supervise_user_id]);
 
 
   const handleChange = (e) => {
@@ -37,16 +72,14 @@ const Export = ({ setSearch, expUrl, setVisible }) => {
   const handleExport = () => {
     const url =
       process.env.NEXT_PUBLIC_API +
-      `${expUrl}?${
-        searchValue?.search ? "search=" + searchValue?.search + "&&" : ""
-      }${
-        searchValue?.start_date && searchValue?.end_date
-          ? "start_date=" +
-            searchValue?.start_date +
-            "&&end_date=" +
-            searchValue?.end_date +
-            "&&"
-          : ""
+      `${expUrl}?${searchValue?.search ? "search=" + searchValue?.search + "&&" : ""
+      }${searchValue?.start_date && searchValue?.end_date
+        ? "start_date=" +
+        searchValue?.start_date +
+        "&&end_date=" +
+        searchValue?.end_date +
+        "&&"
+        : ""
       }export=true`;
 
     downloadFile(url);
@@ -101,84 +134,120 @@ const Export = ({ setSearch, expUrl, setVisible }) => {
 
   console.log('searchValue', searchValue)
 
+
+  const updateState = async (id, name) => {
+    // console
+  };
+
   return (
     <div>
-    <form
-      className="flex flex-wrap justify-between w-full"
-      onSubmit={handleSubmit}
-    >
-      <div className="flex flex-wrap gap-3">
-      <div>
-          <p className="mb-2 text-[#646C9A]">Employee ID</p>
-          <input
-            type="text"
-            name="employee_id"
-            onChange={handleChange}
-            placeholder="Enter Employee ID"
-            className="px-5 py-2 rounded-md placeholder:text-[12px] placeholder:text-black outline-none w-full md:w-auto lg:w-auto"
-          />
+      <form
+        className="flex flex-wrap justify-between w-full"
+        onSubmit={handleSubmit}
+      >
+        <div className="flex flex-wrap gap-3">
+
+          <div>
+            <p className="mb-2 text-[#646C9A] text-[14px]">Employee ID</p>
+            <input
+              className={inputStyle}
+              type="text"
+              name="employee_id"
+              placeholder="Example: 100001"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div>
+            <p className="mb-2 text-[#646C9A] text-[14px]"> Search</p>
+            <input
+              className={inputStyle}
+              type="text"
+              name="search"
+              placeholder="Enter Name, Phone, Email"
+              onChange={handleChange}
+            />
+          </div>
+
+
+          <div>
+              <p className="mb-2 text-[#646C9A] text-[14px]">Start Date</p>
+              <input
+                className={inputStyle}
+                type="date"
+                name="start_date"
+                required={searchValue?.end_date !== ""}
+                onChange={handleChange}
+              />
+            </div>
+
+          <div>
+            <p className="mb-2 text-[#646C9A] text-[14px]">End Date</p>
+            <input
+              type="date"
+              name="end_date"
+              required={searchValue?.start_date !== ""}
+              onChange={handleChange}
+              className={inputStyle}
+            />
+          </div>
+          <div className="flex items-end gap-3">
+            <button
+              type="submit"
+              onClick={() => setIsSearch(true)}
+              className="py-2.5  px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
+            >
+              Search
+            </button>
+          
+          </div>
         </div>
-        <div>
-          <p className="mb-2 text-[#646C9A]">Enter Search</p>
-          <input
-            type="text"
-            name="search"
-            onChange={handleChange}
-            placeholder="Enter Name, Phone, Email"
-            className="px-5 py-2 rounded-md placeholder:text-[12px] placeholder:text-black outline-none w-full md:w-auto lg:w-auto"
-          />
-        </div>
-        <div>
-          <p className="mb-2 text-[#646C9A]">Start Date</p>
-          <input
-            type="date"
-            name="start_date"
-            onChange={handleChange}
-            required={searchValue?.end_date !== ""}
-            className="px-5 py-2 rounded-md placeholder:text-[12px] outline-none w-full md:w-auto lg:w-auto"
-          />
-        </div>
-        <div>
-          <p className="mb-2 text-[#646C9A]">End Date</p>
-          <input
-            type="date"
-            name="end_date"
-            required={searchValue?.start_date !== ""}
-            onChange={handleChange}
-            className="px-5 py-2 rounded-md placeholder:text-[12px] outline-none w-full md:w-auto lg:w-auto"
-          />
-        </div>
-        <div className="flex items-end gap-3">
+        <div className="items-end lg:flex md:flex hidden">
           <button
             type="submit"
-            onClick={() => setIsSearch(true)}
+            onClick={() => setIsSearch(false)}
             className="py-2.5  px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
           >
-            Search
-          </button>
-          {/* <button
-            type="submit"
-            onClick={() => setIsSearch(false)}
-            className="py-2.5 block lg:hidden md:hidden px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
-          >
             Export
-          </button> */}
+          </button>
         </div>
-      </div>
-      <div className="items-end lg:flex md:flex hidden">
-        <button
-          type="submit"
-          onClick={() => setIsSearch(false)}
-          className="py-2.5  px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
-        >
-          Export
-        </button>
-      </div>
-    </form>
+
+        <div className="flex w-full gap-3 my-2">
+
+          <div>
+            <p className="mb-2 text-[#646C9A] text-sm">Supervise Users</p>
+            <CommonDropDown
+              optionData={data?.data}
+              defaultOptionValue={searchValue?.supervise_user_id}
+              defaultOptionLabel="name"
+              defaultCreateText="Select User"
+              setFormData={setSearchvalue}
+              onChange={handleChange}
+              updateState = {updateState}
+              name="supervise_user_id"
+            />
+          </div>
+
+          {supervisor2?.data && (
+            <div>
+              <p className="mb-2 text-[#646C9A] text-sm">Related Users</p>
+              <CommonDropDown
+                optionData={supervisor2?.data}
+                defaultOptionValue={searchValue?.supervisor2_user_id}
+                defaultOptionLabel="name"
+                defaultCreateText="Select User"
+                setFormData={setSearchvalue}
+                onChange={handleChange}
+                updateState = {updateState}
+                name="supervise2_user_id"
+              />
+            </div>
+          )}
+          
 
 
-   
-    
+        </div>
+      </form>
 
     </div>
   );

@@ -81,6 +81,13 @@ const userApi = api.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    getSuperviseUsers: builder.query({
+      query: (id) => ({
+        url: `/get-supervise-users`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
   }),
 });
 
@@ -92,5 +99,6 @@ export const {
   useGetAllUserQuery,
   useUserProfileQuery,
   useStatusUserMutation,
-  useImportUserMutation
+  useImportUserMutation,
+  useGetSuperviseUsersQuery
 } = userApi;

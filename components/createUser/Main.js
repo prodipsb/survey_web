@@ -8,7 +8,7 @@ import countries from '../../utils/countries.json';
 import commissionerate from '../../utils/commissionerate.json';
 import cities from '../../utils/cities.json';
 import zones from '../../utils/zones.json';
-import {circleData, subdivision} from '../../utils/divisionCircle';
+import { circleData, subdivision } from '../../utils/divisionCircle';
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -34,8 +34,8 @@ const Main = () => {
     division: "",
     circle: "",
     address: "",
-    longitude:"",
-    latitude:"",
+    longitude: "",
+    latitude: "",
     status: "",
   });
   const [mobileNumber, setMobileNumber] = useState('');
@@ -54,11 +54,11 @@ const Main = () => {
 
   const { data } = useGetRoleQuery({ pagination: 0 });
 
-  const { data: roleData, error: roleError, isLoading: roleIsLoading, refetch: refetchRoles  } = useGetUpperRolesQuery(selectedRole);
+  const { data: roleData, error: roleError, isLoading: roleIsLoading, refetch: refetchRoles } = useGetUpperRolesQuery(selectedRole);
   // const { data: roleUsers, error: roleUsersError, isLoading: roleUsersIsLoading, refetch: roleUsersRefetch } = useLazyGetUserWithRoleQuery(selectedSupervisorRole)
 
 
-  const { data: roleUsers, error: roleUsersError, isLoading: roleUsersIsLoading, refetch: refetchRoleUsers  } = useGetUserWithRoleQuery(selectedSupervisorRole);
+  const { data: roleUsers, error: roleUsersError, isLoading: roleUsersIsLoading, refetch: refetchRoleUsers } = useGetUserWithRoleQuery(selectedSupervisorRole);
 
 
   console.log('selectedSupervisorRole', selectedSupervisorRole)
@@ -112,8 +112,8 @@ const Main = () => {
         division: "",
         circle: "",
         address: "",
-        longitude:"",
-        latitude:"",
+        longitude: "",
+        latitude: "",
         status: "",
       });
     }
@@ -123,7 +123,7 @@ const Main = () => {
     }
   }, [isSuccess, isError]);
 
-  
+
 
   useEffect(() => {
     // Additional logic with the fetched data
@@ -166,19 +166,19 @@ const Main = () => {
   const handleCityChange = (e) => {
     setSelectedCity(e.target.value);
   };
-  
+
   // const { data } = useGetUpperRolesQuery(2);
   //     console.log('hello test', data);
 
   const updateState = async (id, name) => {
     // console.log('aaa' ,id)
     try {
-      if(name == 'role_id'){
+      if (name == 'role_id') {
         setSelectedRole(id);
         await refetchRoles(id);
       }
 
-      if(name == 'supervisor_id'){
+      if (name == 'supervisor_id') {
         const payload = {
           id: id,
           pagination: 0
@@ -204,25 +204,25 @@ const Main = () => {
 
   //  console.log('formData', formData)
   //  console.log('formData commissionerate', formData.commissionerate)
-//  console.log('subdivision', subdivision[formData.commissionerate])
+  //  console.log('subdivision', subdivision[formData.commissionerate])
 
   return (
     <div>
       <div className="mt-5 w-[90%] mx-auto text-[13px] border-b-blue-300 pb-5">
 
-      <div className="flex justify-between items-center">
-        <p className="font-bold text-[#646C9A] text-[24px] mt-5 mb-5">
-          User Creation
-        </p>
-        <div className="flex items-end">
-          <Link
-            href="/importUser"
-            className="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
-          >
-            Import 
-          </Link>
+        <div className="flex justify-between items-center">
+          <p className="font-bold text-[#646C9A] text-[24px] mt-5 mb-5">
+            User Creation
+          </p>
+          <div className="flex items-end">
+            <Link
+              href="/importUser"
+              className="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
+            >
+              Import
+            </Link>
+          </div>
         </div>
-      </div>
 
 
         {/* <p className="font-bold text-[#646C9A] text-[24px] mt-5 mb-5">
@@ -240,7 +240,7 @@ const Main = () => {
         <form className="mb-5" onSubmit={handleSubmit} ref={formRef}>
           <div className="md:flex lg:flex gap-10">
 
-          <div className="mb-5 w-full">
+            <div className="mb-5 w-full">
               <p className="mb-2 text-[#646C9A]">Employee ID*</p>
               <input
                 className={inputStyle}
@@ -284,30 +284,30 @@ const Main = () => {
 
           </div>
           <div className="md:flex lg:flex gap-10">
-          <div className="mb-5 w-full">
-          <p className="mb-2 text-[#646C9A]"> Phone*</p>
-            <input
-              className={inputStyle}
-              type="text"
-              id="mobileNumber"
-              name="phone"
-              value={mobileNumber}
-              required
-              placeholder="Example: 01XXXXXXXXX"
-              onChange={handleMobileNumberChange}
-            />
-          
+            <div className="mb-5 w-full">
+              <p className="mb-2 text-[#646C9A]"> Phone*</p>
+              <input
+                className={inputStyle}
+                type="text"
+                id="mobileNumber"
+                name="phone"
+                value={mobileNumber}
+                required
+                placeholder="Example: 01XXXXXXXXX"
+                onChange={handleMobileNumberChange}
+              />
 
-            { phoneValid && isValid && (
-              <p style={{ color: 'green' }}>Valid mobile number format</p>
-            )}
 
-            {!isValid && (
-               <p style={{ color: 'red' }}>Invalid mobile number format</p>
-            )}
-          </div>
+              {phoneValid && isValid && (
+                <p style={{ color: 'green' }}>Valid mobile number format</p>
+              )}
 
- 
+              {!isValid && (
+                <p style={{ color: 'red' }}>Invalid mobile number format</p>
+              )}
+            </div>
+
+
             <div className="mb-5 w-full">
               <p className="mb-2 text-[#646C9A]">Gender*</p>
               <select
@@ -357,7 +357,7 @@ const Main = () => {
           </div>
           <div className="md:flex lg:flex gap-10">
 
-          <div className="w-full mb-5">
+            <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]"> Role*</p>
 
               {/* <select
@@ -382,8 +382,8 @@ const Main = () => {
                 defaultOptionLabel="name"
                 defaultCreateText="Select a Role"
                 setFormData={setFormData}
-               // onChange={handleUserRole}
-                updateState = {updateState}
+                // onChange={handleUserRole}
+                updateState={updateState}
                 required={true}
                 name="role_id"
               />
@@ -391,7 +391,7 @@ const Main = () => {
 
             </div>
 
-          {/* <div className="w-full mb-5">
+            {/* <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]">User Role*</p>
               <CommonDropDown
                 optionData={data?.data?.data?.data}
@@ -404,7 +404,7 @@ const Main = () => {
                 name="role_id"
               />
             </div> */}
-            
+
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]"> Supervisor</p>
               <CommonDropDown
@@ -412,7 +412,7 @@ const Main = () => {
                 defaultOptionValue={formData?.supervisor_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select supervisor"
-                updateState = {updateState}
+                updateState={updateState}
                 setFormData={setFormData}
                 required={false}
                 name="supervisor_id"
@@ -435,7 +435,7 @@ const Main = () => {
 
 
           <div className="md:flex lg:flex gap-10">
-          <div className="w-full mb-5">
+            <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]"> Country*</p>
 
               <CommonDropDown
@@ -483,10 +483,10 @@ const Main = () => {
 
             </div>
 
-   
+
           </div>
 
-          
+
           <div className="md:flex lg:flex gap-10">
             <div className="w-full mb-5">
               <p className="mb-2 text-[#646C9A]"> Division*</p>
@@ -552,10 +552,10 @@ const Main = () => {
                 onChange={handleInputChange}
               />
             </div>
-            
+
           </div>
           <div className="md:flex lg:flex gap-10">
-          <div className="mb-5 w-full">
+            <div className="mb-5 w-full">
               <p className="mb-2 text-[#646C9A]"> Status*</p>
               <select
                 className={inputStyle}
@@ -593,7 +593,7 @@ const Main = () => {
 
           </div>
           <div className="md:flex lg:flex gap-10">
-          <div className="mb-5 w-full">
+            <div className="mb-5 w-full">
               <p className="mb-2 text-[#646C9A]">Avatar</p>
               <input
                 className="relative bg-white m-0 block w-full min-w-0 flex-auto rounded-md border border-solid border-gray-300 bg-clip-padding py-2 px-3 text-base font-normal text-[#AFABC3] transition duration-300 ease-in-out file:-mx-3 file:-my-2 file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-2 file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[margin-inline-end:0.75rem] file:[border-inline-end-width:1px] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-primary focus:border-blue-300"
