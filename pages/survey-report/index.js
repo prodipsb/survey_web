@@ -5,10 +5,12 @@ import CustomTable from "../../components/common/table/CustomTable";
 import Export from "../../components/common/export/Export";
 import ViewActivityReport from "../../components/activityReport/ViewActivityReport";
 import { useMasterReportQuery } from "../../redux/features/report/activityReportApi";
+import SurveyReportFilter from "../../components/common/reportFilter/SurveyReportFilter";
 
 const SurveyReport = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState({
+    employee_id: "",
     search: "",
     start_date: "",
     end_date: "",
@@ -19,6 +21,8 @@ const SurveyReport = () => {
   const handleChange = (event, value) => {
     setPage(value);
   };
+
+  // console.log('search', search)
 
   const handleClick = (name, data) => {
     if (name === "view") {
@@ -35,7 +39,7 @@ const SurveyReport = () => {
           <h1 className="font-bold text-[#646C9A] text-[24px] text-center mt-5 mb-5">
             Survey Report
           </h1>
-          <Export setSearch={setSearch} expUrl="/master-report" />
+          <SurveyReportFilter setSearch={setSearch} expUrl="/master-report" />
           <CustomTable
             headers={[
               { key: "date", label: "Date" },

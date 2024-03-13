@@ -5,6 +5,8 @@ const activityReportApi = api.injectEndpoints({
     masterReport: builder.query({
       query: (id) => ({
         url: `/master-report?page=${id?.page}${
+          id?.search?.employee_id && "&employee_id=" + id?.search?.employee_id
+        }${
           id?.search?.search && "&search=" + id?.search?.search
         }${
           id?.search?.start_date &&
@@ -20,6 +22,14 @@ const activityReportApi = api.injectEndpoints({
           id?.search?.supervise2_user_id &&
           "&supervise2_user_id=" +
             id?.search?.supervise2_user_id
+        }${
+          id?.search?.supervise3_user_id &&
+          "&supervise3_user_id=" +
+            id?.search?.supervise3_user_id
+        }${
+          id?.search?.supervise4_user_id &&
+          "&supervise4_user_id=" +
+            id?.search?.supervise4_user_id
         }`,
         method: "GET",
       }),

@@ -1,11 +1,12 @@
-import { Button, Modal } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { FaDownload } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import CommonDropDown from "../dropDown/CommonDropDown";
+import { useGetSuperviseUsersQuery } from "../../../redux/features/user/userApi";
+import { get } from "../../../utils/api/ApiCaller";
 
 
-const Export = ({ setSearch, expUrl, setVisible }) => {
+const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
   const [searchValue, setSearchvalue] = useState({
     employee_id: "",
     search: "",
@@ -13,11 +14,85 @@ const Export = ({ setSearch, expUrl, setVisible }) => {
     end_date: "",
   });
   const [isSearch, setIsSearch] = useState(false);
+  const [supervisor2, setSupervisor2] = useState([]);
+  const [supervisor3, setSupervisor3] = useState([]);
+  const [supervisor4, setSupervisor4] = useState([]);
   const token = useSelector((state) => state?.loginInfo?.access_token);
 
 
   const inputStyle =
     "border border-[#e2e5ec] outline-none focus:border-blue-300 placeholder:text-[#AFABC3] text-sm text-black rounded-md w-full p-2.5 bg-white min-w-[252px]";
+
+    const { data } = useGetSuperviseUsersQuery();
+
+
+    useEffect(() => {
+      const fetchData = async () => {
+        
+    
+        if(searchValue?.supervise_user_id){
+
+          const payload = {
+            'supervise_user_id': searchValue?.supervise_user_id
+          };
+
+          console.log('payload', payload)
+
+          try {
+            const superviseUsers = await get('get-supervise-users/list', payload, token);
+            setSupervisor2(superviseUsers);
+          } catch (error) {
+            console.error('Error fetching supervise users:', error);
+          }
+
+        }
+
+        if(searchValue?.supervise2_user_id){
+
+          const payload = {
+            'supervise2_user_id': searchValue?.supervise2_user_id
+          };
+
+         
+
+          try {
+            const superviseUsers = await get('get-supervise-users/list', payload, token);
+            setSupervisor3(superviseUsers);
+            console.log('superviseUsers superviseUsers', superviseUsers)
+          } catch (error) {
+            console.error('Error fetching supervise users:', error);
+          }
+
+        }
+
+        if(searchValue?.supervise3_user_id){
+
+          const payload = {
+            'supervise3_user_id': searchValue?.supervise3_user_id
+          };
+
+          console.log('payload3', payload)
+
+          try {
+            const superviseUsers = await get('get-supervise-users/list', payload, token);
+            setSupervisor4(superviseUsers);
+          } catch (error) {
+            console.error('Error fetching supervise users:', error);
+          }
+
+        }
+
+
+      };
+    
+      fetchData(); // Call the async function inside useEffect
+    
+    }, [
+      searchValue?.supervise_user_id,
+      searchValue?.supervise2_user_id,
+      searchValue?.supervise3_user_id,
+      searchValue?.supervise4_user_id
+    ]);
 
 
   const handleChange = (e) => {
@@ -131,7 +206,7 @@ const Export = ({ setSearch, expUrl, setVisible }) => {
               className={inputStyle}
               type="text"
               name="search"
-              placeholder="Enter Name, Phone"
+              placeholder="Enter Name"
               onChange={handleChange}
             />
           </div>
@@ -179,10 +254,76 @@ const Export = ({ setSearch, expUrl, setVisible }) => {
           </button>
         </div>
 
+        <div className="flex w-full gap-3 my-2">
+
+          <div>
+            <p className="mb-2 text-[#646C9A] text-sm">Supervise Users</p>
+            <CommonDropDown
+              optionData={data?.data}
+              defaultOptionValue={searchValue?.supervise_user_id}
+              defaultOptionLabel="name"
+              defaultCreateText="Select User"
+              setFormData={setSearchvalue}
+              onChange={handleChange}
+              updateState = {updateState}
+              name="supervise_user_id"
+            />
+          </div>
+
+          {supervisor2?.data && (
+            <div>
+              <p className="mb-2 text-[#646C9A] text-sm">Related Users</p>
+              <CommonDropDown
+                optionData={supervisor2?.data}
+                defaultOptionValue={searchValue?.supervise2_user_id}
+                defaultOptionLabel="name"
+                defaultCreateText="Select User"
+                setFormData={setSearchvalue}
+                onChange={handleChange}
+                updateState = {updateState}
+                name="supervise2_user_id"
+              />
+            </div>
+          )}
+
+          {supervisor3?.data && (
+            <div>
+              <p className="mb-2 text-[#646C9A] text-sm">Related Users</p>
+              <CommonDropDown
+                optionData={supervisor3?.data}
+                defaultOptionValue={searchValue?.supervise3_user_id}
+                defaultOptionLabel="name"
+                defaultCreateText="Select User"
+                setFormData={setSearchvalue}
+                onChange={handleChange}
+                updateState = {updateState}
+                name="supervise3_user_id"
+              />
+            </div>
+          )}
+
+          {supervisor4?.data && (
+            <div>
+              <p className="mb-2 text-[#646C9A] text-sm">Related Users</p>
+              <CommonDropDown
+                optionData={supervisor4?.data}
+                defaultOptionValue={searchValue?.supervise4_user_id}
+                defaultOptionLabel="name"
+                defaultCreateText="Select User"
+                setFormData={setSearchvalue}
+                onChange={handleChange}
+                updateState = {updateState}
+                name="supervise4_user_id"
+              />
+            </div>
+          )}
+
+          
+        </div>
       </form>
 
     </div>
   );
 };
 
-export default Export;
+export default SurveyReportFilter;
