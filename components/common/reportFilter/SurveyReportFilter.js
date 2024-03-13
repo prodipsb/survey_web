@@ -40,7 +40,7 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
 
           try {
             const superviseUsers = await get('get-supervise-users/list', payload, token);
-            setSupervisor2(superviseUsers);
+            setSupervisor2(superviseUsers?.data);
           } catch (error) {
             console.error('Error fetching supervise users:', error);
           }
@@ -57,7 +57,7 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
 
           try {
             const superviseUsers = await get('get-supervise-users/list', payload, token);
-            setSupervisor3(superviseUsers);
+            setSupervisor3(superviseUsers?.data);
             console.log('superviseUsers superviseUsers', superviseUsers)
           } catch (error) {
             console.error('Error fetching supervise users:', error);
@@ -75,7 +75,8 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
 
           try {
             const superviseUsers = await get('get-supervise-users/list', payload, token);
-            setSupervisor4(superviseUsers);
+            console.log('superviseUsers 3', superviseUsers)
+            setSupervisor4(superviseUsers?.data);
           } catch (error) {
             console.error('Error fetching supervise users:', error);
           }
@@ -176,6 +177,8 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
 
   console.log('searchValue', searchValue)
 
+  console.log('supervisor4', supervisor4)
+
 
   const updateState = async (id, name) => {
     // console
@@ -270,11 +273,11 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
             />
           </div>
 
-          {supervisor2?.data && (
+          {supervisor2.length > 0 && (
             <div>
               <p className="mb-2 text-[#646C9A] text-sm">Related Users</p>
               <CommonDropDown
-                optionData={supervisor2?.data}
+                optionData={supervisor2}
                 defaultOptionValue={searchValue?.supervise2_user_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select User"
@@ -286,11 +289,11 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
             </div>
           )}
 
-          {supervisor3?.data && (
+          {supervisor3.length > 0 && (
             <div>
               <p className="mb-2 text-[#646C9A] text-sm">Related Users</p>
               <CommonDropDown
-                optionData={supervisor3?.data}
+                optionData={supervisor3}
                 defaultOptionValue={searchValue?.supervise3_user_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select User"
@@ -302,11 +305,11 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
             </div>
           )}
 
-          {supervisor4?.data && (
+          {supervisor4.length > 0 && (
             <div>
               <p className="mb-2 text-[#646C9A] text-sm">Related Users</p>
               <CommonDropDown
-                optionData={supervisor4?.data}
+                optionData={supervisor4}
                 defaultOptionValue={searchValue?.supervise4_user_id}
                 defaultOptionLabel="name"
                 defaultCreateText="Select User"
