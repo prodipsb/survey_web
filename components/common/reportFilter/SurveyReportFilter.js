@@ -4,6 +4,9 @@ import { useSelector } from "react-redux";
 import CommonDropDown from "../dropDown/CommonDropDown";
 import { useGetSuperviseUsersQuery } from "../../../redux/features/user/userApi";
 import { get } from "../../../utils/api/ApiCaller";
+import { RiLoader4Fill } from "react-icons/ri";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
 
 
 const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
@@ -14,6 +17,7 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
     end_date: "",
   });
   const [isSearch, setIsSearch] = useState(false);
+  const [exportLoader, setExportLoader] = useState(false);
   const [supervisor2, setSupervisor2] = useState([]);
   const [supervisor3, setSupervisor3] = useState([]);
   const [supervisor4, setSupervisor4] = useState([]);
@@ -129,14 +133,18 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
   };
 
   const downloadFile = (url) => {
+   
     const headers = new Headers({
       Authorization: `Bearer ${token}`,
     });
+
+    setExportLoader(true);
 
     fetch(url, { headers })
       .then((response) => {
         if (!response.ok) {
           toast.error(`Failed to export file...`);
+          setExportLoader(false);
         }
 
         const contentDisposition = response.headers.get("content-disposition");
@@ -164,6 +172,8 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
         document.body.removeChild(link);
 
         window.URL.revokeObjectURL(blobUrl);
+
+        setExportLoader(false);
       })
       .catch((error) => {
         console.error("Error downloading file:", error);
@@ -247,15 +257,20 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
           
           </div>
         </div>
-        <div className="items-end lg:flex md:flex hidden">
-          <button
-            type="submit"
-            onClick={() => setIsSearch(false)}
-            className="py-2.5  px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
-          >
-            Export
-          </button>
-        </div>
+
+        <div className="flex items-end lg:flex md:flex hidden">
+        <button
+          type="submit"
+          onClick={() => setIsSearch(false)}
+          className="flex items-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700"
+        >
+          {exportLoader && 
+          <AiOutlineLoading3Quarters className="animate-spin mr-2" />
+          }
+          Export
+        </button>
+      </div>
+
 
         <div className="flex w-full gap-3 my-2">
 
