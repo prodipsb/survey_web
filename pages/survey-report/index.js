@@ -57,7 +57,7 @@ const SurveyReport = () => {
               { key: "binHolderName", label: "BIN Holder" },
               { key: "binHolderMobile", label: "BIN Holder Mobile" },
               { key: "division", label: "Division" },
-              { key: "circle", label: "circle" },
+              { key: "circle", label: "Circle" },
               { key: "shopName", label: "Shop Name" },
               {
                 key: "businessRegisteredAddress",

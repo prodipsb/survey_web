@@ -5,7 +5,7 @@ const ViewActivityReport = ({ viewData, setViewData }) => {
   return (
     <div className="w-[90%] mx-auto">
       <p className="font-bold text-[#646C9A] text-center text-[24px] mt-5 mb-5">
-        View Report
+         Survey Report Details
       </p>
       <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1">
         <p className="mb-3 text-[#646C9A]">
@@ -13,16 +13,24 @@ const ViewActivityReport = ({ viewData, setViewData }) => {
           {viewData?.date}
         </p>
         <p className="mb-3 text-[#646C9A]">
-          <span className="font-bold text-[16px]">Submitted User: </span>
-          {viewData?.surveySubmittedUserName}
-        </p>
-        <p className="mb-3 text-[#646C9A]">
-          <span className="font-bold text-[16px]">Submitted User Mobile: </span>
-          {viewData?.surveySubmittedUserPhone}
+          <span className="font-bold text-[16px]">Employee ID: </span>
+          {viewData?.employee_id}
         </p>
         <p className="mb-3 text-[#646C9A]">
           <span className="font-bold text-[16px]">Role: </span>
           {viewData?.role}
+        </p>
+        <p className="mb-3 text-[#646C9A]">
+          <span className="font-bold text-[16px]">Employee Name: </span>
+          {viewData?.surveySubmittedUserName}
+        </p>
+        <p className="mb-3 text-[#646C9A]">
+          <span className="font-bold text-[16px]">Employee Mobile: </span>
+          {viewData?.surveySubmittedUserPhone}
+        </p>
+        <p className="mb-3 text-[#646C9A]">
+          <span className="font-bold text-[16px]">Employee Email: </span>
+          {viewData?.surveySubmittedUserEmail}
         </p>
         <p className="mb-3 text-[#646C9A]">
           <span className="font-bold text-[16px]">Supervisor: </span>
@@ -69,16 +77,7 @@ const ViewActivityReport = ({ viewData, setViewData }) => {
             {viewData?.brandname}
           </p>
         )}
-        <p className="mb-3 text-[#646C9A]">
-          <span className="font-bold text-[16px]">
-            Business Registered Adddress:{" "}
-          </span>
-          {viewData?.businessRegisteredAddress}
-        </p>
-        <p className="mb-3 text-[#646C9A]">
-          <span className="font-bold text-[16px]">Outlet Address: </span>
-          {viewData?.outletAddress}
-        </p>
+      
         <p className="mb-3 text-[#646C9A]">
           <span className="font-bold text-[16px]">Number of Outlet: </span>
           {viewData?.numberOfOutlet}
@@ -115,7 +114,7 @@ const ViewActivityReport = ({ viewData, setViewData }) => {
         </p>
         <p className="mb-3 text-[#646C9A]">
           <span className="font-bold text-[16px]">
-            Monthly Average Customer:{" "}
+            Monthly Average Customer:
           </span>
           {viewData?.monthlyAverageCustomer}
         </p>
@@ -208,6 +207,16 @@ const ViewActivityReport = ({ viewData, setViewData }) => {
             Mobile Operator Coverage:{" "}
           </span>
           {viewData?.operatorCoverage}
+        </p>
+        <p className="mb-3 text-[#646C9A]">
+          <span className="font-bold text-[16px]">
+            Business Registered Adddress:{" "}
+          </span>
+          {viewData?.businessRegisteredAddress}
+        </p>
+        <p className="mb-3 text-[#646C9A]">
+          <span className="font-bold text-[16px]">Outlet Address: </span>
+          {viewData?.outletAddress}
         </p>
         <p className="mb-3 text-[#646C9A]">
           <span className="font-bold text-[16px]">Category: </span>
