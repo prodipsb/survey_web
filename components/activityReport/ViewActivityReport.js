@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import ImageViewer from "../common/imageViewer/ImageViewer";
+import Map from "../map/Map";
 
 const ViewActivityReport = ({ viewData, setViewData }) => {
+  const [coordinate, setCoordinate] = useState({
+    lat: parseFloat(viewData?.latitude),
+    lng: parseFloat(viewData?.longitude)
+  });
+  console.log('all viewData', viewData)
+  console.log('all viewData latitute', viewData.latitude)
+  console.log('all coordinate', coordinate)
   return (
     <div className="w-[90%] mx-auto">
       <p className="font-bold text-[#646C9A] text-center text-[24px] mt-5 mb-5">
@@ -37,13 +45,17 @@ const ViewActivityReport = ({ viewData, setViewData }) => {
           {viewData?.supervisor}
         </p>
         <p className="mb-3 text-[#646C9A]">
+          <span className="font-bold text-[16px]">BIN Number: </span>
+          {viewData?.binNumber}
+        </p>
+        <p className="mb-3 text-[#646C9A]">
           <span className="font-bold text-[16px]">BIN Holder Name: </span>
           {viewData?.binHolderName}
         </p>
         {viewData?.binHolderEmail && (
           <p className="mb-3 text-[#646C9A]">
             <span className="font-bold text-[16px]">
-              BIN HOlder Email (optional):{" "}
+              BIN Holder Email (optional):{" "}
             </span>
             {viewData?.binHolderEmail}
           </p>
@@ -249,14 +261,18 @@ const ViewActivityReport = ({ viewData, setViewData }) => {
           ))}
         </div>
       </div>
-      <div className="flex justify-center mt-5 mb-10">
+      <div className="flex justify-center mt-2 mb-5">
         <button
           onClick={() => setViewData(null)}
           className="border border-gray-400 px-8 py-2 rounded-md text-[14px] hover:bg-gray-400 hover:text-white"
         >
-          Cancel
+          Back
         </button>
       </div>
+
+      <div className="m-10 p-10 text-center">
+      <Map center={coordinate} zoom={15} />
+    </div>
     </div>
   );
 };
