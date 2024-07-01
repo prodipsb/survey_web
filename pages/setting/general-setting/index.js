@@ -4,14 +4,21 @@ import { useGetGeneralSettingQuery } from "../../../redux/features/generalSettin
 import { useCreateGeneralSettingMutation } from "../../../redux/features/generalSetting/generalSettingApi";
 import toast from "react-hot-toast";
 import AuthCheck from "../../../components/authCheck/AuthCheck";
+import Switch from '@mui/material/Switch';
+import ToggleSwitch from "../../../components/switch/ToggleSwitch";
+
+const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 const GeneralSetting = () => {
+
   const [formData, setFormData] = useState({
     website_title: "",
     address: "",
     about: "",
     logo: "",
     favicon: null,
+    googleMap: false,
+    leafletMap: false
   });
 
   const formRef = useRef();
@@ -26,17 +33,59 @@ const GeneralSetting = () => {
 
   useEffect(() => {
     if (data) {
-      setFormData(data?.data);
+
+      const { id, website_title, about, address, googleMap, leafletMap } = data.data;
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        id,
+        website_title,
+        about,
+        address,
+        googleMap,
+        leafletMap,
+      }));
+
+      // setFormData(data?.data);
     }
   }, [data]);
 
+
   const handleInputChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]:
-        e.target.type === "file" ? e.target.files[0] : e.target.value,
-    });
+    const { name, type } = e.target;
+  
+    if (type === 'checkbox') {
+      const value = e.target.checked ? 1 : 0;
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    } else if (type === 'file') {
+      // If it's a file input, set the value to the first selected file
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: e.target.files[0],
+      }));
+    } else {
+      // For other types of inputs, set the value directly
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: e.target.value,
+      }));
+    }
   };
+
+  
+
+  // const handleInputChange = (e) => {
+    
+  //   console.log('hell', e.target.name)
+  //   console.log('hell value', e.target.value)
+  //   setFormData({
+  //     ...formData,
+  //     [e.target.name]:
+  //       e.target.type === "file" ? e.target.files[0] : e.target.value,
+  //   });
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -74,6 +123,7 @@ const GeneralSetting = () => {
               type="text"
               name="website_title"
               required
+              value={formData.website_title}
               placeholder="Example: website"
               onChange={handleInputChange}
             />
@@ -84,6 +134,7 @@ const GeneralSetting = () => {
               className={inputStyle}
               type="text"
               name="address"
+              value={formData.address}
               placeholder="Example: address"
               onChange={handleInputChange}
             />
@@ -100,10 +151,40 @@ const GeneralSetting = () => {
               type="text"
               rows={3}
               name="about"
+              value={formData.about}
               placeholder="Example: user information"
               onChange={handleInputChange}
             />
           </div>
+
+          <div className="gap-10">
+          <div className="mb-5 w-full">
+            <p className="mb-2 text-[#646C9A]">Google Map</p>
+            <ToggleSwitch
+              checked={formData.googleMap}
+              onChange={handleInputChange}
+              name="googleMap"
+              label="Google Map"
+            />
+            {/* <Switch {...label} defaultChecked /> */}
+          </div>
+          <div className="mb-5 w-full">
+            <p className="mb-2 text-[#646C9A]">Third Party</p>
+            <ToggleSwitch
+              checked={formData.leafletMap}
+              onChange={handleInputChange}
+              name="leafletMap"
+              label="Leaflet Map"
+            />
+            {error && (
+              <p className="text-red-500 mt-1">
+                {error?.data?.message?.address}
+              </p>
+            )}
+          </div>
+
+        </div>
+
           <div className="mb-5 w-full">
             <p className="mb-2 text-[#646C9A]"> Logo</p>
             <input

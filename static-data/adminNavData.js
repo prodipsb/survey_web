@@ -2,12 +2,13 @@ import { TfiHome } from "react-icons/tfi";
 import { FaUserPlus, FaUsers } from "react-icons/fa";
 import { FiUsers } from "react-icons/fi";
 import { CiSettings } from "react-icons/ci";
-import { RiNotification2Fill, RiSettings5Line } from "react-icons/ri";
+import { RiNotification2Fill, RiSettings5Line, RiDeviceRecoverFill, RiDeviceRecoverLine, RiDeviceLine, RiDeviceFill } from "react-icons/ri";
 import { BsFilePdfFill } from "react-icons/bs";
-import { MdAdminPanelSettings, MdManageAccounts } from "react-icons/md";
+import { MdAdminPanelSettings, MdManageAccounts, MdOnDeviceTraining } from "react-icons/md";
 import { CgUserList } from "react-icons/cg";
 import { FcSalesPerformance } from "react-icons/fc";
 import { TbActivity } from "react-icons/tb";
+import { MdOutlineCoPresent } from "react-icons/md";
 
 export const adminNav = [
   {
@@ -81,6 +82,13 @@ export const adminNav = [
         single: true,
         href: "/performance-report",
       },
+      {
+        id: 3,
+        name: "Attendance Report",
+        icon: <MdOutlineCoPresent size={18} />,
+        single: true,
+        href: "/attendance-report",
+      },
     ],
   },
   {
@@ -117,6 +125,28 @@ export const adminNav = [
         icon: <RiNotification2Fill size={18} />,
         single: true,
         href: "/notification/push-notification",
+      },
+    ],
+  },
+  {
+    id: 7,
+    single: false,
+    icon: <RiDeviceFill size={18} />,
+    name: "Device Servicing",
+    navData: [
+      {
+        id: 1,
+        name: "Device Issues",
+        icon: <RiDeviceLine size={18} />,
+        single: true,
+        href: "/device/issues",
+      },
+      {
+        id: 2,
+        name: "Device Services",
+        icon: <MdOnDeviceTraining size={18} />,
+        single: true,
+        href: "/device/services",
       },
     ],
   },

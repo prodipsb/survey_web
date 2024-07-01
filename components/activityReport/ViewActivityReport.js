@@ -1,19 +1,36 @@
 import React, { useState } from "react";
 import ImageViewer from "../common/imageViewer/ImageViewer";
-import Map from "../map/Map";
+import Map from "../map/GoogleMap";
+
+import dynamic from 'next/dynamic'; // Import dynamic from 'next/dynamic'
+import { useGetGeneralSettingQuery } from "../../redux/features/generalSetting/generalSettingApi";
+import EMap from "../map/Emap";
+
+// const LeafletMap = dynamic(() => import('../map/LeafletMap'), { ssr: false }); 
+
+const LeafletMap = dynamic(() => import('../map/LeafletMap'), { ssr: false });
 
 const ViewActivityReport = ({ viewData, setViewData }) => {
+  console.log('details view', viewData)
   const [coordinate, setCoordinate] = useState({
     lat: parseFloat(viewData?.latitude),
     lng: parseFloat(viewData?.longitude)
   });
+
+  const { data } = useGetGeneralSettingQuery();
+
+  const center = [parseFloat(viewData?.latitude), parseFloat(viewData?.longitude)]; // Example center coordinates
+ // const center = [23.8012609, 90.3576247]; // Example center coordinates
+  const zoom = 15; // Example zoom level
+
+
   console.log('all viewData', viewData)
   console.log('all viewData latitute', viewData.latitude)
   console.log('all coordinate', coordinate)
   return (
     <div className="w-[90%] mx-auto">
       <p className="font-bold text-[#646C9A] text-center text-[24px] mt-5 mb-5">
-         Survey Report Details
+        Survey Report Details
       </p>
       <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1">
         <p className="mb-3 text-[#646C9A]">
@@ -72,7 +89,7 @@ const ViewActivityReport = ({ viewData, setViewData }) => {
           <span className="font-bold text-[16px]">Division: </span>
           {viewData?.division}
         </p>
-        
+
         <p className="mb-3 text-[#646C9A]">
           <span className="font-bold text-[16px]">Circle: </span>
           {viewData?.circle}
@@ -89,7 +106,7 @@ const ViewActivityReport = ({ viewData, setViewData }) => {
             {viewData?.brandname}
           </p>
         )}
-      
+
         <p className="mb-3 text-[#646C9A]">
           <span className="font-bold text-[16px]">Number of Outlet: </span>
           {viewData?.numberOfOutlet}
@@ -270,9 +287,24 @@ const ViewActivityReport = ({ viewData, setViewData }) => {
         </button>
       </div>
 
-      <div className="m-10 p-10 text-center">
-      <Map center={coordinate} zoom={15} />
-    </div>
+      {/* <div style={{ height: '600px', width: '100%', marginTop: '50px', marginBottom: '80px'}}>
+      <LeafletMap center={center} zoom={zoom} scrollWheelZoom={false} /> 
+      </div> */}
+
+      {data?.data?.googleMap && (
+        <div style={{ height: '600px', width: '100%', marginTop: '50px', marginBottom: '80px' }}>
+          {/* <GoogleMap center={center} zoom={zoom} scrollWheelZoom={false} /> Render GoogleMap component */}
+          <EMap inCordinate={center} outCordinate={center} zoom={zoom} scrollWheelZoom={false} /> {/* Render GoogleMap component */}
+        </div>
+      )}
+
+      {data?.data?.leafletMap && (
+        <div style={{ height: '600px', width: '100%', marginTop: '50px', marginBottom: '80px' }}>
+          <LeafletMap center={center} outCordinate={center} zoom={zoom} scrollWheelZoom={false} /> {/* Render LeafletMap component */}
+        </div>
+      )}
+
+
     </div>
   );
 };
