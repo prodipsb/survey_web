@@ -3,7 +3,13 @@ const nextConfig = {
   reactStrictMode: true,
 };
 
-module.exports = nextConfig;
+const withTM = require('next-transpile-modules')(['@mui/material', '@emotion/react', '@emotion/styled']); // Add other packages as needed
+
+module.exports = withTM({
+  // other Next.js config options here
+});
+
+// module.exports = nextConfig;
 
 module.exports = {
   images: {
