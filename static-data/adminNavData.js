@@ -8,7 +8,7 @@ import { MdAdminPanelSettings, MdManageAccounts, MdOnDeviceTraining } from "reac
 import { CgUserList } from "react-icons/cg";
 import { FcSalesPerformance } from "react-icons/fc";
 import { TbActivity } from "react-icons/tb";
-import { MdOutlineCoPresent } from "react-icons/md";
+import { MdOutlineCoPresent, MdDevices } from "react-icons/md";
 
 export const adminNav = [
   {
@@ -71,14 +71,14 @@ export const adminNav = [
       {
         id: 1,
         name: "Survey Report",
-        icon: <TbActivity size={18} />,
+        icon: <FcSalesPerformance size={18} />,
         single: true,
         href: "/survey-report",
       },
       {
         id: 2,
         name: "Performance Report",
-        icon: <FcSalesPerformance size={18} />,
+        icon: <TbActivity size={18} />,
         single: true,
         href: "/performance-report",
       },
@@ -88,6 +88,13 @@ export const adminNav = [
         icon: <MdOutlineCoPresent size={18} />,
         single: true,
         href: "/attendance-report",
+      },
+      {
+        id: 4,
+        name: "Device Service Report",
+        icon: <MdDevices size={18} />,
+        single: true,
+        href: "/device-service-report",
       },
     ],
   },

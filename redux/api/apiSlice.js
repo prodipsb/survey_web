@@ -30,6 +30,7 @@ export const api = createApi({
     "pushNotification",
     "deviceIssues",
     "deviceServices",
+    "serviceReport",
   ],
   endpoints: () => ({}),
 });
