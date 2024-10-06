@@ -58,10 +58,14 @@ const LoginForm = ({ setForgotPassword }) => {
 
 
   const handleAppDownload = () => {
-    const url = 'https://play.google.com/store/apps/details?id=com.surveyMaster';
-    window.open(url, '_blank'); // Open the link in a new tab/window
-    // Alternatively, you can use history.push(url) if you're using React Router for navigation
-  };
+    // Initiate the download
+    const link = document.createElement('a');
+    link.href = '/app/app-release.apk'; 
+    link.setAttribute('download', 'tax-hub.apk'); // Specify the download filename
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link); // Remove the link element after downloading
+};
 
   return (
     <div>
@@ -71,7 +75,7 @@ const LoginForm = ({ setForgotPassword }) => {
         alt=""
         priority
       />
-      <div className="mt-5 flex justify-center items-center">
+      <div className="flex items-center justify-center mt-5">
         <div>
           <h2 className="text-center font-bold text-white text-[15px] mb-5">
             SURVEY APPLICATION WEB PORTAL
