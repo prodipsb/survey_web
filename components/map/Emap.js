@@ -12,7 +12,7 @@ const EMap = ({ inCordinate, outCordinate, zoom }) => {
 
     const defaultProps = {
         center: [parseFloat(inCordinate[0]), parseFloat(inCordinate[1])],
-        zoom: 9,
+        zoom: zoom,
         greatPlaceCoords: {lat: parseFloat(outCordinate[0]), lng: parseFloat(outCordinate[1])}
       };
 

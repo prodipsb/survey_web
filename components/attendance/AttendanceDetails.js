@@ -17,7 +17,7 @@ const AttendanceDetails = ({ viewData, setViewData }) => {
   });
 
   // const center = [23.8012609, 90.3576247]; // Example center coordinates
-  const zoom = 15; // Example zoom level
+  const zoom = 12; // Example zoom level
 
    const inCordinate = [parseFloat(viewData?.in_latitude), parseFloat(viewData?.in_longitude)]; // Example center coordinates
    const outCordinate = [parseFloat(viewData?.out_latitude), parseFloat(viewData?.out_longitude)]; // Example center coordinates

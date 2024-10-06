@@ -14,7 +14,7 @@ const ViewService = ({ deviceService, setDeviceService }) => {
   const [formData, setFormData] = useState({
     title: 'Device status notification',
     body: '',
-    image:`${process.env.NEXT_PUBLIC_IMAGE}/assets/notification-bell.png`,
+    image: `${process.env.NEXT_PUBLIC_IMAGE}/assets/notification-bell.png`,
     content_available: true
   });
 
@@ -59,9 +59,9 @@ const ViewService = ({ deviceService, setDeviceService }) => {
     let tt = deviceService?.deviceToken;
     const deviceTokens = [tt]
     console.log('deviceTokens', deviceTokens)
-    if(deviceTokens){
+    if (deviceTokens) {
 
-      console.log('deviceTokens formData',  formData)
+      console.log('deviceTokens formData', formData)
 
       await sendPushNotification(deviceTokens, formData)
 
@@ -75,74 +75,68 @@ const ViewService = ({ deviceService, setDeviceService }) => {
 
 
   return (
-    <div className="mt-5 w-[90%] lg:w-[40%] md:w-[60%] mx-auto text-[13px] border-b-blue-300 pb-5">
+    <div className="mt-5 w-[90%] lg:w-[60%] md:w-[60%] mx-auto text-[13px] border-b-blue-300 pb-5">
       <div className="flex flex-col items-center mb-5">
         <p className="font-bold text-[#646C9A] text-[24px] text-center w-full">
           Service Details
         </p>
-        <div className="w-full flex justify-end text-[#646C9A] cursor-pointer">
-          <TbEdit size={20} onClick={handleEdit} />
+        <div className="w-full flex justify-end text-[#646C9A] cursor-pointer" onClick={handleEdit} >
+          <strong className="text-[18px]">Device Service</strong> <TbEdit size={25}/>
         </div>
       </div>
 
-      <div className="mb-5 w-full">
-        <p className="mb-2 text-[#646C9A]">Date: {deviceService.date}</p>
-      </div>
-      <div className="mb-5 w-full">
-        <p className="mb-2 text-[#646C9A]">Sender Name: {deviceService.user}</p>
-      </div>
-      <div className="mb-5 w-full">
-        <p className="mb-2 text-[#646C9A]">BIN Number: {deviceService.binNumber}</p>
-      </div>
-      
-      <div className="mb-5 w-full">
-        <p className="mb-2 text-[#646C9A]">Device Serial Number: {deviceService.serialNumber}</p>
-      </div>
-      <div className="mb-5 w-full">
-        <p className="mb-2 text-[#646C9A]">Device: {deviceService.device}</p>
-      </div>
-      <div className="mb-5 w-full">
-        <p className="mb-2 text-[#646C9A]">Outlet Name: {deviceService.outletName}</p>
-      </div>
-      <div className="mb-5 w-full">
-        <p className="mb-2 text-[#646C9A]">Outlet Address: {deviceService.outletAddress}</p>
-      </div>
-      <div className="mb-5 w-full">
-        <p className="mb-2 text-[#646C9A]">Additional Information: {deviceService.comment}</p>
-      </div>
-      <div className="mb-5 w-full">
-        <p className="mb-2 text-[#646C9A]">Device Issue: {deviceService.deviceIssues.map((deviceIssue, index) => {
-          return deviceIssue.issue.title + ',  '
-        })}</p>
-      </div>
-      <div className="mb-5 w-full">
-        <p className="mb-2 text-[#646C9A]">Status: {deviceService.status}</p>
-      </div>
+      <table className="table-auto w-full text-left text-[14px] overflow-x-auto">
+        <tr className="hover:bg-[#eff0f3] bg-[#F7F8FA]">
+          <td className="border whitespace-nowrap p-3 h-[55px]">Date</td>
+          <td className="border whitespace-nowrap p-3 h-[55px]">{deviceService.date}</td>
+          <td className="border whitespace-nowrap p-3 h-[55px]">BIN Number</td>
+          <td className="border whitespace-nowrap p-3 h-[55px]">{deviceService.binNumber}</td>
+        </tr>
+        <tr className="hover:bg-[#eff0f3] bg-[#F7F8FA]">
+          <td className="border whitespace-nowrap p-3 h-[55px]">Sender Name</td>
+          <td className="border whitespace-nowrap p-3 h-[55px]">{deviceService.user}</td>
+          <td className="border whitespace-nowrap p-3 h-[55px]">Device Serial Number</td>
+          <td className="border whitespace-nowrap p-3 h-[55px]">{deviceService.serialNumber}</td>
+        </tr>
+        <tr className="hover:bg-[#eff0f3] bg-[#F7F8FA]">
+          <td className="border whitespace-nowrap p-3 h-[55px]">Device</td>
+          <td className="border whitespace-nowrap p-3 h-[55px]">{deviceService.device}</td>
+          <td className="border whitespace-nowrap p-3 h-[55px]">Outlet Name</td>
+          <td className="border whitespace-nowrap p-3 h-[55px]">{deviceService.outletName}</td>
+        </tr>
+        <tr className="hover:bg-[#eff0f3] bg-[#F7F8FA]">
+          <td className="border whitespace-nowrap p-3 h-[55px]">Device Issue</td>
+          <td className="border whitespace-nowrap p-3 h-[55px]">
+          {deviceService.deviceIssues.map((deviceIssue, index) => {
+              return deviceIssue.issue.title + ',  '
+            })}
+          </td>
+          <td className="border whitespace-nowrap p-3 h-[55px]">Outlet Address</td>
+          <td className="border whitespace-nowrap p-3 h-[55px]">{deviceService.outletAddress}</td>
+
+        </tr>
+        <tr className="hover:bg-[#eff0f3] bg-[#F7F8FA]">
+          <td className="border whitespace-nowrap p-3 h-[55px]">Additional Information</td>
+          <td className="border whitespace-nowrap p-3 h-[55px]">{deviceService.comment}</td>
+          <td className="border whitespace-nowrap p-3 h-[55px]">Status</td>
+          <td className="border whitespace-nowrap p-3 h-[55px]">{deviceService.status}</td>
+        </tr>
+      </table>
+
       {deviceService?.last_comment &&
-        <div className="mb-5 w-full">
-          <p className="mb-2 text-[#646C9A]">Comment: {deviceService?.last_comment}</p>
+        <div className="my-5 w-full">
+          <p className="my-2 text-[#646C9A]">Comment: {deviceService?.last_comment}</p>
         </div>
       }
-      <div className="mb-5 w-full">
-        <p className="mb-2 text-[#646C9A]">Status Updated: {deviceService.updatedAt}</p>
+      <div className="my-5 w-full">
+        <p className="my-2 text-[#646C9A]">Status Updated: {deviceService.updatedAt}</p>
       </div>
 
 
       {showInput && (
         <form className="mb-5" onSubmit={handleSubmit} ref={formRef}>
           <div className="gap-10">
-            <div className="w-full mb-5">
-              <p className="mb-2 text-[#646C9A]">Comment</p>
-              <textarea
-                className={inputStyle}
-                rows={5}
-                name="body"
-                placeholder="Example: comment body"
-                onChange={handleInputChange}
-              />
-            </div>
-
-            <div className="mb-5 w-full">
+          <div className="mb-5 w-full">
               <p className="mb-2 text-[#646C9A]">Status</p>
               <CommonDropDown
                 optionData={[
@@ -161,6 +155,18 @@ const ViewService = ({ deviceService, setDeviceService }) => {
                 name="status"
               />
             </div>
+            <div className="w-full mb-5">
+              <p className="mb-2 text-[#646C9A]">Comment</p>
+              <textarea
+                className={inputStyle}
+                rows={5}
+                name="body"
+                placeholder="Example: comment body"
+                onChange={handleInputChange}
+              />
+            </div>
+
+            
           </div>
           <div className="flex justify-center mt-5">
             <button
@@ -168,7 +174,7 @@ const ViewService = ({ deviceService, setDeviceService }) => {
               type="submit"
               className="bg-white border-blue-500 border px-8 py-2 rounded-md text-black hover:bg-blue-500 hover:text-white"
             >
-              {isLoading ? "Loading..." : "Save"}
+              {isLoading ? "Loading..." : "Submit"}
             </button>
           </div>
         </form>

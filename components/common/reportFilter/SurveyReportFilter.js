@@ -15,6 +15,7 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
     search: "",
     start_date: "",
     end_date: "",
+    bin_number: "",
   });
   const [isSearch, setIsSearch] = useState(false);
   const [exportLoader, setExportLoader] = useState(false);
@@ -220,6 +221,17 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
               type="text"
               name="search"
               placeholder="Enter Name"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div>
+            <p className="mb-2 text-[#646C9A] text-[14px]"> BIN Number</p>
+            <input
+              className={inputStyle}
+              type="text"
+              name="bin_number"
+              placeholder="Enter BIN Number"
               onChange={handleChange}
             />
           </div>
