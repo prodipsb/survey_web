@@ -57,7 +57,6 @@ const UserList = () => {
   };
 
   const handleChange = (event, value) => {
-    console.log('page', page)
     setPage(value);
   };
 

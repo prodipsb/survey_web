@@ -3,8 +3,6 @@ import React from "react";
 
 const ServiceDetails = ({ deviceService, setDeviceService }) => {
 
-    console.log('deviceService', deviceService)
-
     return (
         <div className="mt-5 w-[90%] lg:w-[60%] md:w-[60%] mx-auto text-[13px] border-b-blue-300 pb-5">
             <div className="flex flex-col items-center mb-5">

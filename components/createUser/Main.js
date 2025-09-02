@@ -60,10 +60,6 @@ const Main = () => {
 
   const { data: roleUsers, error: roleUsersError, isLoading: roleUsersIsLoading, refetch: refetchRoleUsers } = useGetUserWithRoleQuery(selectedSupervisorRole);
 
-
-  console.log('selectedSupervisorRole', selectedSupervisorRole)
-
-
   const [createUser, { isLoading, isError, isSuccess, error }] =
     useCreateUserMutation();
 
@@ -128,12 +124,10 @@ const Main = () => {
   useEffect(() => {
     // Additional logic with the fetched data
     setUpperRoles(roleData?.data);
-    console.log('Fetched data:', roleData?.data);
   }, [roleData]);
 
   useEffect(() => {
     // Additional logic with the fetched data
-    console.log('Fetched roleUsers:', roleUsers);
     setSupervisorUsers(roleUsers?.data);
   }, [roleUsers]);
 
@@ -168,10 +162,8 @@ const Main = () => {
   };
 
   // const { data } = useGetUpperRolesQuery(2);
-  //     console.log('hello test', data);
 
   const updateState = async (id, name) => {
-    // console.log('aaa' ,id)
     try {
       if (name == 'role_id') {
         setSelectedRole(id);
@@ -183,7 +175,6 @@ const Main = () => {
           id: id,
           pagination: 0
         }
-        console.log('setSelectedSupervisorRole', payload)
         setSelectedSupervisorRole(payload);
         await refetchRoleUsers(id);
       }
@@ -201,10 +192,6 @@ const Main = () => {
       console.error('Error fetching data:', error);
     }
   };
-
-  //  console.log('formData', formData)
-  //  console.log('formData commissionerate', formData.commissionerate)
-  //  console.log('subdivision', subdivision[formData.commissionerate])
 
   return (
     <div>

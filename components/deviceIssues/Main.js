@@ -30,11 +30,8 @@ const DeviceIssuesManage = ({ values }) => {
 
 
   const handleEdit = (data) => {
-    console.log('edited data', data)
     setEditData(data);
   }
-
-  console.log('values', values)
 
   return (
     <div>

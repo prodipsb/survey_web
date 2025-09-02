@@ -41,8 +41,6 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
             'supervise_user_id': searchValue?.supervise_user_id
           };
 
-          console.log('payload', payload)
-
           try {
             const superviseUsers = await get('get-supervise-users/list', payload, token);
             setSupervisor2(superviseUsers?.data);
@@ -63,7 +61,6 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
           try {
             const superviseUsers = await get('get-supervise-users/list', payload, token);
             setSupervisor3(superviseUsers?.data);
-            console.log('superviseUsers superviseUsers', superviseUsers)
           } catch (error) {
             console.error('Error fetching supervise users:', error);
           }
@@ -76,11 +73,8 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
             'supervise3_user_id': searchValue?.supervise3_user_id
           };
 
-          console.log('payload3', payload)
-
           try {
             const superviseUsers = await get('get-supervise-users/list', payload, token);
-            console.log('superviseUsers 3', superviseUsers)
             setSupervisor4(superviseUsers?.data);
           } catch (error) {
             console.error('Error fetching supervise users:', error);
@@ -184,12 +178,6 @@ const SurveyReportFilter = ({ setSearch, expUrl, setVisible }) => {
   const showModal = () => {
     setVisible(true);
   };
-
-
-  console.log('searchValue', searchValue)
-
-  console.log('supervisor4', supervisor4)
-
 
   const updateState = async (id, name) => {
     // console

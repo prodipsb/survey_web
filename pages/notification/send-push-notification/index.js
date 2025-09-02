@@ -24,8 +24,6 @@ const PushNotification = () => {
     content_available: true
   });
 
-  console.log('useGetDevicetokenQuery', data)
-
 
   const formRef = useRef();
   const router = useRouter();
@@ -94,10 +92,6 @@ const PushNotification = () => {
       //   sender: {id: profileData?.data?.id, name: profileData?.data?.name, role_id: profileData?.data?.role_id, role: profileData?.data?.role?.name},
       //   notification: formData
       // }
-
-     
-      //  console.log('profileData', profileData);
-      //   console.log('storeData', storeData);
       //  return false;
 
 
@@ -147,12 +141,6 @@ const PushNotification = () => {
     // Toggle selection status for "Select All"
     event?.target?.checked ? setRoles(roleData?.data?.data?.data) : setRoles([]);
   };
-
-
-  //  console.log('data', data)
-  // console.log('roleData', roleData?.data?.data?.data);
-
-  // console.log('selectedDeviceUsers', selectedDeviceUsers)
 
   return (
     <div className="mt-5 w-[90%] lg:w-[40%] md:w-[60%] mx-auto text-[13px] border-b-blue-300 pb-5">

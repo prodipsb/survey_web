@@ -1,21 +1,26 @@
 /** @type {import('next').NextConfig} */
+const withTM = require('next-transpile-modules')([
+  '@mui/material',
+  '@emotion/react',
+  '@emotion/styled'
+]); // Add other packages if needed
+
 const nextConfig = {
   reactStrictMode: true,
-};
-
-const withTM = require('next-transpile-modules')(['@mui/material', '@emotion/react', '@emotion/styled']); // Add other packages as needed
-
-module.exports = withTM({
-  // other Next.js config options here
-});
-
-// module.exports = nextConfig;
-
-module.exports = {
   images: {
-    domains: [process?.env?.NEXT_PUBLIC_BASE_URL],
+    domains: ['103.54.36.22'],
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: '103.54.36.22',
+        port: '8000',
+        pathname: '/uploads/**',
+      },
+    ],
   },
   eslint: {
     ignoreDuringBuilds: true,
   },
 };
+
+module.exports = withTM(nextConfig);

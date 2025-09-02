@@ -1,9 +1,6 @@
 import toast from "react-hot-toast";
 
 const sendPushNotification = async (deviceTokens, formData) => {
-  console.log('Device Tokens:', deviceTokens);
-  console.log('Form Data:', formData);
-  console.log('Environment Key:', process.env.NEXT_PUBLIC_PUSH_NOTIFICATION_SECRET_KEY);
 
   try {
     const payload = {
@@ -11,7 +8,6 @@ const sendPushNotification = async (deviceTokens, formData) => {
       notification: formData,
       priority: "high"
     };
-    console.log('Payload:', JSON.stringify(payload));
 
     const response = await fetch("https://fcm.googleapis.com/fcm/send", {
       method: "POST",
@@ -23,7 +19,6 @@ const sendPushNotification = async (deviceTokens, formData) => {
     });
 
     const responseData = await response.text(); // Use text() first to inspect the raw response
-    console.log('Response:', responseData);
 
     // Try parsing the response data to JSON
     try {

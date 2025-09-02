@@ -58,10 +58,7 @@ const ViewService = ({ deviceService, setDeviceService }) => {
     toast.success("Device Service updated successfully!");
     let tt = deviceService?.deviceToken;
     const deviceTokens = [tt]
-    console.log('deviceTokens', deviceTokens)
     if (deviceTokens) {
-
-      console.log('deviceTokens formData', formData)
 
       await sendPushNotification(deviceTokens, formData)
 

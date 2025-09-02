@@ -48,17 +48,8 @@ const PerformanceReport = () => {
               { key: "surveySubmittedUserEmail", label: "Email" },
               { key: "surveySubmittedUserPhone", label: "Phone" },
               { key: "totalSurvey", label: "Total Survey" },
-              { key: "totalUniPrice", label: "Total Unite Price" },
-              { key: "totalVat", label: "Total VAT" },
-              { key: "totalSdPercent", label: "Total SD Percent" },
-              {
-                key: "totalPriceIncludingVat",
-                label: "Total Price Including VAT",
-              },
-              {
-                key: "totalPriceExcludingVat",
-                label: "Total Price Excluding VAT",
-              },
+              
+             
               { key: "action", label: "Action" },
             ]}
             data={data?.data?.data}

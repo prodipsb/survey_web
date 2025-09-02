@@ -18,8 +18,6 @@ const DeviceIssuess = () => {
     search: search,
   });
 
-  // console.log('device issues', data)
-
   const handleChange = (event, value) => {
     setPage(value);
   };

@@ -5,7 +5,6 @@ const deviceServiceReportApi = api.injectEndpoints({
     serviceReport: builder.query({
       query: (data) => {
         const searchParams = new URLSearchParams();
-        console.log('searc param', data?.search)
 
         if (data?.search?.employee_id) {
           searchParams.append("employee_id", data.search.employee_id);

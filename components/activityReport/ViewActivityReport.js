@@ -11,22 +11,29 @@ import EMap from "../map/Emap";
 const LeafletMap = dynamic(() => import('../map/LeafletMap'), { ssr: false });
 
 const ViewActivityReport = ({ viewData, setViewData }) => {
-  console.log('details view', viewData)
-  const [coordinate, setCoordinate] = useState({
-    lat: parseFloat(viewData?.latitude),
-    lng: parseFloat(viewData?.longitude)
-  });
+  // const [coordinate, setCoordinate] = useState({
+  //   lat: parseFloat(viewData?.latitude),
+  //   lng: parseFloat(viewData?.longitude)
+  // });
 
   const { data } = useGetGeneralSettingQuery();
 
-  const center = [parseFloat(viewData?.latitude), parseFloat(viewData?.longitude)]; // Example center coordinates
- // const center = [23.8012609, 90.3576247]; // Example center coordinates
+  const isValidCoordinate = (coord) =>
+    Array.isArray(coord) &&
+    coord.length === 2 &&
+    !isNaN(coord[0]) &&
+    !isNaN(coord[1]);
+
+  const center = [
+    parseFloat(viewData?.latitude),
+    parseFloat(viewData?.longitude)
+  ];
+
+
+  //const center = [parseFloat(viewData?.latitude), parseFloat(viewData?.longitude)]; // Example center coordinates
+  // const center = [23.8012609, 90.3576247]; // Example center coordinates
   const zoom = 15; // Example zoom level
 
-
-  console.log('all viewData', viewData)
-  console.log('all viewData latitute', viewData.latitude)
-  console.log('all coordinate', coordinate)
   return (
     <div className="w-[90%] mx-auto">
       <p className="font-bold text-[#646C9A] text-center text-[24px] mt-5 mb-5">
@@ -287,20 +294,25 @@ const ViewActivityReport = ({ viewData, setViewData }) => {
         </button>
       </div>
 
-      {/* <div style={{ height: '600px', width: '100%', marginTop: '50px', marginBottom: '80px'}}>
-      <LeafletMap center={center} zoom={zoom} scrollWheelZoom={false} /> 
-      </div> */}
-
-      {data?.data?.googleMap && (
+      {data?.data?.googleMap && isValidCoordinate(center) && (
         <div style={{ height: '600px', width: '100%', marginTop: '50px', marginBottom: '80px' }}>
-          {/* <GoogleMap center={center} zoom={zoom} scrollWheelZoom={false} /> Render GoogleMap component */}
-          <EMap inCordinate={center} outCordinate={center} zoom={zoom} scrollWheelZoom={false} /> {/* Render GoogleMap component */}
+          <EMap
+            inCordinate={center}
+            outCordinate={isValidCoordinate(center) ? center : null}
+            zoom={zoom}
+            scrollWheelZoom={false}
+          />
         </div>
       )}
 
-      {data?.data?.leafletMap && (
+      {data?.data?.leafletMap && isValidCoordinate(center) && (
         <div style={{ height: '600px', width: '100%', marginTop: '50px', marginBottom: '80px' }}>
-          <LeafletMap center={center} outCordinate={center} zoom={zoom} scrollWheelZoom={false} /> {/* Render LeafletMap component */}
+          <LeafletMap
+            center={center}
+            outCordinate={isValidCoordinate(center) ? center : null}
+            zoom={zoom}
+            scrollWheelZoom={false}
+          />
         </div>
       )}
 

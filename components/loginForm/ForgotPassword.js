@@ -7,7 +7,6 @@ const ForgotPassword = ({ setForgotPassword }) => {
   const [forgotMail, setForgotMail] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(forgotMail);
   };
   return (
     <div>

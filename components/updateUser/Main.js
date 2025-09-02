@@ -50,8 +50,6 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log('gggg', userEdit)
-
     const formdata = new FormData();
     Object.keys(userEdit).forEach((key) => {
       const value = userEdit[key];
@@ -76,21 +74,15 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
   useEffect(() => {
     const roles = roleData?.data ? roleData?.data : data?.data?.data?.data;
     setUpperRoles(roles);
-    console.log('Fetched data 12:',  data?.data?.data?.data);
-    console.log('Fetched data 11:', roles);
   }, []);
 
   useEffect(() => {
     // Additional logic with the fetched data
     setUpperRoles(roleData?.data);
-    console.log('Fetched data:', roleData?.data);
   }, [roleData]);
 
   useEffect(() => {
-
-   
     // Additional logic with the fetched data
-    console.log('Fetched roleUsers:', roleUsers);
     setSupervisorUsers(roleUsers?.data);
   }, [roleUsers]);
 
@@ -370,7 +362,6 @@ const UpdateUser = ({ userEdit, setUserEdit }) => {
 
            
           </div>
-          {console.log('userEdit', userEdit)}
           <div className="md:flex lg:flex gap-10">
 
 

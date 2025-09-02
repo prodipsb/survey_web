@@ -12,6 +12,7 @@ const ImageViewer = ({ image }) => {
           width={200}
           alt=""
           onClick={() => {}}
+          unoptimized
         />
       )}
     </Link>

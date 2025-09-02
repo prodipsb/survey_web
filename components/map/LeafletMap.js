@@ -10,7 +10,6 @@ import L from "leaflet";
 const LeafletMap = ({ center, outCordinate, zoom }) => {
   const mapRef = useRef(null);
 
-  // console.log('customMarkerIcon', customMarkerIcon)
 
   // const customIcon = L.icon({
   //   iconUrl: customMarkerIcon,
@@ -31,8 +30,6 @@ const LeafletMap = ({ center, outCordinate, zoom }) => {
     }
   }, []);
 
-  // console.log('center center', center)
-
   // L.marker(center, { icon: customIcon }).addTo(map);
 
   return (
@@ -44,14 +41,14 @@ const LeafletMap = ({ center, outCordinate, zoom }) => {
       />
       <Marker position={center} icon={customIcon}>
         <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
+          A
         </Popup>
       </Marker>
 
       {outCordinate && 
       <Marker position={outCordinate} icon={customIcon}>
         <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
+          B
         </Popup>
       </Marker>
       }

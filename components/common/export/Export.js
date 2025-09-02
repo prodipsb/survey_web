@@ -99,9 +99,6 @@ const Export = ({ setSearch, expUrl, setVisible }) => {
   };
 
 
-  console.log('searchValue', searchValue)
-
-
   const updateState = async (id, name) => {
     // console
   };

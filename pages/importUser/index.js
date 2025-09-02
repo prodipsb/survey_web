@@ -57,8 +57,6 @@ const ImportUser = ({ setShowPopup, history }) => {
     window.location.href = url;
   };
 
-  console.log('uplod', uploadFile)
-
   return (
     <div className="mt-5 lg:w-[40%] w-[90%] md:w-[60%] mx-auto text-[13px] border-b-blue-300 pb-5">
       <p className="font-bold text-[#646C9A] text-[24px] text-center mt-5 mb-5">

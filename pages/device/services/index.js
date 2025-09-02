@@ -56,8 +56,6 @@ const DeviceService = () => {
     router.push('/notification/send-push-notification');
   };
 
-  console.log('deviceServices', data)
-
 
   return (
     <>

@@ -78,8 +78,6 @@ const GeneralSetting = () => {
 
   // const handleInputChange = (e) => {
     
-  //   console.log('hell', e.target.name)
-  //   console.log('hell value', e.target.value)
   //   setFormData({
   //     ...formData,
   //     [e.target.name]:
